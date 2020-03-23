@@ -1,0 +1,210 @@
+<?php
+  //funcion que imprime el formulario de los doctores
+  function docs(){
+      //retornando el formulario de los doctores
+      return '<form action="'.base_url('Doctores/Registrar').'" method="post" id="form">
+      <div class="form-group">
+       <label for="nom">Nombres: </label>
+       <input type="text" class="form-control" id="nom" name="nom" placeholder="Ingrese nombres">
+        <!-- mensaje de validacion -->
+        <div class="invalid-feedback">
+          Ingrese los dos nombres 
+        </div>
+      </div>
+    
+      <div class="form-group">
+       <label for="ape">Apellidos: </label>
+       <input type="text" class="form-control" id="ape" name="ape" placeholder="Ingrese apellidos">
+        <!-- mensaje de validacion -->
+        <div class="invalid-feedback">
+          Ingrese los dos apellidos
+        </div>
+      </div>
+    
+      <br>
+      <label>Estado</label>
+      <div class="form-group form-check">
+       <input type="checkbox" class="form-check-input" value="1" id="activo">
+       <label class="form-check-label" for="activo">Activo</label>
+      </div>
+      
+      <div class="form-group form-check">
+       <input type="checkbox" class="form-check-input" value="0" id="inactivo">
+       <label class="form-check-label" for="inactivo">Inactivo</label>
+      </div>
+    
+      <div class="form-group">
+        <label for="espe">Especialidad</label>
+        <select class="form-control" id="espe" name="espe">
+          <option>Cirugia</option>
+          <option>Medicina General</option>
+        </select>
+      </div>
+    
+      <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
+      <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">
+      </form>'
+      ;
+  }
+
+  //funcion que devuelve el formulario de personas
+  function personas(){
+      return '<!-- formulario para ingreso de personal -->
+      <form >
+        <div class="form-group">
+            <label for="nom">Nombres: </label>
+            <input type="text" class="form-control nom" id="nom" placeholder="Ingrese nombres">
+            <!-- mensaje de validacion -->
+            <div class="invalid-feedback">
+                Ingrese minimo un nombre
+            </div>
+          </div>
+        <div class="form-group">
+            <label for="ape">Apellidos: </label>
+            <input type="text" class="form-control" id="ape" placeholder="Ingrese apellidos">
+            <!-- mensaje de validacion -->
+            <div class="invalid-feedback">
+                Ingrese minimo un apellido
+            </div>
+        </div>  
+        <div class="form-group">
+          <label for="email">Correo electronico</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
+          <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie mas.</small>
+          <!-- mensaje de validacion -->
+          <div class="invalid-feedback">
+            Ingrese un corredo valido
+        </div>
+        <div class="form-group">
+            <label>Tipo de usuario</label>
+            <select name="tipo" id="tipo" class="form-control">
+                <option value="admin">Admin</option>
+                <option value="doctor">Doctor</option>
+            </select>
+        </div>
+        </div>
+        <div class="form-group">
+          <label for="contra">Contraseña</label>
+          <input type="password" class="form-control" id="contra" placeholder="Ingrese contraseña">
+          <!-- mensaje de validacion -->
+          <div class="invalid-feedback">
+             Debe contener minimo 8 digitos y maximo 10
+        </div>
+        </div>                   
+        <button type="submit" id="boton" class="btn btn-primary mb-4">Editar datos</button>
+        <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+      </form>';
+  }
+
+  // retorna el formulario de los pacientes
+  function pacientes(){
+      return '<form>
+      <div class="form-group">
+          <label for="nom">Nombres:</label>
+          <input type="text" id="nom" class="form-control" placeholder="Ingrese Nombres">
+      </div>
+      <div class="form-group">
+          <label for="nom">Apellidos:</label>
+          <input type="text" id="ape" class="form-control" placeholder="Ingrese Apellidos">
+      </div>
+      <div class="row">
+          <div class="col">
+              <label for="fech">Fecha de naciemiento:</label>
+              <input type="datetime" class="form-control" id="fech" placeholder="dd/mm/aa">
+          </div>
+          <div class="col">
+              <label for="pes">Sexo:</label>
+              <input type="number" id="pes" class="form-control" placeholder="Ingrese Sexo">
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <label for="fech">Numero de telefono:</label>
+              <input type="text" class="form-control" id="fech" placeholder="####-####">
+          </div>
+          <div class="col">
+              <label for="pes">Edad:</label>
+              <input type="text" id="pes" class="form-control" placeholder="Edad">
+          </div>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary mb-4">Editar datos</button>
+      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+     </form>';
+   }
+
+   function citas(){
+   //formulario de citas
+    return '<form>
+      <div class="form-group">
+          <label for="horario">Horario</label>
+          <select class="form-control" id="horario" name="horario">
+            <option>07:00 - 08:00 am</option>
+            <option>08:00 - 09:00 am</option>
+          </select>
+      </div>
+      <div class="form-group">
+        <label for="docto">Doctor</label>
+        <select class="form-control" id="docto" name="docto">
+          <option>Carlos Josue Hernandez Funes</option>
+          <option>Josue Samuel Rodriguez Tobias</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pac">Paciente: </label>
+        <input type="text" class="form-control" id="pac" name="pac" placeholder="Ingrese paciente">
+          <!-- mensaje de validacion -->
+          <div class="invalid-feedback">
+            Ingrese los dos nombres 
+          </div>
+      </div>
+      <div class="form-group">
+        <label for="des">Ingrese una descripción: </label>
+        <textarea class="form-control" id="des" name="des"></textarea>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
+      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+      </form>';
+
+   }
+
+  //formulario de personalizacion del sitio web
+   function personalizar(){
+
+    return '<form>
+    <div class="col-lg-12">
+      <div class="showback">
+        <h4>Personalización de colores</h4><hr/>
+        <label>Color de fondo de la sidebar:</label>
+        <input type="color" class="form-control" style="width: 200px;" name="bg_header" value="" />
+        <br/><br/>
+
+        <label>Color de texto de la sidebar:</label>
+        <input type="color" class="form-control" style="width: 200px;" name="text_header" value="" />
+        <br/><br/>                 
+
+        <label>Color de fondo de la navbar</label>
+        <input type="color" class="form-control" style="width: 200px;" name="bg_body" value="" />
+        <br/><br/>
+
+        <label>Color de fondo del pie de página:</label>
+        <input type="color" class="form-control" style="width: 200px;" name="bg_footer" value="" />
+        <br/><br/>
+
+        <label>Color de texto del pie de página:</label>
+        <input type="color" class="form-control" style="width: 200px;" name="text_footer" value="" />
+        <br/> <br/>
+      </div>
+  </div>
+      <br>
+      <button type="submit" class="btn btn-primary mb-4">Editar colores</button>
+      <button type="submit" class="btn btn-primary mb-4">Restablecer por defecto</button>
+      </form>';
+
+   }
+
+   function consulta(){
+     
+   }
+?>
