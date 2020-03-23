@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Doctores extends CI_Controller {
-
+//holi uwu
   public function __construct(){
     parent:: __construct(); 
     // cargando los helpers 
