@@ -50,10 +50,10 @@
   //funcion que devuelve el formulario de personas
   function personas(){
       return '<!-- formulario para ingreso de personal -->
-      <form >
+      <form action="'.base_url('Usuarios/Registrar').'" method="post" id="form">
         <div class="form-group">
             <label for="nom">Nombres: </label>
-            <input type="text" class="form-control nom" id="nom" placeholder="Ingrese nombres">
+            <input type="text" class="form-control" name="nom" id="nom" placeholder="Ingrese nombres">
             <!-- mensaje de validacion -->
             <div class="invalid-feedback">
                 Ingrese minimo un nombre
@@ -61,7 +61,7 @@
           </div>
         <div class="form-group">
             <label for="ape">Apellidos: </label>
-            <input type="text" class="form-control" id="ape" placeholder="Ingrese apellidos">
+            <input type="text" class="form-control" name="ape" id="ape" placeholder="Ingrese apellidos">
             <!-- mensaje de validacion -->
             <div class="invalid-feedback">
                 Ingrese minimo un apellido
@@ -69,7 +69,7 @@
         </div>  
         <div class="form-group">
           <label for="email">Correo electronico</label>
-          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
+          <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
           <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie mas.</small>
           <!-- mensaje de validacion -->
           <div class="invalid-feedback">
@@ -85,14 +85,14 @@
         </div>
         <div class="form-group">
           <label for="contra">Contraseña</label>
-          <input type="password" class="form-control" id="contra" placeholder="Ingrese contraseña">
+          <input type="password" class="form-control" name="password" id="contra" placeholder="Ingrese contraseña">
           <!-- mensaje de validacion -->
           <div class="invalid-feedback">
              Debe contener minimo 8 digitos y maximo 10
         </div>
-        </div>                   
-        <button type="submit" id="boton" class="btn btn-primary mb-4">Editar datos</button>
-        <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+        </div> 
+        <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
+        <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">                  
       </form>';
   }
 
@@ -113,18 +113,17 @@
               <input type="datetime" class="form-control" id="fech" placeholder="dd/mm/aa">
           </div>
           <div class="col">
-              <label for="pes">Sexo:</label>
-              <input type="number" id="pes" class="form-control" placeholder="Ingrese Sexo">
+            <label for="sexo">Sexo:</label>
+            <select name="sexo" id="sexo" class="form-control">
+                <option value="man">Hombre</option>
+                <option value="woman">Mujer</option>
+            </select>
           </div>
       </div>
       <div class="row">
           <div class="col">
               <label for="fech">Numero de telefono:</label>
               <input type="text" class="form-control" id="fech" placeholder="####-####">
-          </div>
-          <div class="col">
-              <label for="pes">Edad:</label>
-              <input type="text" id="pes" class="form-control" placeholder="Edad">
           </div>
       </div>
       <br>

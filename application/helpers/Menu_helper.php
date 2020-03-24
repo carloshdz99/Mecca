@@ -1,5 +1,6 @@
 <?php
 //funcion que imprime toda la estrutura de la pagina
+//<span class="hidden-sx">'; echo $this->session->userdata("nombre");    echo '</span> para inprimir usuario
 function menu($form,$msg,$nom){
     echo '<div class="wrapper">
     <!-- menu lateral de la pagina -->
@@ -91,7 +92,7 @@ function menu($form,$msg,$nom){
                                     <a class="btn btn-primary " href="'.base_url().'index/sitioPublico" target="_blank" role="button">Ir al sitio público</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="btn btn-primary" href="#" role="button">Cerrar sesión</a>
+                                    <a class="btn btn-primary" href="'.base_url().'Login/logout" role="button">Cerrar sesión</a>
                                 </li>                            
                             </ul>
                         </div>
