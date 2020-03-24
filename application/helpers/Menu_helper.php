@@ -30,7 +30,7 @@ function menu($form,$msg,$nom){
                     Doctores</a>
                 <ul class="collapse list-unstyled" id="doctorSubmenu">
                     <li>
-                        <a href="'.base_url().'index/verDocs">Ver doctores</a>
+                        <a href="'.base_url().'Doctores/mostrarD">Ver doctores</a>
                     </li>
                     <li>
                         <a href="'.base_url().'Doctores/Doctores">Agregar doctores</a>
@@ -43,7 +43,7 @@ function menu($form,$msg,$nom){
                     Paciente</a>
                 <ul class="collapse list-unstyled" id="pacienteSubmenu">
                     <li>
-                        <a href="'.base_url().'index/verPac">Ver pacientes</a>
+                        <a href="'.base_url().'Pacientes/verPacie">Ver pacientes</a>
                     </li>
                     <li>
                         <a href="'.base_url().'Pacientes/Pacientes">Agregar pacientes</a>
@@ -56,10 +56,10 @@ function menu($form,$msg,$nom){
                     Citas</a>
                 <ul class="collapse list-unstyled" id="horarioSubmenu">
                     <li>
-                        <a href="#">Ver horarios</a>
+                        <a href="'.base_url().'Citas/verCitas">Ver Citas</a>
                     </li>
                     <li>
-                        <a href="'.base_url().'Citas/Citas">Agregar horarios</a>
+                        <a href="'.base_url().'Citas/Citas">Agregar Citas</a>
                     </li>                       
                 </ul>
             </li>               
@@ -97,7 +97,6 @@ function menu($form,$msg,$nom){
                         </div>
                     </div>
                 </nav>
-                
                 '.$msg.'
 
                 <!--fin del menu horizontal-->
@@ -105,7 +104,7 @@ function menu($form,$msg,$nom){
                 <section class="main-content">
                     <div class="row mt">
                         <div class="col-lg-12">
-                            <h1>Ingresando '.$nom.'</h1>
+                            <h1>'.$nom.'</h1>
                             <hr>
                       '.$form.'
 

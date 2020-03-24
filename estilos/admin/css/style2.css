@@ -192,3 +192,7 @@ a.article:hover {
 .ce{
     text-align: center;
 }
+
+#lista{
+    border: thin solid 5px;
+}

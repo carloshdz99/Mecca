@@ -9,6 +9,7 @@ class Doctores extends CI_Controller {
     $this->load->helper('Menu');
     $this->load->helper('forms/forms');
     $this->load->helper('forms/validarF');
+    $this->load->helper('list/listas');
     // cargando base de datos
     $this->load->database();
     // llamando modelo Insertando
@@ -22,7 +23,7 @@ public function doctores(){
     //tomando el formulario que devuelve la funcion
     $form = docs();
     //tomando la estructura de la pagina
-    $data['estructura']= menu($form,'','Doctores');
+    $data['estructura']= menu($form,'','Ingresando Doctores');
     $this->load->view('administrador/doctores.php',$data);
 }
 ///////////////////////////////////////////////////////////
@@ -48,20 +49,9 @@ public function Registrar(){
     $pF=substr($apellido,1);
     $id_doctor.="$pL";
     $id_doctor.="$pF";
-    $id_doctor.="2";
-    $id_doctor.="3";
-
-      //tomando las reglas de la validacion
-      $campos = doctoresVal();
-      //pasando las validaciones
-      $this->form_validation->set_rules($campos);
-      //comprobando si se ha incumplido alguna regla
-      if($this->form_validation->run() == FALSE){
-        //tomando la estructura de la pagina
-        $data['estructura']= menu($form,'');
-        $this->load->view('administrador/doctores.php',$data);
-      }else{
-        // mandando los datos al modulo en forma de arreglo
+    $id_doctor.="5";
+    $id_doctor.="7";
+    
         $datos = array(
        'NOMBRE_DOCTOR' => $nombre,
        'APELLIDO_DOCTOR' => $apellido,
@@ -73,21 +63,23 @@ public function Registrar(){
       if(!$this->Insertando->Insertando($datos)){
         //recargando la pagina con mensaje de guardado
         $msg='<div class="alert alert-danger"> Error en el llenado</div>';
-        $data['estructura'] = menu($form,$msg);
+        $data['estructura'] = menu($form,$msg,'Ingresando Doctores');
         $this->load->view('administrador/doctores.php',$data);
       }else{
          //recargando la pagina con mensaje de guardado
          $msg='<div class="alert alert-success"> guardado correctamente</div>';
-         $data['estructura'] = menu($form,$msg);
+         $data['estructura'] = menu($form,$msg,'Ingresando Doctores');
          $this->load->view('administrador/doctores.php',$data);
         }
-      }
-      ///////////////////////////////////////////////////
-      }
+
+}
 
 //funcion que muestra los doctores registrados en la base de datos
 function mostrarD(){
 
+  $lista = verDocs();
+  $data['estructura'] = menu($lista,'','Lista de Doctores');
+  //cargando la vista con los doctores registrados en la base
   $this->load->view('administrador/verDocs.php',$data);
 }
 

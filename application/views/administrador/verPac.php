@@ -22,31 +22,11 @@
 
 <body>
 
-    <div class="wrapper">
-
-    <!--incluyendo sidebar con include-->
-    <?php  include("sidebar.php") ?>
-    <!---->
-
-        <div id="content">
-        <!--incluyendo menu horizontal-->
-        <?php include("menu.php") ?>
-        <!---->
-
-        <!-- section del contenido principal-->
-        <section class="main-content">
-        
-        </section>
-        <!---->
-
-        <br>   
-        <!-- incluyendo footer a la pagina-->
-        <?php include("footer.php") ?>    
-        <!---->
-        </div>
-    </div>
-
-    
+     <!-- imprimiento todo el contenido de la pagina -->
+     <?php
+            print_r($estructura);
+            ?>
+            <!-- fin de contenido de la pagina-->
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
