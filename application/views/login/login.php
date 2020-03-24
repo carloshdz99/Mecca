@@ -30,11 +30,11 @@
 <div id="login-page">
 	  	<div class="container">
 	  	
-		      <form class="form-login" action="<?php echo base_url();?>autentificacion/login" method="post">
+		      <form class="form-login" action="<?php echo base_url();?>Login/login" method="post">
 
 		        <h2 class="form-login-heading">Inicio de sesión</h2>
 		        <div class="login-wrap">
-		            <input type="text" class="form-control" placeholder="Usuario" name="username" autofocus>
+		            <input type="text" class="form-control" placeholder="Ingrese correo" name="email" autofocus>
 		            <br>
 		            <input type="password" class="form-control" placeholder="Contraseña" name="password">
 		            <label class="checkbox">

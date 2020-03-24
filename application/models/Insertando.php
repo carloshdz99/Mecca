@@ -13,6 +13,14 @@ class Insertando extends CI_Model{
            return true;
        }
     }
+   //funcion de llenado para usuarios
+    public function InsertandoUsuarios($datos){
+        if(!$this->db->insert('usuario',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
 
 ?>
