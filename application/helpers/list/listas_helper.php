@@ -1,43 +1,34 @@
 <?php
-function verDocs(){
-    return '<table class="table table-sm table-dark" id="lista">
-    <thead>
-      <tr class="text-white">
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Especialidad</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="table-dark text-dark">
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>Activo</td>
-        <td><i class="fas fa-edit"></i></td>
-      </tr>
-      <tr class="bg-white text-dark">
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>@mdo</td>
-        <td>Activo</td>
-        <td><i class="fas fa-edit"></i></td>
-      </tr>
-      <tr class="table-dark text-dark">
-        <td>Larry the Bird</td>
-        <td>John Doe</td>
-        <td>@twitter</td>
-        <td>@mdo</td>
-        <td>Activo</td>
-        <td><i class="fas fa-edit"></i></td>
-      </tr>
-    </tbody>
-  </table>';
+function verDocs($doctores){
+  //variable que concatena los valores tomados
+  $mos='<table class="table table-sm table-dark" id="lista">
+  <thead>
+    <tr class="text-white">
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Especialidad</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>';
+  //recorriendo los datos de los doctores
+    foreach($doctores as $d){
+      $mos .= '<tr class="table-dark text-dark">
+      <td>'.$d->ID_DOCTOR.'</td>
+      <td>'.$d->NOMBRE_DOCTOR.'</td>
+      <td>'.$d->APELLIDO_DOCTOR.'</td>
+      <td>'.$d->ESPECIALIDAD.'</td>
+      <td>'.$d->ESTADO.'</td>
+      <td><i class="fas fa-edit"></i></td>
+    </tr>';
+    }
+    $mos.='</tbody>
+    </table>';   
+    //imprimiendo los doctores seleccionados
+    return $mos;
+   // return var_dump($doctores);
 }
 
 function verPaci(){

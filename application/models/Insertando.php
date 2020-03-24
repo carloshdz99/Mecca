@@ -5,7 +5,7 @@ class Insertando extends CI_Model{
         $this->load->database();
     }
 
-    // funcion que usa sql para insertan en la base
+    // funcion que usa sql para insertan en la tabla doctores
     public function Insertando($datos){
        if(!$this->db->insert('doctor',$datos)){
            return false;

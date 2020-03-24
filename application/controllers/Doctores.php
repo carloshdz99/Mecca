@@ -14,6 +14,10 @@ class Doctores extends CI_Controller {
     $this->load->database();
     // llamando modelo Insertando
     $this->load->model('Insertando');
+    //llamando modelo generador de id
+    $this->load->model('Generador');
+    //modelo mostrar
+    $this->load->model('Mostrar');
     //cargando libreria de errores
     $this->load->library(array('form_validation'));
     }
@@ -38,28 +42,23 @@ public function Registrar(){
     $apellido = $this->input->post('ape');
     $especialidad = $this->input->post('espe');
     $estado=0;
-    $id_doctor='';
+    //obteniendo id del doctor
+    $id= $this->Generador->id_doctor($nombre,$apellido);
     // comprobando si se selecciono activo o inactivo
     if($this->input->post('activo')){
         $estado = 1;
     }else if($this->input->post('inactivo')){
         $estado = 0;
     }
-    $pL=substr($nombre,1);
-    $pF=substr($apellido,1);
-    $id_doctor.=$pL;
-    $id_doctor.=$pF;
-    $id_doctor.="5";
-    $id_doctor.="7";
-    
+    //guardando los valores en un arreglo para su llenado
         $datos = array(
        'NOMBRE_DOCTOR' => $nombre,
        'APELLIDO_DOCTOR' => $apellido,
        'ESTADO' => $estado,
        'ESPECIALIDAD' => $especialidad,
-       'ID_DOCTOR' => $id_doctor
+       'ID_DOCTOR' => $id
        );
-      // comprobando que se haya recibido datos
+      // comprobando que se haya enviado datos a la base
       if(!$this->Insertando->Insertando($datos)){
         //recargando la pagina con mensaje de guardado
         $msg='<div class="alert alert-danger"> Error en el llenado</div>';
@@ -76,13 +75,12 @@ public function Registrar(){
 
 //funcion que muestra los doctores registrados en la base de datos
 function mostrarD(){
-
-  $lista = verDocs();
+  $doctores = $this->Mostrar->Docs();
+  $lista = verDocs($doctores);
   $data['estructura'] = menu($lista,'','Lista de Doctores');
   //cargando la vista con los doctores registrados en la base
   $this->load->view('administrador/verDocs.php',$data);
 }
-
 }
 
 ?>
