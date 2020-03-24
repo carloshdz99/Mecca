@@ -20,30 +20,30 @@
           Ingrese los dos apellidos
         </div>
       </div>
-    
-      <br>
-      <label>Estado</label>
-      <div class="form-group form-check">
-       <input type="checkbox" class="form-check-input" value="1" id="activo">
-       <label class="form-check-label" for="activo">Activo</label>
-      </div>
-      
-      <div class="form-group form-check">
-       <input type="checkbox" class="form-check-input" value="0" id="inactivo">
-       <label class="form-check-label" for="inactivo">Inactivo</label>
-      </div>
-    
-      <div class="form-group">
-        <label for="espe">Especialidad</label>
-        <select class="form-control" id="espe" name="espe">
-          <option>Cirugia</option>
-          <option>Medicina General</option>
-        </select>
-      </div>
+      <div class="row">
+      <div class="form-group col">
+      <label for="est">Estado</label>
+      <select name="est" id="est" class="form-control col-sm-4">
+        <option>Activo</option>
+        <option>Inactivo</option>
+      </select>
+    </div>
+  
+    <div class="form-group col">
+      <label for="espe">Especialidad</label>
+      <select class="form-control col-sm-6" id="espe" name="espe">
+        <option>Cirugia</option>
+        <option>Medicina General</option>
+      </select>
+    </div>
+    </div>
+    <br>
     
       <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
-      <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">
-      </form>'
+      <input type="button" class="btn btn-primary" id="cancelar" name="cancelar" Value="Cancelar">
+      </form>
+      <br>
+      <p class="text-danger">* Todos los campos son requeridos</p>'
       ;
   }
 

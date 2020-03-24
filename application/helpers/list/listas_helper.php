@@ -1,9 +1,9 @@
 <?php
 function verDocs($doctores){
   //variable que concatena los valores tomados
-  $mos='<table class="table table-sm table-dark" id="lista">
+  $mos='<table class="table table-striped" id="lista">
   <thead>
-    <tr class="text-white">
+    <tr>
       <th scope="col">ID</th>
       <th scope="col">Nombre</th>
       <th scope="col">Apellido</th>
@@ -15,12 +15,17 @@ function verDocs($doctores){
   <tbody>';
   //recorriendo los datos de los doctores
     foreach($doctores as $d){
-      $mos .= '<tr class="table-dark text-dark">
+      if($d->ESTADO == 0){
+        $est = 'Inactivo';
+      }else{
+        $est = 'Activo';
+      }
+      $mos .= '<tr>
       <td>'.$d->ID_DOCTOR.'</td>
       <td>'.$d->NOMBRE_DOCTOR.'</td>
       <td>'.$d->APELLIDO_DOCTOR.'</td>
       <td>'.$d->ESPECIALIDAD.'</td>
-      <td>'.$d->ESTADO.'</td>
+      <td>'.$est.'</td>
       <td><i class="fas fa-edit"></i></td>
     </tr>';
     }

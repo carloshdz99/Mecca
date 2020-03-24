@@ -41,20 +41,23 @@ public function Registrar(){
     $nombre = $this->input->post('nom');   
     $apellido = $this->input->post('ape');
     $especialidad = $this->input->post('espe');
-    $estado=0;
+    $estado = $this->input->post('est');
+    if($estado=='Activo'){$numE=1;}else{$numE=0;}
     //obteniendo id del doctor
     $id= $this->Generador->id_doctor($nombre,$apellido);
     // comprobando si se selecciono activo o inactivo
-    if($this->input->post('activo')){
-        $estado = 1;
-    }else if($this->input->post('inactivo')){
-        $estado = 0;
-    }
+    $campos = doctoresVal();
+    $this->form_validation->set_rules($campos);
+    if($this->form_validation->run($campos) ==FALSE){
+        $msg='<div class="alert alert-danger">Error en los datos del llenado</div>';
+        $data['estructura'] = menu($form,$msg,'Ingresando doctores');
+        $this->load->view('administrador/doctores.php',$data);
+    }else{
     //guardando los valores en un arreglo para su llenado
         $datos = array(
-       'NOMBRE_DOCTOR' => $nombre,
-       'APELLIDO_DOCTOR' => $apellido,
-       'ESTADO' => $estado,
+       'NOMBRE_DOCTOR' => strtolower($nombre),
+       'APELLIDO_DOCTOR' => strtolower($apellido),
+       'ESTADO' => $numE,
        'ESPECIALIDAD' => $especialidad,
        'ID_DOCTOR' => $id
        );
@@ -70,7 +73,7 @@ public function Registrar(){
          $data['estructura'] = menu($form,$msg,'Ingresando Doctores');
          $this->load->view('administrador/doctores.php',$data);
         }
-
+      }
 }
 
 //funcion que muestra los doctores registrados en la base de datos
@@ -82,5 +85,4 @@ function mostrarD(){
   $this->load->view('administrador/verDocs.php',$data);
 }
 }
-
 ?>

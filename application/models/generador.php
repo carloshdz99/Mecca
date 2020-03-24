@@ -14,7 +14,6 @@ function __construct(){
        $numero1=rand(0,9);
        $numero2=rand(0,9);
        $id = $pL.$pF.$numero1.$numero2;
-
        //retornando el id del doctor
        return $id;
    }
