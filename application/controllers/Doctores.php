@@ -47,8 +47,8 @@ public function Registrar(){
     }
     $pL=substr($nombre,1);
     $pF=substr($apellido,1);
-    $id_doctor.="$pL";
-    $id_doctor.="$pF";
+    $id_doctor.=$pL;
+    $id_doctor.=$pF;
     $id_doctor.="5";
     $id_doctor.="7";
     
