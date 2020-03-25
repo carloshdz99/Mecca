@@ -21,6 +21,15 @@ class Insertando extends CI_Model{
             return true;
         }
     }
+
+    //funcion de llenado para pacientes
+    public function InsertandoPacientes($datos){
+        if(!$this->db->insert('expediente',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
 
 ?>

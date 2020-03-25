@@ -98,19 +98,19 @@
 
   // retorna el formulario de los pacientes
   function pacientes(){
-      return '<form>
+      return '<form action="'.base_url('Pacientes/Registrar').'" method="post" id="form">
       <div class="form-group">
           <label for="nom">Nombres:</label>
-          <input type="text" id="nom" class="form-control" placeholder="Ingrese Nombres">
+          <input type="text" name="nom" id="nom" class="form-control" placeholder="Ingrese Nombres">
       </div>
       <div class="form-group">
           <label for="nom">Apellidos:</label>
-          <input type="text" id="ape" class="form-control" placeholder="Ingrese Apellidos">
+          <input type="text" name="ape" id="ape" class="form-control" placeholder="Ingrese Apellidos">
       </div>
       <div class="row">
           <div class="col">
               <label for="fech">Fecha de naciemiento:</label>
-              <input type="datetime" class="form-control" id="fech" placeholder="dd/mm/aa">
+              <input type="datetime" name="fecha" class="form-control" id="fech" placeholder="yyyy/mm/dd">
           </div>
           <div class="col">
             <label for="sexo">Sexo:</label>
@@ -123,49 +123,50 @@
       <div class="row">
           <div class="col">
               <label for="fech">Numero de telefono:</label>
-              <input type="text" class="form-control" id="fech" placeholder="####-####">
+              <input type="text" class="form-control" name="telefono" id="fech" placeholder="####-####">
           </div>
       </div>
       <br>
-      <button type="submit" class="btn btn-primary mb-4">Editar datos</button>
-      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+      <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
+      <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">   
      </form>';
    }
 
-   function citas(){
-   //formulario de citas
-    return '<form>
-      <div class="form-group">
-          <label for="horario">Horario</label>
-          <select class="form-control" id="horario" name="horario">
-            <option>07:00 - 08:00 am</option>
-            <option>08:00 - 09:00 am</option>
-          </select>
-      </div>
-      <div class="form-group">
-        <label for="docto">Doctor</label>
-        <select class="form-control" id="docto" name="docto">
-          <option>Carlos Josue Hernandez Funes</option>
-          <option>Josue Samuel Rodriguez Tobias</option>
+   function citas($doctores){
+    $form='<form>
+    <div class="form-group">
+        <label for="horario">Horario</label>
+        <select class="form-control" id="horario" name="horario">
+          <option>07:00 - 08:00 am</option>
+          <option>08:00 - 09:00 am</option>
         </select>
-      </div>
-      <div class="form-group">
-        <label for="pac">Paciente: </label>
-        <input type="text" class="form-control" id="pac" name="pac" placeholder="Ingrese paciente">
-          <!-- mensaje de validacion -->
-          <div class="invalid-feedback">
-            Ingrese los dos nombres 
-          </div>
-      </div>
-      <div class="form-group">
-        <label for="des">Ingrese una descripción: </label>
-        <textarea class="form-control" id="des" name="des"></textarea>
-      </div>
-      <br>
-      <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
-      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
-      </form>';
-
+    </div>
+    <div class="form-group">
+      <label for="docto">Doctor</label>
+      <select class="form-control" id="docto" name="docto">';
+    foreach($doctores as $docs){
+       $form.= '<option>'.$docs->NOMBRE_DOCTOR.'</option>';
+    }
+    $form.= ' </select>
+    </div>
+    <div class="form-group">
+      <label for="pac">Paciente: </label>
+      <input type="text" class="form-control" id="pac" name="pac" placeholder="Ingrese paciente">
+        <!-- mensaje de validacion -->
+        <div class="invalid-feedback">
+          Ingrese los dos nombres 
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="des">Ingrese una descripción: </label>
+      <textarea class="form-control" id="des" name="des"></textarea>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
+    <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+    </form>';
+   //formulario de citas
+    return $form;
    }
 
   //formulario de personalizacion del sitio web

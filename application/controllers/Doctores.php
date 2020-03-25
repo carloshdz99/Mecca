@@ -27,7 +27,6 @@ class Doctores extends CI_Controller {
     lo redireccionara siempre al login*/
     if(!$this->session->userdata('login')){
       redirect(base_url());
-
   }
     }
 

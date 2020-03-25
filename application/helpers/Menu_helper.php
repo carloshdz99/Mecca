@@ -1,6 +1,7 @@
 <?php
 //funcion que imprime toda la estrutura de la pagina
 
+
 function menu($form,$msg,$nom){
     echo '<div class="wrapper">
     <!-- menu lateral de la pagina -->
