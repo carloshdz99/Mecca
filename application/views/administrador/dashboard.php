@@ -20,6 +20,7 @@
             <!-- imprimiento todo el contenido de la pagina -->
             <?php
             print_r($estructura);
+            //echo $this->session->userdata('nombre'); para probar que sesion tiene datos correctos
             ?>
             <!-- fin de contenido de la pagina-->
 
