@@ -132,40 +132,41 @@
      </form>';
    }
 
-   function citas(){
-   //formulario de citas
-    return '<form>
-      <div class="form-group">
-          <label for="horario">Horario</label>
-          <select class="form-control" id="horario" name="horario">
-            <option>07:00 - 08:00 am</option>
-            <option>08:00 - 09:00 am</option>
-          </select>
-      </div>
-      <div class="form-group">
-        <label for="docto">Doctor</label>
-        <select class="form-control" id="docto" name="docto">
-          <option>Carlos Josue Hernandez Funes</option>
-          <option>Josue Samuel Rodriguez Tobias</option>
+   function citas($doctores){
+    $form='<form>
+    <div class="form-group">
+        <label for="horario">Horario</label>
+        <select class="form-control" id="horario" name="horario">
+          <option>07:00 - 08:00 am</option>
+          <option>08:00 - 09:00 am</option>
         </select>
-      </div>
-      <div class="form-group">
-        <label for="pac">Paciente: </label>
-        <input type="text" class="form-control" id="pac" name="pac" placeholder="Ingrese paciente">
-          <!-- mensaje de validacion -->
-          <div class="invalid-feedback">
-            Ingrese los dos nombres 
-          </div>
-      </div>
-      <div class="form-group">
-        <label for="des">Ingrese una descripción: </label>
-        <textarea class="form-control" id="des" name="des"></textarea>
-      </div>
-      <br>
-      <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
-      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
-      </form>';
-
+    </div>
+    <div class="form-group">
+      <label for="docto">Doctor</label>
+      <select class="form-control" id="docto" name="docto">';
+    foreach($doctores as $docs){
+       $form.= '<option>'.$docs->NOMBRE_DOCTOR.'</option>';
+    }
+    $form.= ' </select>
+    </div>
+    <div class="form-group">
+      <label for="pac">Paciente: </label>
+      <input type="text" class="form-control" id="pac" name="pac" placeholder="Ingrese paciente">
+        <!-- mensaje de validacion -->
+        <div class="invalid-feedback">
+          Ingrese los dos nombres 
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="des">Ingrese una descripción: </label>
+      <textarea class="form-control" id="des" name="des"></textarea>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
+    <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+    </form>';
+   //formulario de citas
+    return $form;
    }
 
   //formulario de personalizacion del sitio web

@@ -9,6 +9,8 @@ function __construct(){
    function id_doctor($nom,$ape){
        //generando un id random usando las primeras letras de 
        //nombre y apellido y dos numeros random
+       // josue
+       // hernandez
        $pL=substr($nom,0,1);
        $pF=substr($ape,0,1);
        $numero1=rand(0,9);

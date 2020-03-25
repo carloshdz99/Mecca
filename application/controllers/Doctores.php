@@ -27,7 +27,6 @@ class Doctores extends CI_Controller {
     lo redireccionara siempre al login*/
     if(!$this->session->userdata('login')){
       redirect(base_url());
-
   }
     }
 
@@ -71,7 +70,7 @@ public function Registrar(){
        'ID_DOCTOR' => $id
        );
       // comprobando que se haya enviado datos a la base
-      if(!$this->Insertando->Insertando($datos)){
+      if(!$this->Insertando->InsertandoDocs($datos)){
         //recargando la pagina con mensaje de guardado
         $msg='<div class="alert alert-danger"> Error en el llenado</div>';
         $data['estructura'] = menu($form,$msg,'Ingresando Doctores');
