@@ -20,30 +20,30 @@
           Ingrese los dos apellidos
         </div>
       </div>
-    
-      <br>
-      <label>Estado</label>
-      <div class="form-group form-check">
-       <input type="checkbox" class="form-check-input" value="1" id="activo">
-       <label class="form-check-label" for="activo">Activo</label>
-      </div>
-      
-      <div class="form-group form-check">
-       <input type="checkbox" class="form-check-input" value="0" id="inactivo">
-       <label class="form-check-label" for="inactivo">Inactivo</label>
-      </div>
-    
-      <div class="form-group">
-        <label for="espe">Especialidad</label>
-        <select class="form-control" id="espe" name="espe">
-          <option>Cirugia</option>
-          <option>Medicina General</option>
-        </select>
-      </div>
+      <div class="row">
+      <div class="form-group col">
+      <label for="est">Estado</label>
+      <select name="est" id="est" class="form-control col-sm-4">
+        <option>Activo</option>
+        <option>Inactivo</option>
+      </select>
+    </div>
+  
+    <div class="form-group col">
+      <label for="espe">Especialidad</label>
+      <select class="form-control col-sm-6" id="espe" name="espe">
+        <option>Cirugia</option>
+        <option>Medicina General</option>
+      </select>
+    </div>
+    </div>
+    <br>
     
       <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
-      <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">
-      </form>'
+      <input type="button" class="btn btn-primary" id="cancelar" name="cancelar" Value="Cancelar">
+      </form>
+      <br>
+      <p class="text-danger">* Todos los campos son requeridos</p>'
       ;
   }
 
@@ -98,19 +98,19 @@
 
   // retorna el formulario de los pacientes
   function pacientes(){
-      return '<form>
+      return '<form action="'.base_url('Pacientes/Registrar').'" method="post" id="form">
       <div class="form-group">
           <label for="nom">Nombres:</label>
-          <input type="text" id="nom" class="form-control" placeholder="Ingrese Nombres">
+          <input type="text" name="nom" id="nom" class="form-control" placeholder="Ingrese Nombres">
       </div>
       <div class="form-group">
           <label for="nom">Apellidos:</label>
-          <input type="text" id="ape" class="form-control" placeholder="Ingrese Apellidos">
+          <input type="text" name="ape" id="ape" class="form-control" placeholder="Ingrese Apellidos">
       </div>
       <div class="row">
           <div class="col">
               <label for="fech">Fecha de naciemiento:</label>
-              <input type="datetime" class="form-control" id="fech" placeholder="dd/mm/aa">
+              <input type="datetime" name="fecha" class="form-control" id="fech" placeholder="yyyy/mm/dd">
           </div>
           <div class="col">
             <label for="sexo">Sexo:</label>
@@ -123,12 +123,12 @@
       <div class="row">
           <div class="col">
               <label for="fech">Numero de telefono:</label>
-              <input type="text" class="form-control" id="fech" placeholder="####-####">
+              <input type="text" class="form-control" name="telefono" id="fech" placeholder="####-####">
           </div>
       </div>
       <br>
-      <button type="submit" class="btn btn-primary mb-4">Editar datos</button>
-      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+      <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
+      <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">   
      </form>';
    }
 

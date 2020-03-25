@@ -11,6 +11,7 @@ class Usuarios extends CI_Controller {
         // cargando base de datos
         $this->load->database();
         $this->load->model('Insertando');
+        $this->load->model('Generador');
         $this->load->library(array('form_validation'));
 
          /*aqui evaluamos si no existe una variable de sesion definida en el parametro login no tendra asignado nada
@@ -37,8 +38,10 @@ class Usuarios extends CI_Controller {
         $tipo_usuario=$this->input->post('tipo');
         $contraseña=$this->input->post('password');
 
+        $id=$this->Generador->id_doctor($nombre,$apellido);
+
         $datos = array(
-            'ID_USUARIO'=>,
+            'ID_USUARIO'=>$id,
             'NOMBRE_USUARIO'=>$nombre,
             'APELLIDO_USUARIO'=>$apellido,
             'TIPO_USUARIO'=>$tipo_usuario,
