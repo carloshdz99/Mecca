@@ -1,13 +1,6 @@
 <?php
 //funcion que imprime toda la estrutura de la pagina
-<<<<<<< HEAD
-//los parametros de la funcion menu son para lo siguiente
-/* $form imprime el fomulario recibido desde el helper forms
-   $msg imprime un mensaje de confirmacion 
-   $nom imprime en nombre de la vista que se esta cargando */
-=======
-//<span class="hidden-sx">'; echo $this->session->userdata("nombre");    echo '</span> para inprimir usuario
->>>>>>> origin/samuel
+
 function menu($form,$msg,$nom){
     echo '<div class="wrapper">
     <!-- menu lateral de la pagina -->
