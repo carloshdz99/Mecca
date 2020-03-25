@@ -19,6 +19,21 @@ class Mostrar extends CI_Model{
         $pacientes= $this->db->get('expediente');
         return $pacientes->result();
     }
+    //tomando el id del expediente
+    public function idEx($nombre){
+       $id=$this->db->get_where('expediente',array("NOMBRE_PACIENTE" =>$nombre));
+       return $id->row_array();
+    }
+    //tomando horarios de la tabla
+    public function horario(){
+        $hora= $this->db->get('horario');
+        return $hora->result();
+    }
+    //tomando id de horario
+    public function idHor($hora){
+        $id=$this->db->get_where('horario',array("HORA"=>$hora));
+        return $id->row_array();
+    }
 
     //funcion que jala los usuarios
     public function users(){

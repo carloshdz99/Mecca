@@ -30,6 +30,15 @@ class Insertando extends CI_Model{
             return true;
         }
     }
+
+    //insertando citas
+    public function InsertandoCitas($datos){
+        if(!$this->db->insert('cita',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
 
 ?>

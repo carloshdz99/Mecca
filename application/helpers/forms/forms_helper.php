@@ -123,7 +123,7 @@
       <div class="row">
           <div class="col">
               <label for="fech">Numero de telefono:</label>
-              <input type="text" class="form-control" name="telefono" id="fech" placeholder="####-####">
+              <input type="text" class="form-control col-sm-2" name="telefono" id="fech" placeholder="####-####">
           </div>
       </div>
       <br>
@@ -132,30 +132,33 @@
      </form>';
    }
 
-   function citas($doctores){
-    $form='<form>
+   function citas($doctores,$horario,$paciente){
+    $form='<form action="'.base_url('Citas/Registrar').'" method="post">
     <div class="form-group">
         <label for="horario">Horario</label>
-        <select class="form-control" id="horario" name="horario">
-          <option>07:00 - 08:00 am</option>
-          <option>08:00 - 09:00 am</option>
-        </select>
+        <select class="form-control" id="horario" name="horario">';
+    foreach($horario as $hor){
+      $form.= '<option>'.$hor->HORA.'</option>';
+    }
+     $form.='</select>
     </div>
     <div class="form-group">
       <label for="docto">Doctor</label>
-      <select class="form-control" id="docto" name="docto">';
+      <select class="form-control" id="docto" name="doctor">';
     foreach($doctores as $docs){
-       $form.= '<option>'.$docs->NOMBRE_DOCTOR.'</option>';
+      if($docs->ESTADO==1){
+        $form.= '<option>'.$docs->NOMBRE_DOCTOR.'</option>';
+      }else{$form.='';}
     }
     $form.= ' </select>
     </div>
     <div class="form-group">
       <label for="pac">Paciente: </label>
-      <input type="text" class="form-control" id="pac" name="pac" placeholder="Ingrese paciente">
-        <!-- mensaje de validacion -->
-        <div class="invalid-feedback">
-          Ingrese los dos nombres 
-        </div>
+      <select class="form-control" name="paciente" id="pac">';
+    foreach($paciente as $pac){
+      $form.= '<option>'.$pac->NOMBRE_PACIENTE.'</option>';
+    }
+     $form.=' </select>
     </div>
     <div class="form-group">
       <label for="des">Ingrese una descripción: </label>
