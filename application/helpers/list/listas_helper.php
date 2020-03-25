@@ -105,7 +105,30 @@ function verPaci($pacs){
     return $pacientes;
 }
 //funcion que devuelve las citas
-function verCit(){
-   
+function verCit($citas){
+   $ci = '<table class="table table-striped" id="lista">
+   <thead>
+     <tr>
+       <th scope="col">ID</th>
+       <th scope="col">Id Horario</th>
+       <th scope="col">Id Expediente</th>
+       <th scope="col">Doctor</th>
+       <th scope="col">Comentario</th>
+       <th scope="col">Acciones</th>
+     </tr>
+   </thead>
+   <tbody>';
+   foreach($citas as $cis){
+     $ci.= '<tr>
+     <td>'.$cis->ID_CITA.'</td>
+     <td>'.$cis->ID_HORARIO.'</td>
+     <td>'.$cis->IDEXPEDIENTE.'</td>
+     <td>'.$cis->DOCTOR.'</td>
+     <td>'.$cis->COMENTARIO.'</td>
+     </tr>';
+   }
+   $ci='</tbody>
+   </table>';
+   return $ci;
 }
 ?>

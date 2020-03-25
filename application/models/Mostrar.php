@@ -42,6 +42,7 @@ class Mostrar extends CI_Model{
 
     //funcion que jala las citas
     public function citas(){
-        
+        $citas = $this->db->get('cita');
+        return $citas->result();
     }
 }
