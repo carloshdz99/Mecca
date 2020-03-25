@@ -34,6 +34,24 @@ function verDocs($doctores){
     //imprimiendo los doctores seleccionados
     return $mos;
 }
+function doctoresActivos($doctores){
+    $mos= '<div class="row mb-3">';
+    foreach($doctores as $d){
+      if($d->ESTADO==0){
+        $mos.= '';
+      }else{
+      $mos.= '<div class="col-lg-4 py-1"><div class="card">
+        <div class="card-body">
+          <h5 class="card-title">'.$d->NOMBRE_DOCTOR.'</h5>
+          <h5 class="card-title">'.$d->APELLIDO_DOCTOR.'</h5>
+          <p class="card-text">'.$d->ESPECIALIDAD.'</p>
+        </div>
+      </div></div>';
+      }
+    }
+    $mos.= '</div><br>';
+    return $mos;
+}
 
 function verPaci($pacs){
    $pacientes='<table class="table table-striped" id="lista">
@@ -42,7 +60,7 @@ function verPaci($pacs){
        <th scope="col">ID</th>
        <th scope="col">Nombre</th>
        <th scope="col">Apellido</th>
-       <th scope="col">Especialidad</th>
+       <th scope="col">Telefono</th>
        <th scope="col">Estado</th>
        <th scope="col">Fecha de nacimiento</th>
        <th scope="col">Acciones</th>
@@ -50,7 +68,9 @@ function verPaci($pacs){
    </thead>
    <tbody>';
    //recorriendo los datos de los doctores
+   $i=0;
    foreach($pacs as $p){
+     $i++;
      $pacientes.= '<tr>
      <td>'.$p->IDEXPEDIENTE.'</td>
      <td>'.$p->NOMBRE_PACIENTE.'</td>
@@ -58,52 +78,34 @@ function verPaci($pacs){
      <td>'.$p->TELEFONO.'</td>
      <td>'.$p->SEXO.'</td>
      <td>'.$p->FECHA_NACIEMIENTO.'</td>
-     <td><a href="'.base_url().'Doctores/editarDocs/" class="btn btn-dark"><i class="fas fa-edit"></i></a> / <a href="'.base_url().'Doctores/editarDocs/" class="btn btn-dark"><i class="fas fa-trash-alt"></i></a></td>
-   </tr>';
+     <td><a href="'.base_url().'Pacientes/tomarP/'.$p->IDEXPEDIENTE.'" class="btn btn-dark"><i class="fas fa-edit"></i></a> / <a class="btn btn-dark-outline" data-toggle="modal" data-target="#eliminar'.$i.'"><i class="fas fa-trash-alt"></i></a></td>
+   </tr>
+   <div class="modal fade" id="eliminar'.$i.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Eliminando Registro</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+           Esta seguro?
+         </div>
+         <div class="modal-footer">
+           <a href="'.base_url().'Pacientes/eliminarPacs/'.$p->IDEXPEDIENTE.'" class="btn btn-primary">Aceptar</a>
+           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+         </div>
+       </div>
+     </div>
+   </div>';
    }
    $pacientes.='</tbody>
    </table>';
     return $pacientes;
 }
-
+//funcion que devuelve las citas
 function verCit(){
-    return '<table class="table table-sm table-dark" id="lista">
-    <thead>
-      <tr class="bg-primary text-white">
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Especialidad</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>Activo</td>
-        <td><i class="fas fa-edit"></i>     <i class="fas fa-trash-alt"></i></td>
-      </tr>
-      <tr class="table-info">
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>@mdo</td>
-        <td>Activo</td>
-        <td><i class="fas fa-edit"></i>     <i class="fas fa-trash-alt"></i></td>
-      </tr>
-      <tr>
-        <td>Larry the Bird</td>
-        <td>John Doe</td>
-        <td>@twitter</td>
-        <td>@mdo</td>
-        <td>Activo</td>
-        <td><i class="fas fa-edit"></i>     <i class="fas fa-trash-alt"></i></td>
-      </tr>
-    </tbody>
-  </table>';
+   
 }
 ?>

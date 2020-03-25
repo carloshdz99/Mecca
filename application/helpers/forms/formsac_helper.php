@@ -49,3 +49,42 @@
     <p class="text-danger">* Todos los campos son requeridos</p>'
     ;
 }
+
+  function paciA($pa){
+    return '<form action="'.base_url('Pacientes/actualizar').'" method="post" id="form">
+      <div class="form-group">
+         <input type="text" class="form-control col-sm-4" name="id" value="'.$pa['IDEXPEDIENTE'].'" readonly>
+      </div>
+      <div class="form-group">
+          <label for="nom">Nombres:</label>
+          <input type="text" name="nom" id="nom" value="'.$pa['NOMBRE_PACIENTE'].'" class="form-control" placeholder="Ingrese Nombres">
+      </div>
+      <div class="form-group">
+          <label for="nom">Apellidos:</label>
+          <input type="text" name="ape" id="ape" value="'.$pa['APELLIDO_PACIENTE'].'" class="form-control" placeholder="Ingrese Apellidos">
+      </div>
+      <div class="row">
+          <div class="col">
+              <label for="fech">Fecha de naciemiento:</label>
+              <input type="datetime" name="fecha" class="form-control" value="'.$pa['FECHA_NACIEMIENTO'].'" id="fech" placeholder="yyyy/mm/dd">
+          </div>
+          <div class="col">
+            <label for="sexo">Sexo:</label>
+            <select name="sexo" id="sexo" class="form-control">
+                <option value="man">Hombre</option>
+                <option value="woman">Mujer</option>
+            </select>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <label for="fech">Numero de telefono:</label>
+              <input type="text" class="form-control col-sm-2" value="'.$pa['TELEFONO'].'" name="telefono" id="fech" placeholder="####-####">
+          </div>
+      </div>
+      <br>
+      <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
+      <a href="'.base_url().'Pacientes/verPacie" class="btn btn-primary" id="boton" name="cancelar">Cancelar</a>   
+     </form>';
+  }
+?>

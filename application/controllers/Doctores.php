@@ -55,7 +55,8 @@ public function Registrar(){
     $estado = $this->input->post('est');
     if($estado=='Activo'){$numE=1;}else{$numE=0;}
     //obteniendo id del doctor
-    $id= $this->Generador->id_doctor($nombre,$apellido);
+    $doctores = $this->Mostrar->Docs();
+    $id= $this->Generador->id_doctor($nombre,$apellido,$doctores);
     // comprobando si se selecciono activo o inactivo
     $campos = doctoresVal();
     $this->form_validation->set_rules($campos);
@@ -100,7 +101,7 @@ public function Registrar(){
     $datos= $this->Actualizar->tomarDocs($id);
     //tomando el formulario que devuelve la funcion
     $form = docsA($datos);
-    $data['estructura'] = menu($form,'','Actualizar datos del Doctor');
+    $data['estructura'] = menu($form,'','Actualizar Doctor');
     $this->load->view('administrador/doctores',$data);
   }
   //funcion que actualizar los datos

@@ -21,5 +21,20 @@ class Actualizar extends CI_Model{
             return false;
         }else{return true;}
     }
+    //funcion que toma los pacientes a actualizar
+    function tomarPacs($id){
+        //setencia que busca los pacientes
+        $tomar = $this->db->get_where('expediente',array('idexpediente'=>$id));
+        return $tomar->row_array();
+    }
+    //funcion que actualiza los datos de los pacientes
+    function actualizarPacs($datos){
+        $this->db->where('IDEXPEDIENTE',$datos['IDEXPEDIENTE']);
+        if(!$this->db->update('expediente',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 }
