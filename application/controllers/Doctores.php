@@ -9,6 +9,7 @@ class Doctores extends CI_Controller {
     $this->load->helper('Menu');
     $this->load->helper('forms/forms');
     $this->load->helper('forms/validarF');
+    $this->load->helper('forms/formsac');
     $this->load->helper('list/listas');
     // cargando base de datos
     $this->load->database();
@@ -18,6 +19,8 @@ class Doctores extends CI_Controller {
     $this->load->model('Generador');
     //modelo mostrar
     $this->load->model('Mostrar');
+    //modelo de actualizar
+    $this->load->model('Actualizar');
     //cargando libreria de errores
     $this->load->library(array('form_validation'));
 
@@ -85,12 +88,70 @@ public function Registrar(){
 }
 
 //funcion que muestra los doctores registrados en la base de datos
-function mostrarD(){
+  public function mostrarD(){
   $doctores = $this->Mostrar->Docs();
   $lista = verDocs($doctores);
   $data['estructura'] = menu($lista,'','Lista de Doctores');
   //cargando la vista con los doctores registrados en la base
-  $this->load->view('administrador/verDocs.php',$data);
-}
+  $this->load->view('administrador/verDocs.php',$data);}
+  
+  //funcion que toma los valores del docto a actualizar
+  public function editarDocs($id){
+    $datos= $this->Actualizar->tomarDocs($id);
+    //tomando el formulario que devuelve la funcion
+    $form = docsA($datos);
+    $data['estructura'] = menu($form,'','Actualizar datos del Doctor');
+    $this->load->view('administrador/doctores',$data);
+  }
+  //funcion que actualizar los datos
+  public function ActualizarDocs(){
+    //tomando los valores de las cajas de texto
+    $id_doctor = $this->input->post('id');
+    $nombre = $this->input->post('nom');   
+    $apellido = $this->input->post('ape');
+    $especialidad = $this->input->post('espe');
+    $estado = $this->input->post('est');
+    if($estado=='Activo'){$numE=1;}else{$numE=0;}
+
+    //validando los datos que se estan mandando
+    $campos = doctoresVal();
+    $this->form_validation->set_rules($campos);
+    if($this->form_validation->run($campos)==FALSE){
+      $datos= $this->actualizar->tomarDocs($id);
+        //tomando el formulario que devuelve la funcion
+        $form = docsA($datos);
+        $data['estructura'] = menu($form,'<div class="alert alert-danger">Datos mal ingresados</div>','Actualizar datos del Doctor');
+        $this->load->view('administrador/doctores',$data);
+    }else{
+      //guardando los valores en un arreglo para su llenado
+    $datos = array(
+      'NOMBRE_DOCTOR' => strtolower($nombre),
+      'APELLIDO_DOCTOR' => strtolower($apellido),
+      'ESTADO' => $numE,
+      'ESPECIALIDAD' => $especialidad,
+      'ID_DOCTOR' => $id_doctor
+      );
+      //llamando metodo para actualizar los datos
+      if(!$this->Actualizar->actualizarDocs($datos)){
+        $datos= $this->Actualizar->tomarDocs($id);
+        //tomando el formulario que devuelve la funcion
+        $form = docsA($datos);
+        $data['estructura'] = menu($form,'<div class="alert alert-danger">No se ha actualizado</div>','Actualizar datos del Doctor');
+        $this->load->view('administrador/doctores',$data);
+      }else{
+      $doctores = $this->Mostrar->Docs();
+      $lista = verDocs($doctores);
+      $data['estructura'] = menu($lista,'<div class="alert alert-success">Actualizado Correctamente</div>','Lista de Doctores');
+      //cargando la vista con los doctores registrados en la base
+      $this->load->view('administrador/verDocs.php',$data);
+      //cargando la vista de los datos de la base
+      }
+    }
+
+    ///////////////////////////////////////////
+
+    
+
+  }
 }
 ?>

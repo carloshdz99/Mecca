@@ -14,6 +14,12 @@ class Mostrar extends CI_Model{
         return $doctores->result();
     }
 
+    //tomando los pacientes 
+    public function pacientes(){
+        $pacientes= $this->db->get('expediente');
+        return $pacientes->result();
+    }
+
     //funcion que jala los usuarios
     public function users(){
 

@@ -12,6 +12,7 @@ class Pacientes extends CI_Controller {
         $this->load->database();
         $this->load->model('Insertando');
         $this->load->model('Generador');
+        $this->load->model('Mostrar');
         $this->load->library(array('form_validation'));
 
          /*aqui evaluamos si no existe una variable de sesion definida en el parametro login no tendra asignado nada
@@ -20,7 +21,6 @@ class Pacientes extends CI_Controller {
     lo redireccionara siempre al login*/
         if(!$this->session->userdata('login')){
             redirect(base_url());
-
         }
     }
 
@@ -35,16 +35,17 @@ class Pacientes extends CI_Controller {
 
     //cargando lista de pacientes registrados en la base
     public function verPacie(){
+        //tomando los datos de la base
+        $pacientes = $this->Mostrar->pacientes();
         //toma la estructura de la vista para imprimirla
         //tomando la lista correspondiente a la vista
-        $lista = verPaci();
+        $lista = verPaci($pacientes);
         $data['estructura'] = menu($lista,'','Pacientes');
         $this->load->view('administrador/verPac.php',$data);
     }
 
 
     public function Registrar(){
-
         $nombre = $this->input->post('nom');   
         $apellido = $this->input->post('ape');
         $fecha=$this->input->post('fecha');
@@ -75,8 +76,6 @@ class Pacientes extends CI_Controller {
          $msg='<div class="alert alert-success"> Guardado correctamente</div>';
          $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
          $this->load->view('administrador/paciente.php',$data);
-        }
-        
+        } 
     }
-
 }

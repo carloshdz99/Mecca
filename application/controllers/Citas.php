@@ -35,6 +35,7 @@ class Citas extends CI_Controller {
 
     //cargando la lista de cistas registradas
     public function verCitas(){
+        //tomando la estructura de la pagina 
         $data['estructura'] = menu($lista,'','Lista de Citas');
         $this->load->view('administrador/verCitas',$data);
     }
