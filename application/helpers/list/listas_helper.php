@@ -125,7 +125,7 @@ function verCit($citas){
      <td>'.$cis->IDEXPEDIENTE.'</td>
      <td>'.$cis->DOCTOR.'</td>
      <td>'.$cis->COMENTARIO.'</td>
-     <td><a href="#" class="btn btn-dark"><i class="fas fa-edit"></i></a><a href="#" class="btn btn-dark"><i class="fas fa-trash-alt"></i></a></td>
+     <td><a href="#" class="btn btn-dark"><i class="fas fa-edit"></i></a> / <a href="#" class="btn btn-dark"><i class="fas fa-trash-alt"></i></a></td>
      </tr>';
    }
    $ci.='</tbody>

@@ -12,6 +12,7 @@ class Usuarios extends CI_Controller {
         $this->load->database();
         $this->load->model('Insertando');
         $this->load->model('Generador');
+        $this->load->model('Mostrar');
         $this->load->library(array('form_validation'));
 
          /*aqui evaluamos si no existe una variable de sesion definida en el parametro login no tendra asignado nada
@@ -31,14 +32,15 @@ class Usuarios extends CI_Controller {
     }
 
     public function Registrar(){
-
+        //tomando los valores de los campos 
         $nombre = $this->input->post('nom');   
         $apellido = $this->input->post('ape');
         $email=$this->input->post('email');
         $tipo_usuario=$this->input->post('tipo');
         $contraseña=$this->input->post('password');
 
-        $id=$this->Generador->id_doctor($nombre,$apellido);
+        $db=$this->Mostrar->users();
+        $id=$this->Generador->id_doctor($tipo_usuario,$nombre,$db);
 
         $datos = array(
             'ID_USUARIO'=>$id,

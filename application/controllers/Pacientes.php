@@ -58,7 +58,7 @@ class Pacientes extends CI_Controller {
         //tomando los datos de la tabla pacientes
         //para generar el id del paciente
         $pacientes = $this->Mostrar->pacientes();
-        $id=$this->Generador->id_doctor($nombre,$apellido,$pacientes);
+        $id=$this->Generador->id_paciente($nombre,$apellido,$pacientes);
 
         $datos = array(
             'IDEXPEDIENTE'=>$id,
@@ -75,12 +75,12 @@ class Pacientes extends CI_Controller {
       if(!$this->Insertando->InsertandoPacientes($datos)){
         //recargando la pagina con mensaje de guardado
         $msg='<div class="alert alert-danger"> Error en el llenado</div>';
-        $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
+        $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
         $this->load->view('administrador/paciente.php',$data);
       }else{
          //recargando la pagina con mensaje de guardado
          $msg='<div class="alert alert-success"> Guardado correctamente</div>';
-         $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
+         $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
          $this->load->view('administrador/paciente.php',$data);
         } 
     }
@@ -133,16 +133,18 @@ class Pacientes extends CI_Controller {
         //tomando los datos de la base
         $pacientes = $this->Mostrar->pacientes();
         if(!$this->eliminar->eliminarP($id)){
+            $pacientes = $this->Mostrar->pacientes();
             //tomando la lista correspondiente a la vista
             $lista = verPaci($pacientes);
             $data['estructura'] = menu($lista,'<div class="alert alert-danger">No se Elimino</div>','Pacientes');
             $this->load->view('administrador/verPac.php',$data);
         }else{
-        //toma la estructura de la vista para imprimirla
-        //tomando la lista correspondiente a la vista
-        $lista = verPaci($pacientes);
-        $data['estructura'] = menu($lista,'<div class="alert alert-warning">Registro Eliminado</div>','Pacientes');
-        $this->load->view('administrador/verPac.php',$data);
+            $pacientes = $this->Mostrar->pacientes();
+            //toma la estructura de la vista para imprimirla
+            //tomando la lista correspondiente a la vista
+            $lista = verPaci($pacientes);
+            $data['estructura'] = menu($lista,'<div class="alert alert-warning">Registro Eliminado</div>','Pacientes');
+            $this->load->view('administrador/verPac.php',$data);
         }
     }
 }
