@@ -83,7 +83,7 @@ class Pacientes extends CI_Controller {
         //tomando los datos de la tabla pacientes
         //para generar el id del paciente
         $pacientes = $this->Mostrar->pacientes();
-        $id=$this->Generador->id_doctor($nombre,$apellido,$pacientes);
+        $id=$this->Generador->id_paciente($nombre,$apellido,$pacientes);
 
         $datos = array(
             'IDEXPEDIENTE'=>$id,
@@ -101,12 +101,16 @@ class Pacientes extends CI_Controller {
         //recargando la pagina con mensaje de guardado
         $msg='<div class="alert alert-danger"> Error en el llenado</div>';
 
+
             if($this->session->userdata('tipo')=='admin'){
                 $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
             }
             elseif($this->session->userdata('tipo')=='archivo'){
                 $data['estructura'] = menuarchivo($form,$msg,'Ingresando Usuarios');
             }
+
+
+        $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
 
         $this->load->view('administrador/paciente.php',$data);
 
@@ -115,12 +119,16 @@ class Pacientes extends CI_Controller {
          //recargando la pagina con mensaje de guardado
          $msg='<div class="alert alert-success"> Guardado correctamente</div>';
 
+
             if($this->session->userdata('tipo')=='admin'){
                 $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
             }
             elseif($this->session->userdata('tipo')=='archivo'){
                 $data['estructura'] = menuarchivo($form,$msg,'Ingresando Usuarios');
             }
+
+
+         $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
 
          $this->load->view('administrador/paciente.php',$data);
 
@@ -209,6 +217,7 @@ class Pacientes extends CI_Controller {
         $pacientes = $this->Mostrar->pacientes();
 
         if(!$this->eliminar->eliminarP($id)){
+            $pacientes = $this->Mostrar->pacientes();
             //tomando la lista correspondiente a la vista
             $lista = verPaci($pacientes);
 
@@ -221,12 +230,14 @@ class Pacientes extends CI_Controller {
 
             $this->load->view('administrador/verPac.php',$data);
 
-        }
+
+        }        
         else{
+            $pacientes = $this->Mostrar->pacientes();
             //toma la estructura de la vista para imprimirla
             //tomando la lista correspondiente a la vista
             $lista = verPaci($pacientes);
-            
+
                 if($this->session->userdata('tipo')=='admin'){
                     $data['estructura'] = menu($lista,'<div class="alert alert-warning">Registro Eliminado</div>','Pacientes');
                 }

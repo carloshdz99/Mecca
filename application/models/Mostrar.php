@@ -37,7 +37,8 @@ class Mostrar extends CI_Model{
 
     //funcion que jala los usuarios
     public function users(){
-
+        $usuarios=$this->db->get('usuario');
+        return $usuarios->result();
     }
 
     //funcion que jala las citas
