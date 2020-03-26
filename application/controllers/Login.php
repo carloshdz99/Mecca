@@ -44,6 +44,7 @@ class Login extends CI_Controller {
                 'id'=>$result->ID_USUARIO,
                 'nombre'=>$result->NOMBRE_USUARIO,
                 'email'=>$result->CORREO,
+                'tipo'=>$result->TIPO_USUARIO,
                 'login'=>TRUE
 
             );

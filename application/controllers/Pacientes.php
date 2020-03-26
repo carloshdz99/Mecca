@@ -6,6 +6,7 @@ class Pacientes extends CI_Controller {
         parent:: __construct(); 
         // cargando los helpers 
         $this->load->helper('Menu');
+        $this->load->helper('MenuArchivo');
         $this->load->helper('forms/forms');
         $this->load->helper('forms/formsac');
         $this->load->helper('list/listas');
@@ -28,14 +29,28 @@ class Pacientes extends CI_Controller {
         }
     }
 
+
     //carga la vista de pacientes 
     public function Pacientes(){
         //toma la estructura de la vista para imprimirla
         //tomando el formulario correspondiente a la vista
         $form = pacientes();
-        $data['estructura'] = menu($form,'','Pacientes');
+
+        /*Se evalua si por variable de sesion desde la base si el usuario es administrador entonces
+        imprimira el helper del menu completo*/
+        if($this->session->userdata('tipo')=='admin'){
+            $data['estructura'] = menu($form,'','Pacientes');
+        }
+        /*Si el tipo de usuario es de arhivo imprimira el menu helper de archivo donde solo no trae el formulario
+          de ingresar usuarios ni el de personalizar el sitio web*/
+        elseif($this->session->userdata('tipo')=='archivo'){
+            $data['estructura'] = menuarchivo($form,'','Pacientes');
+        }
+
         $this->load->view('administrador/personal.php',$data);
     }
+
+
 
     //cargando lista de pacientes registrados en la base
     public function verPacie(){
@@ -44,9 +59,19 @@ class Pacientes extends CI_Controller {
         //toma la estructura de la vista para imprimirla
         //tomando la lista correspondiente a la vista
         $lista = verPaci($pacientes);
-        $data['estructura'] = menu($lista,'','Pacientes');
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($lista,'','Pacientes');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($lista,'','Pacientes');
+            }
+
         $this->load->view('administrador/verPac.php',$data);
     }
+
+
+
     //funcion que se usa para registrar pacientes
     public function Registrar(){
         //tomando los valores de los campos
@@ -75,24 +100,54 @@ class Pacientes extends CI_Controller {
       if(!$this->Insertando->InsertandoPacientes($datos)){
         //recargando la pagina con mensaje de guardado
         $msg='<div class="alert alert-danger"> Error en el llenado</div>';
-        $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($form,$msg,'Ingresando Usuarios');
+            }
+
         $this->load->view('administrador/paciente.php',$data);
-      }else{
+
+      }
+      else{
          //recargando la pagina con mensaje de guardado
          $msg='<div class="alert alert-success"> Guardado correctamente</div>';
-         $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($form,$msg,'Ingresando Usuarios');
+            }
+
          $this->load->view('administrador/paciente.php',$data);
+
         } 
     }
+
+
+
     //funcion que toma los pacientes en el formulario
     public function tomarP($id){
         //tomando el paciente seleccionado
         $paci=$this->Actualizar->tomarPacs($id);
         //tomando el formulario correspondiente a la vista
         $form = paciA($paci);
-        $data['estructura'] = menu($form,'','Actualizar Paciente');
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($form,'','Actualizar Paciente');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($form,'','Actualizar Paciente');
+            }
+
         $this->load->view('administrador/personal.php',$data);
     }
+
+
+
     //funcion que actualiza los datos
     public function actualizar(){
         //tomando los valores de los campos
@@ -111,38 +166,76 @@ class Pacientes extends CI_Controller {
             'SEXO'=>$sexo,
             'FECHA_NACIEMIENTO'=>$fecha
             );
+
         if(!$this->Actualizar->actualizarPacs($datos)){
             //tomando el paciente seleccionado
             $paci=$this->Actualizar->tomarPacs($id);
             //tomando el formulario correspondiente a la vista
             $form = paciA($paci);
-            $data['estructura'] = menu($form,'<div class="alert alert-danger">Dato no Actualizado</div>','Actualizar Paciente');
+
+                if($this->session->userdata('tipo')=='admin'){
+                    $data['estructura'] = menu($form,'<div class="alert alert-danger">Dato no Actualizado</div>','Actualizar Paciente');
+                }
+                elseif($this->session->userdata('tipo')=='archivo'){
+                    $data['estructura'] = menuarchivo($form,'<div class="alert alert-danger">Dato no Actualizado</div>','Actualizar Paciente');
+                }
+
             $this->load->view('administrador/personal.php',$data);
-        }else{
+        }
+        else{
         //tomando los datos de la base
         $pacientes = $this->Mostrar->pacientes();
         //toma la estructura de la vista para imprimirla
         //tomando la lista correspondiente a la vista
         $lista = verPaci($pacientes);
-        $data['estructura'] = menu($lista,'<div class="alert alert-success">Dato de paciente Actualizado</div>','Pacientes');
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($lista,'<div class="alert alert-success">Dato de paciente Actualizado</div>','Pacientes');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($lista,'<div class="alert alert-success">Dato de paciente Actualizado</div>','Pacientes');
+            }
+
         $this->load->view('administrador/verPac.php',$data);
+
         }
     }
+
+
+
     //funcion para eliminar datos de pacientes
     function eliminarPacs($id){
         //tomando los datos de la base
         $pacientes = $this->Mostrar->pacientes();
+
         if(!$this->eliminar->eliminarP($id)){
             //tomando la lista correspondiente a la vista
             $lista = verPaci($pacientes);
-            $data['estructura'] = menu($lista,'<div class="alert alert-danger">No se Elimino</div>','Pacientes');
+
+                if($this->session->userdata('tipo')=='admin'){
+                    $data['estructura'] = menu($lista,'<div class="alert alert-danger">No se Elimino</div>','Pacientes');
+                }
+                elseif($this->session->userdata('tipo')=='archivo'){
+                    $data['estructura'] = menuarchivo($lista,'<div class="alert alert-danger">No se Elimino</div>','Pacientes');
+                }
+
             $this->load->view('administrador/verPac.php',$data);
-        }else{
-        //toma la estructura de la vista para imprimirla
-        //tomando la lista correspondiente a la vista
-        $lista = verPaci($pacientes);
-        $data['estructura'] = menu($lista,'<div class="alert alert-warning">Registro Eliminado</div>','Pacientes');
-        $this->load->view('administrador/verPac.php',$data);
+
+        }
+        else{
+            //toma la estructura de la vista para imprimirla
+            //tomando la lista correspondiente a la vista
+            $lista = verPaci($pacientes);
+            
+                if($this->session->userdata('tipo')=='admin'){
+                    $data['estructura'] = menu($lista,'<div class="alert alert-warning">Registro Eliminado</div>','Pacientes');
+                }
+                elseif($this->session->userdata('tipo')=='archivo'){
+                    $data['estructura'] = menuarchivo($lista,'<div class="alert alert-warning">Registro Eliminado</div>','Pacientes');
+                }
+
+            $this->load->view('administrador/verPac.php',$data);
+
         }
     }
 }

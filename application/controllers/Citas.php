@@ -6,6 +6,7 @@ class Citas extends CI_Controller {
         parent:: __construct(); 
         // cargando los helpers 
         $this->load->helper('Menu');
+        $this->load->helper('MenuArchivo');
         $this->load->helper('forms/forms');
         $this->load->helper('list/listas');
         $this->load->model('Mostrar');
@@ -24,6 +25,8 @@ class Citas extends CI_Controller {
         }
     }
 
+
+
     //cargando la vista citas
     public function Citas(){
         //tomando la estructura de la pagina 
@@ -33,9 +36,23 @@ class Citas extends CI_Controller {
         $pacientes=$this->Mostrar->pacientes();
         //tomando el formulario correspondiete a la vista
         $form = citas($doctores,$hora,$pacientes);
-        $data['estructura'] = menu($form,'','Citas');
+
+            /*Se evalua si por variable de sesion desde la base si el usuario es administrador entonces
+            imprimira el helper del menu completo*/
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($form,'','Citas');
+            }
+            /*Si el tipo de usuario es de arhivo imprimira el menu helper de archivo donde solo no trae el formulario
+            de ingresar usuarios ni el de personalizar el sitio web*/
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($form,'','Citas');
+            }
+
         $this->load->view('administrador/cita.php',$data);
     }
+
+
+
     //funcion registrar cistas
     public function Registrar(){
         //tomando los valores de las variables
@@ -55,30 +72,58 @@ class Citas extends CI_Controller {
             "DOCTOR"=> $doctor,
             "COMENTARIO" => $descripcion
         );
+
+
         if(!$this->Insertando->InsertandoCitas($datos)){
             $doctores = $this->Mostrar->Docs();
             $hora = $this->Mostrar->horario();
             $pacientes=$this->Mostrar->pacientes();
             //tomando el formulario correspondiete a la vista
             $form = citas($doctores,$hora,$pacientes);
-            $data['estructura'] = menu($form,'<div class="alert alert-danger">Error en el registro</div>','Citas');
+
+                if($this->session->userdata('tipo')=='admin'){
+                    $data['estructura'] = menu($form,'<div class="alert alert-danger">Error en el registro</div>','Citas');
+                }
+                elseif($this->session->userdata('tipo')=='archivo'){
+                    $data['estructura'] = menuarchivo($form,'<div class="alert alert-danger">Error en el registro</div>','Citas');
+                }
+
             $this->load->view('administrador/cita.php',$data);
-        }else{
+
+        }
+        else{
             $doctores = $this->Mostrar->Docs();
             $hora = $this->Mostrar->horario();
             $pacientes=$this->Mostrar->pacientes();
             //tomando el formulario correspondiete a la vista
             $form = citas($doctores,$hora,$pacientes);
-            $data['estructura'] = menu($form,'<div class="alert alert-success">Guardado Correctamente</div>','Citas');
+
+                if($this->session->userdata('tipo')=='admin'){
+                    $data['estructura'] = menu($form,'<div class="alert alert-success">Guardado Correctamente</div>','Citas');
+                }
+                elseif($this->session->userdata('tipo')=='archivo'){
+                    $data['estructura'] = menuarchivo($form,'<div class="alert alert-success">Guardado Correctamente</div>','Citas');
+                }
+
             $this->load->view('administrador/cita.php',$data);
         }
     }
+
+
+
     //cargando la lista de cistas registradas
     public function verCitas(){
         $pacientes = $this->Mostrar->citas();
         $lista = verCit($pacientes);
         //tomando la estructura de la pagina 
-        $data['estructura'] = menu($lista,'','Lista de Citas');
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($lista,'','Lista de Citas');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($lista,'','Lista de Citas');
+            }
+
         $this->load->view('administrador/verCitas',$data);
     }
 

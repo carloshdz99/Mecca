@@ -78,8 +78,8 @@
         <div class="form-group">
             <label>Tipo de usuario</label>
             <select name="tipo" id="tipo" class="form-control">
-                <option value="admin">Admin</option>
-                <option value="doctor">Doctor</option>
+                <option value="admin">Administrador</option>
+                <option value="archivo">Archivador</option>
             </select>
         </div>
         </div>
