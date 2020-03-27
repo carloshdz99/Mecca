@@ -9,6 +9,9 @@ class Login extends CI_Controller {
         parent:: __construct();
         $this->load->model("login_model");
         $this->load->library("session");
+        $this->load->helper("login/login");
+        $this->load->model("loginemail");
+        
         
     }
     public function index()
@@ -60,5 +63,56 @@ class Login extends CI_Controller {
     }
     
 
-	
+
+    public function recuperar(){
+        
+
+        $data['estructura']=logcontra('');
+
+        $this->load->view('login/logincontra',$data);
+    }
+    
+    
+    public function enviarcontra(){
+
+        $correo=$this->input->post('email');
+        $result=$this->login_model->recuperar($correo);
+
+        if(!$result){
+
+            $msg='<div class="alert alert-danger"> Error de busqueda, no se encuentra registrado en el sistema</div>';
+            $data['estructura']=logcontra($msg);
+            $this->load->view('login/logincontra',$data);
+        }
+       
+        else{
+                      
+           $datos=array(
+            'nombre'=>$result->NOMBRE_USUARIO,
+            'email'=>$result->CORREO,
+            'titulo'=>"Recuperación de contraseña",
+            'mensaje'=>"Se le envia por este medio su contraseña para que pueda restablecer sus actividades
+                        su contraseña es: ".$result->CONTRASENA.", feliz día.",
+            'sitio'=>"MECCA: Multiclinica de Especialidades y Centro de Cirugia Ambulatoria"
+
+          );
+
+           $envio=$this->loginemail->enviaremail($datos);
+
+           if(!$envio){
+
+            $msg='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
+            $data['estructura']=logcontra($msg);
+            $this->load->view('login/logincontra',$data);
+           }
+           else{
+
+            $msg='<div class="alert alert-success"> Se envio correctamente el correo</div>';
+            $data['estructura']=logcontra($msg);
+            $this->load->view('login/logincontra',$data);
+
+           }
+
+        }
+    }
 }

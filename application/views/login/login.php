@@ -39,8 +39,7 @@
 		            <input type="password" class="form-control" placeholder="Contraseña" name="password">
 		            <label class="checkbox">
 		                <span class="pull-right">
-		                    <a data-toggle="modal" href="login.html#myModal">¿Olvidaste tu contraseña?</a>
-		
+		                    <a data-toggle="modal" href="<?php echo base_url();?>Login/recuperar">¿Olvidaste tu contraseña?</a>		
 		                </span>
                     </label>
                     <input type="submit" class="btn btn-theme btn-block" name="ingreso" value="INGRESAR" />
@@ -49,7 +48,7 @@
 		        </div>
 		
 		          <!-- Modal -->
-		          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+		   <!--       <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
 		              <div class="modal-dialog">
 		                  <div class="modal-content">
 		                      <div class="modal-header">
@@ -62,7 +61,7 @@
 		                      </div>
 		                  </div>
 		              </div>
-		          </div>
+		          </div>          -->
 		          <!-- modal -->
 		
 		      </form>	  	
