@@ -20,7 +20,10 @@
    
             <!-- imprimiento todo el contenido de la pagina -->
             <?php
-            print_r($estructura);
+            
+               print_r($estructura);
+           
+            
             ?>
             <!-- fin de contenido de la pagina-->
 

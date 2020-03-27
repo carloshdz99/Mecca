@@ -42,11 +42,13 @@ function doctoresActivos($doctores){
       if($d->ESTADO==0){
         $mos.= '';
       }else{
-      $mos.= '<div class="col-lg-4 py-1"><div class="card">
+      $mos.= '<div class="col-lg-4 py-1"><div class="card bg-light">
+        <div class="card-header">ID: '.$d->ID_DOCTOR.'</div>
         <div class="card-body">
-          <h5 class="card-title">'.$d->NOMBRE_DOCTOR.'</h5>
-          <h5 class="card-title">'.$d->APELLIDO_DOCTOR.'</h5>
-          <p class="card-text">'.$d->ESPECIALIDAD.'</p>
+          <h5 class="card-title">Nombre: '.$d->NOMBRE_DOCTOR.'</h5>
+          <h5 class="card-title">Apellido: '.$d->APELLIDO_DOCTOR.'</h5>
+          <hr>
+          <p class="card-text">Especialidad: '.$d->ESPECIALIDAD.'</p>
         </div>
       </div></div>';
       }

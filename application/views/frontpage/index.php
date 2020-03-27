@@ -317,32 +317,51 @@
         </div>
         <div class="col-md-8 col-sm-8 marb20">
           <div class="contact-info">
-            <h3 class="cnt-ttl">Comentarios</h3>
+            <?php
+           // print_r($msg);
+            ?>
+            <h3 class="cnt-ttl">Agendar cita</h3>
             <div class="space"></div>
             <div id="sendmessage">Su mensaje ha sido enviado. ¡Gracias!</div>
             <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
+
+
+
+            <form action="<?php echo base_url();?>Frontpage/cita" method="post" role="form" class="contactForm">
               <div class="form-group">
-                <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Nombre" data-rule="minlen:4" data-msg="Ingrese al menos 4 caracteres" />
+                <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Nombre" data-rule="minlen:4" data-msg="Ingrese al menos 4 caracteres" required="" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Correo electrónico" data-rule="email" data-msg="Ingrese un correo electrónico válido" />
+                <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Correo electrónico" data-rule="email" data-msg="Ingrese un correo electrónico válido" required=""/>
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control br-radius-zero" name="subject" id="subject" placeholder="Asunto" data-rule="minlen:4" data-msg="Ingrese un asunto de al menos 8 caracteres" />
+                <input type="text" class="form-control br-radius-zero" name="asunto" id="subject" placeholder="Asunto" data-rule="minlen:4" data-msg="Ingrese un asunto de al menos 8 caracteres" required=""/>
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <textarea class="form-control br-radius-zero" name="message" rows="5" data-rule="required" data-msg="Porfavor escribe algo para nosotros" placeholder="Comentario"></textarea>
+                <input type="text" class="form-control br-radius-zero" name="telefono" id="subject" placeholder="Telefono" data-rule="minlen:4" data-msg="" required=""/>
                 <div class="validation"></div>
               </div>
+              <div class="form-group">
+                <input type="text" class="form-control br-radius-zero" name="fecha" id="subject" placeholder="Fecha de nacimiento" data-rule="minlen:4" data-msg="" required=""/>
+                <div class="validation"></div>
+              </div>
+              </div>
+               <div class="form-group">
+                <textarea class="form-control br-radius-zero" name="comentario" rows="5" data-rule="required" data-msg="Porfavor escribe algo para nosotros" placeholder="Comentario" required=""></textarea>
+                <div class="validation"></div>
+              </div> 
 
               <div class="form-action">
                 <button type="submit" class="btn btn-form">Enviar</button>
               </div>
             </form>
+
+
+
+
           </div>
         </div>
       </div>

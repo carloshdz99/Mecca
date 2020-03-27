@@ -22,5 +22,18 @@ class login_model extends CI_Model {
         }
     }
 
+
+    public function recuperar($correo){
+
+        $this->db->where("CORREO",$correo);
+
+        $consulta=$this->db->get("usuario");
+        if($consulta->num_rows()>0){
+            return $consulta->row();
+        }
+        else{
+            return false;
+        }
+    }
 	
 }
