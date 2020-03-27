@@ -25,33 +25,26 @@ class  Dashboard extends CI_Controller {
     //muestra los doctores que esten activos en la base de datos
     public function Dashboard(){
 
+        //toma todos los doctores de la base
+        $doctores = $this->Mostrar->Docs();
+        //y los manda como parametro al helper para que los imprima
+        $docsA = doctoresActivos($doctores);
+    //    $data['estructura'] = menu($docsA,'','Doctores Activos');
         /*Se evalua si por variable de sesion desde la base si el usuario es administrador entonces
         imprimira el helper del menu completo*/
-        if($this->session->userdata('tipo')=='admin'){
-
-                //toma todos los doctores de la base
-            $doctores = $this->Mostrar->Docs();
-            //y los manda como parametro al helper para que los imprima
-            $docsA = doctoresActivos($doctores);
+       if($this->session->userdata('tipo')=='admin'){     
             //enviando estructura a la vista
             $data['estructura'] = menu($docsA,'','Doctores Activos');
-            $this->load->view('administrador/dashboard.php',$data);
-
         }
 
         /*Si el usuario es de acihvo entonces imprimira un helper de un menu donde no va el ingrsar usuarios
         ni personalizar el sitio web*/
         elseif($this->session->userdata('tipo')=='archivo'){
-
-                 //toma todos los doctores de la base
-            $doctores = $this->Mostrar->Docs();
-            //y los manda como parametro al helper para que los imprima
-            $docsA = doctoresActivos($doctores);
             //enviando estructura a la vista
             $data['estructura'] = menuarchivo($docsA,'','Doctores Activos');
-            $this->load->view('administrador/dashboard.php',$data);
         }
         
+        $this->load->view('administrador/dashboard.php',$data);
     }
 
 }

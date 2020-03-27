@@ -30,7 +30,9 @@ function verDocs($doctores){
     </tr>';
     }
     $mos.='</tbody>
-    </table>';   
+    </table>
+    <br>
+    <?= $this->pagination->create_links()?>';   
     //imprimiendo los doctores seleccionados
     return $mos;
 }

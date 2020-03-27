@@ -22,7 +22,8 @@
 
 <body>
      <!-- estructura de la pagina -->
-     <?php print_r($estructura); ?>
+     <?php print_r($estructura);
+     $this->pagination->create_links() ?>
      <!--fin de la estructura-->
 
 

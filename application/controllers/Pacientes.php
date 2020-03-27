@@ -54,20 +54,18 @@ class Pacientes extends CI_Controller {
 
     //cargando lista de pacientes registrados en la base
     public function verPacie(){
-        //tomando los datos de la base
-        $pacientes = $this->Mostrar->pacientes();
-        //toma la estructura de la vista para imprimirla
-        //tomando la lista correspondiente a la vista
-        $lista = verPaci($pacientes);
-
+                $pacientes = $this->Mostrar->pacientes();
+                //toma la estructura de la vista para imprimirla
+                //tomando la lista correspondiente a la vista
+                $lista = verPaci($pacientes);
             if($this->session->userdata('tipo')=='admin'){
+                //tomando los datos de la base
                 $data['estructura'] = menu($lista,'','Pacientes');
             }
             elseif($this->session->userdata('tipo')=='archivo'){
                 $data['estructura'] = menuarchivo($lista,'','Pacientes');
             }
-
-        $this->load->view('administrador/verPac.php',$data);
+            $this->load->view('administrador/verPac.php',$data);
     }
 
 
@@ -103,14 +101,11 @@ class Pacientes extends CI_Controller {
 
 
             if($this->session->userdata('tipo')=='admin'){
-                $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
+                $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
             }
             elseif($this->session->userdata('tipo')=='archivo'){
-                $data['estructura'] = menuarchivo($form,$msg,'Ingresando Usuarios');
+                $data['estructura'] = menuarchivo($form,$msg,'Ingresando Pacientes');
             }
-
-
-        $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
 
         $this->load->view('administrador/paciente.php',$data);
 
@@ -126,10 +121,6 @@ class Pacientes extends CI_Controller {
             elseif($this->session->userdata('tipo')=='archivo'){
                 $data['estructura'] = menuarchivo($form,$msg,'Ingresando Usuarios');
             }
-
-
-         $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
-
          $this->load->view('administrador/paciente.php',$data);
 
         } 

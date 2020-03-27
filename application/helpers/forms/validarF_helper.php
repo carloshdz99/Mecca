@@ -28,4 +28,38 @@ function doctoresVal(){
           'required' => 'Por favor seleccion una %s.')
       )
       );
-}
+    }
+
+function usuariosVal(){
+  return $campos = array(
+    array(
+      'field' => 'nom',
+      'label' => 'Nombre',
+      'rules' => 'required',
+      'errors' => array(
+      'required' => 'Su %s es requerido.')
+    ),
+    array(
+      'field' => 'ape',
+      'label' => 'Apellido',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Su %s es requerido.')
+    ),
+    array(
+      'field' => 'email',
+      'label' => 'Correo',
+      'rules' => 'required|valid_email',
+      'errors' => array(
+        'required' => '%s invalido.')
+      ),
+    array(
+      'field' => 'tipo',
+      'label' => 'Tipo',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => '%s requerido.')
+    )
+    );
+  }
+

@@ -13,6 +13,15 @@ class Mostrar extends CI_Model{
         //retornando los datos obtenidos de la base
         return $doctores->result();
     }
+    //paginando los doctores 
+    public function pagiD($limit){
+        $pagd= $this->db->get('doctor');
+    }
+    //tomando especialidades 
+    public function especialidades(){
+        $especialidad = $this->db->get('especialidad');
+        return $especialidad->result();
+    }
 
     //tomando los pacientes 
     public function pacientes(){

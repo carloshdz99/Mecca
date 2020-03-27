@@ -1,8 +1,8 @@
 <?php
   //este formulario va a imprimir la informacion a actualizar
-  function docsA($en){
+  function docsA($en,$especialidad){
     //retornando el formulario de los doctores
-    return '<form action="'.base_url('Doctores/ActualizarDocs').'" method="post" id="form">
+    $docs= '<form action="'.base_url('Doctores/ActualizarDocs').'" method="post" id="form">
     <div class="form-group">
        <input type="text" readonly class="form-control col-sm-2" name="id" value="'.$en["ID_DOCTOR"].'">
     </div>
@@ -27,27 +27,28 @@
     <div class="form-group col">
     <label for="est">Estado</label>
     <select name="est" id="est" class="form-control col-sm-4">
-      <option>Activo</option>
-      <option>Inactivo</option>
+         <option>Activo</option>
+         <option>Inactivo</option>
     </select>
   </div>
 
   <div class="form-group col">
     <label for="espe">Especialidad</label>
-    <select class="form-control col-sm-6" id="espe" name="espe">
-      <option>Cirugia</option>
-      <option>Medicina General</option>
-    </select>
+    <select class="form-control col-sm-6" id="espe" name="espe">';
+    foreach($especialidad as $esp){
+      $docs .='<option>'.$esp->NOMBRE_ESPECIALIDAD.'</option>';
+    }
+   $docs.=' </select>
   </div>
   </div>
   <br>
-  
     <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Actualizar">
     <a href="'.base_url().'Doctores/mostrarD" class="btn btn-primary" id="cancelar" name="cancelar" Value="Cancelar">Cancelar</a>
     </form>
     <br>
     <p class="text-danger">* Todos los campos son requeridos</p>'
     ;
+    return $docs;
 }
 
   function paciA($pa){

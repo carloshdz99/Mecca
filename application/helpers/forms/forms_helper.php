@@ -1,40 +1,32 @@
 <?php
   //funcion que imprime el formulario de los doctores
-  function docs(){
+  function docs($especialidad){
       //retornando el formulario de los doctores
-      return '<form action="'.base_url('Doctores/Registrar').'" method="post" id="form">
+      $docs= '<form action="'.base_url('Doctores/Registrar').'" id="form">
       <div class="form-group">
        <label for="nom">Nombres: </label>
        <input type="text" class="form-control" id="nom" name="nom" placeholder="Ingrese nombres">
-        <!-- mensaje de validacion -->
-        <div class="invalid-feedback">
-          Ingrese los dos nombres 
-        </div>
       </div>
-    
       <div class="form-group">
        <label for="ape">Apellidos: </label>
        <input type="text" class="form-control" id="ape" name="ape" placeholder="Ingrese apellidos">
-        <!-- mensaje de validacion -->
-        <div class="invalid-feedback">
-          Ingrese los dos apellidos
-        </div>
       </div>
       <div class="row">
       <div class="form-group col">
       <label for="est">Estado</label>
       <select name="est" id="est" class="form-control col-sm-4">
-        <option>Activo</option>
-        <option>Inactivo</option>
-      </select>
+         <option>Activo</option>
+         <option>Inactivo</option>
+     </select>
     </div>
   
     <div class="form-group col">
       <label for="espe">Especialidad</label>
-      <select class="form-control col-sm-6" id="espe" name="espe">
-        <option>Cirugia</option>
-        <option>Medicina General</option>
-      </select>
+      <select class="form-control col-sm-6" id="espe" name="espe">';
+      foreach($especialidad as $esp){
+        $docs .='<option>'.$esp->NOMBRE_ESPECIALIDAD.'</option>';
+      }
+     $docs.=' </select>
     </div>
     </div>
     <br>
@@ -45,18 +37,19 @@
       <br>
       <p class="text-danger">* Todos los campos son requeridos</p>'
       ;
+      return $docs;
   }
 
   //funcion que devuelve el formulario de personas
   function personas(){
-      return '<!-- formulario para ingreso de personal -->
+      return '
+      <!-- formulario para ingreso de personal -->
       <form action="'.base_url('Usuarios/Registrar').'" method="post" id="form">
         <div class="form-group">
             <label for="nom">Nombres: </label>
             <input type="text" class="form-control" name="nom" id="nom" placeholder="Ingrese nombres">
             <!-- mensaje de validacion -->
             <div class="invalid-feedback">
-                Ingrese minimo un nombre
             </div>
           </div>
         <div class="form-group">
@@ -91,7 +84,7 @@
              Debe contener minimo 8 digitos y maximo 10
         </div>
         </div> 
-        <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
+        <input type="submit" class="btn btn-primary" id="submit" name="enviar" Value="Guardar Cambios">
         <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">                  
       </form>';
   }

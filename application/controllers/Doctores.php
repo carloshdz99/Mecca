@@ -37,9 +37,9 @@ class Doctores extends CI_Controller {
 
 // funcion que carga la vistas
 public function doctores(){
-
+      $espe=$this->Mostrar->especialidades();
       //tomando el formulario que devuelve la funcion
-      $form = docs();
+      $form = docs($espe);
       //tomando la estructura de la pagina
       /*Se evalua si por variable de sesion desde la base si el usuario es administrador entonces
         imprimira el helper del menu completo*/
@@ -52,17 +52,15 @@ public function doctores(){
             $data['estructura']= menuarchivo($form,'','Ingresando Doctores');
           }
       $this->load->view('administrador/doctores.php',$data);
-  
-   
-  
 }
 ///////////////////////////////////////////////////////////
 
 // funcion para el registro de doctores en la base de datos
 public function Registrar(){
+  $espe=$this->Mostrar->especialidades();
     //variable que posee el formulario de la pagina
     //tomando el formulario que devuelve la funcion
-    $form = docs();
+    $form = docs($espe);
     //obteniendo los datos igresados en cada input
     $nombre = $this->input->post('nom');   
     $apellido = $this->input->post('ape');
@@ -76,7 +74,7 @@ public function Registrar(){
     $campos = doctoresVal();
     $this->form_validation->set_rules($campos);
     if($this->form_validation->run($campos) ==FALSE){
-        $msg='<div class="alert alert-danger">Error en los datos del llenado</div>';
+        $msg='<div class="alert alert-danger">Error en los campos</div>';
         if($this->session->userdata('tipo')=='admin'){
           $data['estructura'] = menu($form,$msg,'Ingresando doctores');
         }
@@ -128,7 +126,7 @@ public function Registrar(){
 
 //funcion que muestra los doctores registrados en la base de datos
   public function mostrarD(){
-  $doctores = $this->Mostrar->Docs();
+    $doctores = $this->Mostrar->Docs();
   $lista = verDocs($doctores);
       if($this->session->userdata('tipo')=='admin'){
         $data['estructura'] = menu($lista,'','Lista de Doctores');
@@ -137,16 +135,16 @@ public function Registrar(){
         $data['estructura'] = menuarchivo($lista,'','Lista de Doctores');
       }
   //cargando la vista con los doctores registrados en la base
-  $this->load->view('administrador/verDocs.php',$data);}
-  
-
-
+  $this->load->view('administrador/verDocs.php',$data);
+}
+/////////////////////////////////////////////////////////////////////////  
 
   //funcion que toma los valores del docto a actualizar
   public function editarDocs($id){
+    $espe=$this->Mostrar->especialidades();
     $datos= $this->Actualizar->tomarDocs($id);
     //tomando el formulario que devuelve la funcion
-    $form = docsA($datos);
+    $form = docsA($datos,$espe);
 
         if($this->session->userdata('tipo')=='admin'){
           $data['estructura'] = menu($form,'','Actualizar Doctor');

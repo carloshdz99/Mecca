@@ -43,7 +43,6 @@ function __construct(){
                $numero2++;
            }   
             $id = $li.$lf.$numero1.$numero2.$num1.$num2;
-           //retornando el id del doctor
            return $id;
        }
        else{
@@ -51,7 +50,6 @@ function __construct(){
                 $numero2++;
            } 
            $id = $li.$lf.$numero2.$num1.$num2;
-           //retornando el id del doctor
            return $id;
        }
    }
