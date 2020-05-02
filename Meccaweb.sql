@@ -9,21 +9,21 @@ CREATE TABLE `doctor` (
   `APELLIDO_DOCTOR` varchar(150) NOT NULL,
   `ESTADO` bit(1) NOT NULL,
   `ESPECIALIDAD` varchar(50) DEFAULT NULL,
-  `ID_DOCTOR` char(10) NOT NULL,
+  `ID_DOCTOR` char(4) NOT NULL,
   PRIMARY KEY (`ID_DOCTOR`)
 ) ;
 
 CREATE TABLE `expediente` (
-  `IDEXPEDIENTE` varchar(15) NOT NULL,
+  `IDEXPEDIENTE` varchar(6) NOT NULL,
   `NOMBRE_PACIENTE` varchar(150) NOT NULL,
   `APELLIDO_PACIENTE` varchar(150) NOT NULL,
-  `TELEFONO` int(11) NOT NULL,
+  `TELEFONO` varchar(8) NOT NULL,
   `SEXO` varchar(10) NOT NULL,
   `FECHA_NACIEMIENTO` date NOT NULL,
   PRIMARY KEY (`IDEXPEDIENTE`)
 ) ;
 CREATE TABLE `cita` (
-  `ID_CITA` varchar(15) NOT NULL,
+  `ID_CITA` varchar(6) NOT NULL,
   `ID_HORARIO` varchar(15) DEFAULT NULL,
   `IDEXPEDIENTE` varchar(15) DEFAULT NULL,
   `DOCTOR` varchar(150) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE `doctor_especialidad` (
 
 
 CREATE TABLE `doctor_horario` (
-  `ID_HORARIO` varchar(15) NOT NULL,
+  `ID_HORARIO` int NOT NULL AUTO_INCREMENT,
   `ID_DOCTOR` varchar(10) NOT NULL,
   PRIMARY KEY (`ID_HORARIO`),
   KEY `FK_DOCTOR_HORARIO2` (`ID_DOCTOR`),

@@ -54,9 +54,10 @@ function __construct(){
        }
    }
    //funcion que genera los id de usuarios
-   function id_usuarios($tipo,$nombre,$db){
+   function id_usuarios($tipo,$nombre,$db,$apellido){
        $li=substr($tipo,0,2);
-       $lf=substr($nombre,0,2);
+       $lf=substr($nombre,0,1);
+       $ll=substr($apellido,0,1);
        $usuarios=count($db);
        $contador=0;
        $contador2=1;
@@ -65,15 +66,16 @@ function __construct(){
                $contador++;
                $contador2++;
            }
-           $id=$li.$lf.$contador.$contador2;
+           $id=$li.$lf.$contador.$contador2.$ll;
            return $id;
        }else{
            for($i=0;$i<$usuarios;$i++){
                $contador2++;
            }
-           $id=$li.$lf.$contador2;
+           $id=$li.$lf.$contador2.$ll;
        }
    }
+
    
 }
 ?>

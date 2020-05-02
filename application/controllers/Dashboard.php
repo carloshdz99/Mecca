@@ -23,27 +23,27 @@ class  Dashboard extends CI_Controller {
         }
     }
     //muestra los doctores que esten activos en la base de datos
-    public function Dashboard(){
-
+    public function Dashboard($paginacion=1){
+        $inicio = ($paginacion-1)*6;
+        $fin = ($paginacion-1)+6;
         //toma todos los doctores de la base
-        $doctores = $this->Mostrar->Docs();
+        $doctores = $this->Mostrar->docsactivos($inicio,$fin);
+        $pdoctores =$this->Mostrar->docsa();
         //y los manda como parametro al helper para que los imprima
-        $docsA = doctoresActivos($doctores);
-    //    $data['estructura'] = menu($docsA,'','Doctores Activos');
+        $docsA = doctoresActivos($doctores,$pdoctores);
+
         /*Se evalua si por variable de sesion desde la base si el usuario es administrador entonces
         imprimira el helper del menu completo*/
        if($this->session->userdata('tipo')=='admin'){     
             //enviando estructura a la vista
             $data['estructura'] = menu($docsA,'','Doctores Activos');
         }
-
         /*Si el usuario es de acihvo entonces imprimira un helper de un menu donde no va el ingrsar usuarios
         ni personalizar el sitio web*/
         elseif($this->session->userdata('tipo')=='archivo'){
             //enviando estructura a la vista
             $data['estructura'] = menuarchivo($docsA,'','Doctores Activos');
         }
-        
         $this->load->view('administrador/dashboard.php',$data);
     }
 

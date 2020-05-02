@@ -7,6 +7,7 @@ class Insertando extends CI_Model{
 
     // funcion que usa sql para insertan en la tabla doctores
     public function InsertandoDocs($datos){
+        // arreglo con los campos a llenar
        if(!$this->db->insert('doctor',$datos)){
            return false;
        }else{

@@ -2,7 +2,7 @@
   //funcion que imprime el formulario de los doctores
   function docs($especialidad){
       //retornando el formulario de los doctores
-      $docs= '<form action="'.base_url('Doctores/Registrar').'" id="form">
+      $docs= '<form action="'.base_url('Doctores/Registrar').'" method="post" id="form">
       <div class="form-group">
        <label for="nom">Nombres: </label>
        <input type="text" class="form-control" id="nom" name="nom" placeholder="Ingrese nombres">
@@ -43,76 +43,68 @@
   //funcion que devuelve el formulario de personas
   function personas(){
       return '
-      <!-- formulario para ingreso de personal -->
       <form action="'.base_url('Usuarios/Registrar').'" method="post" id="form">
-        <div class="form-group">
+      <div class="row">
+        <div class="form-group col">
             <label for="nom">Nombres: </label>
-            <input type="text" class="form-control" name="nom" id="nom" placeholder="Ingrese nombres">
-            <!-- mensaje de validacion -->
-            <div class="invalid-feedback">
-            </div>
+            <input type="text" class="form-control col-sm-8" name="nom" id="nom" placeholder="Ingrese nombres">
           </div>
-        <div class="form-group">
+        <div class="form-group col">
             <label for="ape">Apellidos: </label>
-            <input type="text" class="form-control" name="ape" id="ape" placeholder="Ingrese apellidos">
-            <!-- mensaje de validacion -->
-            <div class="invalid-feedback">
-                Ingrese minimo un apellido
-            </div>
+            <input type="text" class="form-control col-sm-8" name="ape" id="ape" placeholder="Ingrese apellidos">
         </div>  
+      </div>
+ 
         <div class="form-group">
           <label for="email">Correo electronico</label>
-          <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
+          <input type="email" class="form-control col-sm-4" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
           <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie mas.</small>
-          <!-- mensaje de validacion -->
-          <div class="invalid-feedback">
-            Ingrese un corredo valido
         </div>
         <div class="form-group">
             <label>Tipo de usuario</label>
-            <select name="tipo" id="tipo" class="form-control">
+            <select name="tipo" id="tipo" class="form-control col-sm-2">
                 <option value="admin">Administrador</option>
                 <option value="archivo">Archivador</option>
             </select>
         </div>
-        </div>
+  
         <div class="form-group">
           <label for="contra">Contraseña</label>
-          <input type="password" class="form-control" name="password" id="contra" placeholder="Ingrese contraseña">
-          <!-- mensaje de validacion -->
-          <div class="invalid-feedback">
-             Debe contener minimo 8 digitos y maximo 10
-        </div>
+          <input type="password" class="form-control col-sm-4" name="password" id="contra" placeholder="Ingrese contraseña">
         </div> 
         <input type="submit" class="btn btn-primary" id="submit" name="enviar" Value="Guardar Cambios">
         <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">                  
-      </form>';
+      </form>
+      <p class="text-danger">* Todos los campos son requeridos</p>';
   }
 
   // retorna el formulario de los pacientes
   function pacientes(){
       return '<form action="'.base_url('Pacientes/Registrar').'" method="post" id="form">
-      <div class="form-group">
-          <label for="nom">Nombres:</label>
-          <input type="text" name="nom" id="nom" class="form-control" placeholder="Ingrese Nombres">
-      </div>
-      <div class="form-group">
-          <label for="nom">Apellidos:</label>
-          <input type="text" name="ape" id="ape" class="form-control" placeholder="Ingrese Apellidos">
-      </div>
       <div class="row">
-          <div class="col">
-              <label for="fech">Fecha de naciemiento:</label>
-              <input type="datetime" name="fecha" class="form-control" id="fech" placeholder="yyyy/mm/dd">
+      <div class="form-group col">
+          <label for="nom">Nombres:</label>
+          <input type="text" name="nom" id="nom" class="form-control col-sm-8" placeholder="Ingrese Nombres">
+          <small id="nom" class="form-text text-muted">ej: Josue Samuel</small>
+      </div>
+      <div class="form-group col">
+          <label for="nom">Apellidos:</label>
+          <input type="text" name="ape" id="ape" class="form-control col-sm-8" placeholder="Ingrese Apellidos">
+          <small id="ape" class="form-text text-muted">ej: Rogriguez Tobias</small>
+      </div>
+      </div>
+          <div class="form-group">
+              <label for="fech">Fecha de nacimiento:</label>
+              <input type="datetime" name="fecha" class="form-control col-sm-2" id="fech" placeholder="Año - Mes - Dia">
+              <small id="fech" class="form-text text-muted">ej: 1999-10-05</small>
           </div>
-          <div class="col">
+          <div class="form-group">
             <label for="sexo">Sexo:</label>
-            <select name="sexo" id="sexo" class="form-control">
-                <option value="man">Hombre</option>
-                <option value="woman">Mujer</option>
+            <select name="sexo" id="sexo" class="form-control col-sm-2">
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
             </select>
           </div>
-      </div>
       <div class="row">
           <div class="col">
               <label for="fech">Numero de telefono:</label>
@@ -122,14 +114,15 @@
       <br>
       <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
       <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">   
-     </form>';
+     </form>
+     <p class="text-danger">* Todos los campos son requeridos</p>';
    }
 
    function citas($doctores,$horario,$paciente){
     $form='<form action="'.base_url('Citas/Registrar').'" method="post">
     <div class="form-group">
         <label for="horario">Horario</label>
-        <select class="form-control" id="horario" name="horario">';
+        <select class="form-control col-sm-8" id="horario" name="horario">';
     foreach($horario as $hor){
       $form.= '<option>'.$hor->HORA.'</option>';
     }
@@ -160,7 +153,8 @@
     <br>
     <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
     <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
-    </form>';
+    </form>
+    <p class="text-danger">* Todos los campos son requeridos</p>';
    //formulario de citas
     return $form;
    }

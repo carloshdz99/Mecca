@@ -13,9 +13,35 @@ class Mostrar extends CI_Model{
         //retornando los datos obtenidos de la base
         return $doctores->result();
     }
-    //paginando los doctores 
-    public function pagiD($limit){
-        $pagd= $this->db->get('doctor');
+    public function pdocs($inicio, $fin){
+        //tomando los datos de la base doctor
+        $doctores= $this->db->get('doctor',$fin,$inicio);
+        //retornando los datos obtenidos de la base
+        return $doctores->result();
+    }
+    //tomando los doctores por su nombre y apellido
+    public function docexis($nom,$ape){
+        $dato = $this->db->get_where('doctor',array("NOMBRE_DOCTOR"=>$nom, "APELLIDO_DOCTOR"=>$ape));
+        return $dato->row_array();
+    }
+    public function docsa(){
+        $dato = $this->db->get_where('doctor',array("ESTADO"=>1,));
+        return $dato->result();
+    }
+    //tomando doctores que esten activos
+    public function docsactivos($inicio, $fin){
+        $dato = $this->db->get_where('doctor',array("ESTADO"=>1,),$fin,$inicio);
+        return $dato->result();
+    }
+    //tomando usuarios por sus datos
+    public function userexis($nom, $ape, $email){
+        $dato = $this->db->get_where('usuario',array("NOMBRE_USUARIO"=>$nom, "APELLIDO_USUARIO"=>$ape, "CORREO"=>$email));
+        return $dato->row_array();
+    }
+    //tomando usuarios cuando se pase el id
+    public function userac($id){
+        $dato = $this->db->get_where('usuario',array("ID_USUARIO"=>$id));
+        return $dato->row_array();
     }
     //tomando especialidades 
     public function especialidades(){
@@ -26,6 +52,15 @@ class Mostrar extends CI_Model{
     //tomando los pacientes 
     public function pacientes(){
         $pacientes= $this->db->get('expediente');
+        return $pacientes->result();
+    }
+    public function pacientesp($inicio, $fin){
+        $pacientes= $this->db->get('expediente',$fin,$inicio);
+        return $pacientes->result();
+    }
+    //tomando paciente para comprobar si este existe
+    public function pacientese($non, $ape, $telefono, $sexo){
+        $pacientes= $this->db->get_where('expediente',array("NOMBRE_PACIENTE"=>$non,"APELLIDO_PACIENTE"=>$ape,"TELEFONO"=>$telefono,"SEXO"=>$sexo));
         return $pacientes->result();
     }
     //tomando el id del expediente
@@ -47,6 +82,10 @@ class Mostrar extends CI_Model{
     //funcion que jala los usuarios
     public function users(){
         $usuarios=$this->db->get('usuario');
+        return $usuarios->result();
+    }
+    public function usersp($inicio, $fin){
+        $usuarios=$this->db->get('usuario',$fin,$inicio);
         return $usuarios->result();
     }
 
