@@ -36,5 +36,6 @@ class Actualizar extends CI_Model{
             return true;
         }
     }
+    
 
 }

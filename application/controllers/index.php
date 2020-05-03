@@ -6,6 +6,7 @@ class index extends CI_Controller {
 public function __construct()
 {
     parent:: __construct();
+    $this->load->helper('forms/forms');
     
     
 }
@@ -27,7 +28,9 @@ public function paciente(){
 }
 
 public function sitioPublico(){
-    $this->load->view('frontpage/index.php');
+    
+    $data['estructura']=inicioEspañol();
+    $this->load->view('frontpage/index',$data);
 }
 
 public function verDocs(){

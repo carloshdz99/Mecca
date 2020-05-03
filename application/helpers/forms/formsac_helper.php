@@ -87,4 +87,7 @@
       <a href="'.base_url().'Pacientes/verPacie" class="btn btn-primary" id="boton" name="cancelar">Cancelar</a>   
      </form>';
   }
+
+
+ 
 ?>

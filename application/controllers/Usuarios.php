@@ -40,7 +40,7 @@ class Usuarios extends CI_Controller {
         $contraseña=$this->input->post('password');
 
         $db=$this->Mostrar->users();
-        $id=$this->Generador->id_doctor($tipo_usuario,$nombre,$db);
+        $id=$this->Generador->id_usuarios($tipo_usuario,$nombre,$db);
 
         $datos = array(
             'ID_USUARIO'=>$id,
@@ -66,5 +66,5 @@ class Usuarios extends CI_Controller {
          $this->load->view('administrador/personal.php',$data);
         }
         
-    }
+    }  
 }
