@@ -543,7 +543,7 @@
 
 
 
-            <form action="'.base_url('Inicio/cita').'" method="post" role="form" class="contactForm">
+            <!--form action="'.base_url('Inicio/cita').'" method="post" role="form" class="contactForm">
               <div class="form-group">
                 <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Nombre" data-rule="minlen:4" data-msg="Ingrese al menos 4 caracteres" required="" />
                 <div class="validation"></div>
@@ -573,7 +573,44 @@
               <div class="form-action">
                 <button type="submit" class="btn btn-form">Enviar</button>
               </div>
-            </form>
+            </form-->
+
+            <div role="form" class="contactForm">
+              <div class="form-group">
+                <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Nombre" data-rule="minlen:4" data-msg="Ingrese al menos 4 caracteres" required="" />
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Correo electrónico" data-rule="email" data-msg="Ingrese un correo electrónico válido" required=""/>
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control br-radius-zero" name="asunto" id="asunto" placeholder="Asunto" data-rule="minlen:4" data-msg="Ingrese un asunto de al menos 8 caracteres" required=""/>
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control br-radius-zero" name="telefono" id="telefono" placeholder="Telefono" data-rule="minlen:4" data-msg="" required=""/>
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control br-radius-zero" name="fecha" id="fecha" placeholder="Fecha de nacimiento" data-rule="minlen:4" data-msg="" required=""/>
+                <div class="validation"></div>
+              </div>
+               <div class="form-group">
+                <textarea class="form-control br-radius-zero" name="comentario" id="comentario" rows="5" data-rule="required" data-msg="Porfavor escribe algo para nosotros" placeholder="Comentario" required=""></textarea>
+                <div class="validation"></div>
+              </div> 
+
+              <input type="hidden" name="lenguage" id="lenguage" value="1" />
+
+              <div class="form-action">
+                <button class="btn btn-form" id="enviar">Enviar</button>
+              </div>
+              <br/>
+              <div class="form-action" >
+                <div id="inforesults" class="alert alert-info"></div>
+              </div>
+            </div>
 
 
 
@@ -981,7 +1018,7 @@
 
 
 
-            <form action="'.base_url('Inicio/cita').'" method="post" role="form" class="contactForm">
+            <!--form action="'.base_url('Inicio/cita').'" method="post" role="form" class="contactForm">
               <div class="form-group">
                 <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Name" data-rule="minlen:4" data-msg="Ingrese al menos 4 caracteres" required="" />
                 <div class="validation"></div>
@@ -1011,7 +1048,44 @@
               <div class="form-action">
                 <button type="submit" class="btn btn-form">Send</button>
               </div>
-            </form>
+            </form-->
+
+            <div role="form" class="contactForm">
+              <div class="form-group">
+                <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Name" data-rule="minlen:4" data-msg="Ingrese al menos 4 caracteres" required="" />
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Email" data-rule="email" data-msg="Ingrese un correo electrónico válido" required=""/>
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control br-radius-zero" name="asunto" id="asunto" placeholder="Affair" data-rule="minlen:4" data-msg="Ingrese un asunto de al menos 8 caracteres" required=""/>
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control br-radius-zero" name="telefono" id="telefono" placeholder="Fhone" data-rule="minlen:4" data-msg="" required=""/>
+                <div class="validation"></div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control br-radius-zero" name="fecha" id="fecha" placeholder="Birthdate" data-rule="minlen:4" data-msg="" required=""/>
+                <div class="validation"></div>
+              </div>
+               <div class="form-group">
+                <textarea class="form-control br-radius-zero" name="comentario" id="comentario" rows="5" data-rule="required" data-msg="Porfavor escribe algo para nosotros" placeholder="Commentary" required=""></textarea>
+                <div class="validation"></div>
+              </div> 
+
+              <input type="hidden" name="lenguage" id="lenguage" value="2" />
+
+              <div class="form-action">
+                <button class="btn btn-form" id="enviar">Enviar</button>
+              </div>
+              <br/>
+              <div class="form-action">
+                <div id="inforesults" class="alert alert-info"></div>
+              </div>
+            </div>
 
 
 

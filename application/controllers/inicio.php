@@ -57,7 +57,7 @@ class Inicio extends CI_Controller {
         $telefono=$this->input->post('telefono');
         $fecha=$this->input->post('fecha');
         $comentario=$this->input->post('comentario');
-
+        $lenguage = $this->input->post('lenguage');
                            
            $datos=array(
             'titulo'=>$asunto,
@@ -75,16 +75,30 @@ class Inicio extends CI_Controller {
 
            if(!$envio){
 
-            $data['msg']='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
-            $this->load->view('frontpage/index',$data);
+            //$data['msg']='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
+            //$this->load->view('frontpage/index',$data);
+              if($lenguage == 1){
+                echo 'No se pudo enviar el correo';
+              }
+              else{
+                echo 'The mail could not be sent';
+              }
+
+              
            
            }
            else{
 
-            $data['msg']='<div class="alert alert-success"> Se envio correctamente el correo</div>';
+            //$data['msg']='<div class="alert alert-success"> Se envio correctamente el correo</div>';
            
-            $this->load->view('frontpage/index',$data);
-
+            //$this->load->view('frontpage/index',$data);
+              if($lenguage == 1){
+                echo 'Se envio correctamente el correo';
+              }
+              else{
+                echo 'The mail was sent correctly';
+              }
+              
 
            }
         

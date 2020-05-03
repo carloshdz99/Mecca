@@ -121,10 +121,10 @@ class Mostrar extends CI_Model{
         $porme=$numme*100/$total;
 
         $grafh=array($porfi,$poruro,$porcar,$porci,$porme);
-
+    }
     //tomando horarios de la tabla horario
     public function horario($fecha, $hora){
-        $horario= $this->db->get_where('horario',array("HORA"=>$hora,"FECHA"=>$fecha));
+            $horario= $this->db->get_where('horario',array("HORA"=>$hora,"FECHA"=>$fecha));
         return $horario->result();
     }
     public function contarhorario(){

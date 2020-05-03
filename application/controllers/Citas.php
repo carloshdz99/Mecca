@@ -129,8 +129,8 @@ class Citas extends CI_Controller {
         $id=$this->input->post('id');
 
         $msg=$this->Validaciones->citasingreval($hora, $doctor, $paciente, $comentario, $fecha, '', 'registro');
-    
-        if($msg==){
+        
+        /*if($msg==){
 
         }
         if($this->session->userdata('tipo')=='admin'){
@@ -140,7 +140,7 @@ class Citas extends CI_Controller {
             $data['estructura'] = menuarchivo($form,'','Actualizar Cita');
         }
 
-        $this->load->view('administrador/cita.php',$data);
+        $this->load->view('administrador/cita.php',$data);*/
     }
 
 }
