@@ -121,6 +121,7 @@ class Mostrar extends CI_Model{
         $porme=$numme*100/$total;
 
         $grafh=array($porfi,$poruro,$porcar,$porci,$porme);
+    }
 
     //tomando horarios de la tabla horario
     public function horario($fecha, $hora){

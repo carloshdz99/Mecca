@@ -73,20 +73,20 @@ class Inicio extends CI_Controller {
 
            $envio=$this->frontemail->enviaremail($datos);
 
-           if(!$envio){
+          /* if(!$envio){
 
-            $data['msg']='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
+            $msg='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
             $this->load->view('frontpage/index',$data);
            
            }
            else{
 
-            $data['msg']='<div class="alert alert-success"> Se envio correctamente el correo</div>';
+            $msg='<div class="alert alert-success"> Se envio correctamente el correo</div>';
            
             $this->load->view('frontpage/index',$data);
 
 
-           }
+           }*/
         
     }
 }

@@ -67,6 +67,7 @@ class Usuarios extends CI_Controller {
         $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
         $this->load->view('administrador/personal.php',$data);
     }
+}
     
     //mostrando usuarios del sistema
     function verusers($paginacion=1){
@@ -77,12 +78,14 @@ class Usuarios extends CI_Controller {
         $lista = usuarios($usuarios,$usuariosp);
         
         $data['estructura'] = menu($lista,'','Personal');
-        
-
-    }  
 
         $this->load->view('administrador/personal.php',$data);
-    }
+        
+     
+    }  
+
+        
+    
     //funcion que elimina los usuarios
     function eliminar($id,$paginacion=1){
         $inicio = ($paginacion-1)*6;

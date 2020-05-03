@@ -19,7 +19,7 @@
   <!--banner-->
   
   <?php
-            
+            // print_r($msg);
             print_r($estructura);
         
          
