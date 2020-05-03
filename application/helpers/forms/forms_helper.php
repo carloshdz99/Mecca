@@ -118,19 +118,30 @@
      <p class="text-danger">* Todos los campos son requeridos</p>';
    }
 
-   function citas($doctores,$horario,$paciente){
+   function citas($doctores,$paciente){
     $form='<form action="'.base_url('Citas/Registrar').'" method="post">
-    <div class="form-group">
-        <label for="horario">Horario</label>
-        <select class="form-control col-sm-8" id="horario" name="horario">';
-    foreach($horario as $hor){
-      $form.= '<option>'.$hor->HORA.'</option>';
-    }
-     $form.='</select>
+
+    <div class="row">
+    <div class="col form-group">
+        <label for="horario">Hora</label>
+        <select class="form-control col-sm-4" id="horario" name="horario">
+            <option value="7:30">7:30 am</option>
+            <option value="7:30">8:30 am</option>
+            <option value="7:30">9:30 am</option>
+        </select>
     </div>
-    <div class="form-group">
+
+    <div class="col form-group">
+              <label for="fech">Fecha de cita:</label>
+              <input type="datetime" name="fecha" class="form-control col-sm-4" id="fech" placeholder="Año - Mes - Dia">
+              <small id="fech" class="form-text text-muted">ej: 1999-10-05</small>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col form-group">
       <label for="docto">Doctor</label>
-      <select class="form-control" id="docto" name="doctor">';
+      <select class="form-control col-sm-8" id="docto" name="doctor">';
     foreach($doctores as $docs){
       if($docs->ESTADO==1){
         $form.= '<option>'.$docs->NOMBRE_DOCTOR.'</option>';
@@ -138,17 +149,18 @@
     }
     $form.= ' </select>
     </div>
-    <div class="form-group">
+    <div class="col form-group">
       <label for="pac">Paciente: </label>
-      <select class="form-control" name="paciente" id="pac">';
+      <select class="form-control col-sm-8" name="paciente" id="pac">';
     foreach($paciente as $pac){
       $form.= '<option>'.$pac->NOMBRE_PACIENTE.'</option>';
     }
      $form.=' </select>
     </div>
+    </div>
     <div class="form-group">
       <label for="des">Ingrese una descripción: </label>
-      <textarea class="form-control" id="des" name="des"></textarea>
+      <textarea class="form-control col-sm-8" id="des" name="des"></textarea>
     </div>
     <br>
     <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>

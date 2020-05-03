@@ -127,4 +127,56 @@ function usuariosa($user){
       <a href="'.base_url().'Pacientes/verPacie" class="btn btn-primary" id="boton" name="cancelar">Cancelar</a>   
      </form>';
   }
+
+  function citasa($doctores, $paciente, $fecha ,$comentario,$ID){
+      $form='<form action="'.base_url('Citas/Actualizar').'" method="post">
+      <input type="text" value="'.$ID.'" name="id" style="display:none;">
+      <div class="row">
+      <div class="col form-group">
+          <label for="horario">Hora</label>
+          <select class="form-control col-sm-4" id="horario" name="horario">
+              <option value="7:30">7:30 am</option>
+              <option value="7:30">8:30 am</option>
+              <option value="7:30">9:30 am</option>
+          </select>
+      </div>
+  
+      <div class="col form-group">
+                <label for="fech">Fecha de cita:</label>
+                <input type="datetime" name="fecha" class="form-control col-sm-4" value="'.$fecha.'" id="fech" placeholder="Año - Mes - Dia">
+                <small id="fech" class="form-text text-muted">ej: 1999-10-05</small>
+      </div>
+      </div>
+  
+      <div class="row">
+      <div class="col form-group">
+        <label for="docto">Doctor</label>
+        <select class="form-control col-sm-8" id="docto" name="doctor">';
+      foreach($doctores as $docs){
+        if($docs->ESTADO==1){
+          $form.= '<option>'.$docs->NOMBRE_DOCTOR.'</option>';
+        }else{$form.='';}
+      }
+      $form.= ' </select>
+      </div>
+      <div class="col form-group">
+        <label for="pac">Paciente: </label>
+        <select class="form-control col-sm-8" name="paciente" id="pac">
+        <option>'.$paciente.'</option>';
+       $form.=' </select>
+      </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="des">Ingrese una descripción: </label>
+        <textarea class="form-control col-sm-8" id="des" name="des" readonly>'.$comentario.'</textarea>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
+      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+      </form>
+      <p class="text-danger">* Todos los campos son requeridos</p>';
+     //formulario de citas
+      return $form;
+  }
 ?>

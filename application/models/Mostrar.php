@@ -19,6 +19,10 @@ class Mostrar extends CI_Model{
         //retornando los datos obtenidos de la base
         return $doctores->result();
     }
+    public function doc($nom){
+        $dato = $this->db->get_where('doctor',array("NOMBRE_DOCTOR"=>$nom));
+        return $dato->row_array();
+    }
     //tomando los doctores por su nombre y apellido
     public function docexis($nom,$ape){
         $dato = $this->db->get_where('doctor',array("NOMBRE_DOCTOR"=>$nom, "APELLIDO_DOCTOR"=>$ape));
@@ -63,15 +67,11 @@ class Mostrar extends CI_Model{
         $pacientes= $this->db->get_where('expediente',array("NOMBRE_PACIENTE"=>$non,"APELLIDO_PACIENTE"=>$ape,"TELEFONO"=>$telefono,"SEXO"=>$sexo));
         return $pacientes->result();
     }
+
     //tomando el id del expediente
     public function idEx($nombre){
        $id=$this->db->get_where('expediente',array("NOMBRE_PACIENTE" =>$nombre));
        return $id->row_array();
-    }
-    //tomando horarios de la tabla
-    public function horario(){
-        $hora= $this->db->get('horario');
-        return $hora->result();
     }
     //tomando id de horario
     public function idHor($hora){
@@ -93,5 +93,30 @@ class Mostrar extends CI_Model{
     public function citas(){
         $citas = $this->db->get('cita');
         return $citas->result();
+    }
+
+    //tomando horarios de la tabla horario
+    public function horario($fecha, $hora){
+        $horario= $this->db->get_where('horario',array("HORA"=>$hora,"FECHA"=>$fecha));
+        return $horario->result();
+    }
+    public function contarhorario(){
+        $horario =$this->db->get('horario');
+        return $horario->result();
+    }
+    //tomando una cita
+    //funcion para actualizar citas
+    function tomarcits($id){
+        $citas= $this->db->get_where('cita',array("ID_CITA"=>$id));
+        return $citas->row_array();
+    }
+    //tomando fecha de horario
+    function obtenerfecha($id){
+        $hor=$this->db->get_where('horario',array("ID_HORARIO"=>$id));
+        return $hor->row_array();
+    }
+    function nombrepac($id){
+        $nombre= $this->db->get_where('expediente',array("IDEXPEDIENTE"=>$id));
+        return $nombre->row_array();
     }
 }

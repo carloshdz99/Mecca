@@ -40,6 +40,33 @@ class Insertando extends CI_Model{
             return true;
         }
     }
+
+    //insertando en la tabla doctor-horario
+    public function doctorhorario($datos){
+        if(!$this->db->insert('doctor_horario',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    //insertando en tabla horario
+    public function horario($datos){
+        if(!$this->db->insert('horario',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    //insertando en doctor-especialidad
+    public function doctorespecialidad($datos){
+        if(!$this->db->insert('doctor_horario',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
 
 ?>

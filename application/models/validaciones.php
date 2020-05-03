@@ -171,16 +171,92 @@ class Validaciones extends CI_Model{
             return $error;
         }
     }
+
+    function citasingreval($hora, $doctor, $paciente, $comentario,$fecha, $idp, $roa){
+        $fecha_actual= strtotime(date("y-m-d"));
+        $fecha_ingresada= strtotime($fecha);
+        if($hora==null || $doctor==null || $paciente==null || $comentario==null || $fecha==null){
+            $error= Campos();
+        }else if($this->Mostrar->horario($fecha, $hora)){
+            $error=hora();
+        }else if(!preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 || $fecha_ingresada<$fecha_actual){
+            $error= fecha();
+        }else{
+            $horarios = $this->Mostrar->contarhorario();
+            if($idp==''){
+                $idho = count($horarios) + 1;
+            }else{
+                $idho=$idp;
+            }
+            $numero1= substr($hora,0,2);
+            if($numero1 >= 12){
+                $jornada = 'Vespertino';
+            }else{
+                $jornada = 'Matutino';
+            }
+
+            //comprobando que sea registro o actualizar
+            if($roa=='registro'){
+                            // arreglo para horario
+            $horario= array(
+                "ID_HORARIO" => $idho,
+                "HORA" => $hora,
+                "JORNADA" => $jornada,
+                "FECHA" => $fecha
+            );
+            //comprobando que se este realizando el llenado de cada tabla
+            if($this->Insertando->horario($horario)){
+                $idci=rand(0,9).substr($jornada,0,2).rand(100,900);
+                $idExp = $this->Mostrar->idEx($paciente);
+                //arreglo para cita
+                 $cita= array(
+                      "ID_CITA" => $idci,
+                      "ID_HORARIO" => $idho,
+                      "IDEXPEDIENTE" => $idExp["IDEXPEDIENTE"],
+                      "DOCTOR" => $doctor,
+                      "COMENTARIO"=> $comentario
+                 );
+                if($this->Insertando->InsertandoCitas($cita)){
+                    $iddoc = $this->Mostrar->doc($doctor);
+                     //arreglo para doctor_horario
+                           $horariodoctor= array(
+                               "ID_HORARIO" => $idho,
+                               "ID_DOCTOR" => $iddoc["ID_DOCTOR"]
+                            );
+                    if($this->Insertando->doctorhorario($horariodoctor)){
+                        $error = llenadoC();
+                    }else{
+                        $error= llenadoE();
+                    }
+                }else{
+                    $error=llenadoE();
+                }
+            }else{
+                $error = llenadoE();
+            }
+            //fin del llenado
+            }else if($roa=='actualizar'){
+                //inicio de actualizar
+                $idExp = $this->Mostrar->idEx($paciente);
+                $cita= array(
+                    "ID_CITA" => $idci,
+                    "ID_HORARIO" => $idho,
+                    "IDEXPEDIENTE" => $idExp["IDEXPEDIENTE"],
+                    "DOCTOR" => $doctor,
+                    "COMENTARIO"=> $comentario
+               );
+               if(!$this->Actualizar->actualizarcita($cita)){
+                   $error= noactualizado();
+               }else{
+                   $error = actualizado();
+               }
+               //fin de actualizar
+            }
+        }
+
+        return $error;
+    }
     }
     
-    
-    
-    
-
-    
-
-    
-
-
 
 ?>

@@ -45,5 +45,14 @@ class Actualizar extends CI_Model{
             return true;
         }
     }
+    //actualizando citas
+    function actualizarcita($datos){
+        $this->db->where('ID_CITA',$datos["ID_CITA"]);
+        if(!$this->db->update($datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 }

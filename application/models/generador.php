@@ -73,6 +73,7 @@ function __construct(){
                $contador2++;
            }
            $id=$li.$lf.$contador2.$ll;
+           return $id;
        }
    }
 

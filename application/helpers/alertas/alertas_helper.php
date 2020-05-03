@@ -60,3 +60,8 @@ function fecha(){
     $msg = '<div class="alert alert-danger">Debe ingresa una fecha correcta</div>';
     return $msg;
 }
+//funcion horarios
+function hora(){
+    $msg= '<div class="alert alert-danger">Ya existe una cita para la fecha y hora seleccionada</div>';
+    return $msg;
+}
