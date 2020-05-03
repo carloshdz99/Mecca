@@ -22,7 +22,8 @@
 
 <body>
      <!-- estructura de la pagina -->
-     <?php print_r($estructura); ?>
+     <?php print_r($estructura);
+      ?>
      <!--fin de la estructura-->
 
 

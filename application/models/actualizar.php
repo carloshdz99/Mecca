@@ -36,6 +36,27 @@ class Actualizar extends CI_Model{
             return true;
         }
     }
+
     
+
+    //funcion que actualizar usuarios
+    function actualizarusers($datos){
+        $this->db->where('ID_USUARIO',$datos['ID_USUARIO']);
+        if(!$this->db->update('usuario',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //actualizando citas
+    function actualizarcita($datos){
+        $this->db->where('ID_CITA',$datos["ID_CITA"]);
+        if(!$this->db->update($datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 
 }

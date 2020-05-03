@@ -26,10 +26,11 @@
          ?>
 
   <script src="..\..\..\mecca\estilos\front\js\jquery.min.js"></script>
-  <script src="..\..\..\mecca\estilos\front\js\jquery.easing.min.js"></script>
+  <script src="<?php echo base_url('estilos\front\js\jquery.easing.min.js') ?>"></script>
   <script src="..\..\..\mecca\estilos\front\js\bootstrap.min.js"></script>
   <script src="..\..\..\mecca\estilos\front\js\custom.js"></script>
-  <script src="..\..\..\mecca\estilos\front\js\contactform\contactform.js"></script>
+  <script src="<?php echo base_url('estilos\front\contactform\contactform.js') ?>"></script>
+
 
 </body>
 

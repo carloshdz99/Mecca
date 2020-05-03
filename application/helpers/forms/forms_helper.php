@@ -1,40 +1,32 @@
 <?php
   //funcion que imprime el formulario de los doctores
-  function docs(){
+  function docs($especialidad){
       //retornando el formulario de los doctores
-      return '<form action="'.base_url('Doctores/Registrar').'" method="post" id="form">
+      $docs= '<form action="'.base_url('Doctores/Registrar').'" method="post" id="form">
       <div class="form-group">
        <label for="nom">Nombres: </label>
        <input type="text" class="form-control" id="nom" name="nom" placeholder="Ingrese nombres">
-        <!-- mensaje de validacion -->
-        <div class="invalid-feedback">
-          Ingrese los dos nombres 
-        </div>
       </div>
-    
       <div class="form-group">
        <label for="ape">Apellidos: </label>
        <input type="text" class="form-control" id="ape" name="ape" placeholder="Ingrese apellidos">
-        <!-- mensaje de validacion -->
-        <div class="invalid-feedback">
-          Ingrese los dos apellidos
-        </div>
       </div>
       <div class="row">
       <div class="form-group col">
       <label for="est">Estado</label>
       <select name="est" id="est" class="form-control col-sm-4">
-        <option>Activo</option>
-        <option>Inactivo</option>
-      </select>
+         <option>Activo</option>
+         <option>Inactivo</option>
+     </select>
     </div>
   
     <div class="form-group col">
       <label for="espe">Especialidad</label>
-      <select class="form-control col-sm-6" id="espe" name="espe">
-        <option>Cirugia</option>
-        <option>Medicina General</option>
-      </select>
+      <select class="form-control col-sm-6" id="espe" name="espe">';
+      foreach($especialidad as $esp){
+        $docs .='<option>'.$esp->NOMBRE_ESPECIALIDAD.'</option>';
+      }
+     $docs.=' </select>
     </div>
     </div>
     <br>
@@ -45,81 +37,74 @@
       <br>
       <p class="text-danger">* Todos los campos son requeridos</p>'
       ;
+      return $docs;
   }
 
   //funcion que devuelve el formulario de personas
   function personas(){
-      return '<!-- formulario para ingreso de personal -->
+      return '
       <form action="'.base_url('Usuarios/Registrar').'" method="post" id="form">
-        <div class="form-group">
+      <div class="row">
+        <div class="form-group col">
             <label for="nom">Nombres: </label>
-            <input type="text" class="form-control" name="nom" id="nom" placeholder="Ingrese nombres">
-            <!-- mensaje de validacion -->
-            <div class="invalid-feedback">
-                Ingrese minimo un nombre
-            </div>
+            <input type="text" class="form-control col-sm-8" name="nom" id="nom" placeholder="Ingrese nombres">
           </div>
-        <div class="form-group">
+        <div class="form-group col">
             <label for="ape">Apellidos: </label>
-            <input type="text" class="form-control" name="ape" id="ape" placeholder="Ingrese apellidos">
-            <!-- mensaje de validacion -->
-            <div class="invalid-feedback">
-                Ingrese minimo un apellido
-            </div>
+            <input type="text" class="form-control col-sm-8" name="ape" id="ape" placeholder="Ingrese apellidos">
         </div>  
+      </div>
+ 
         <div class="form-group">
           <label for="email">Correo electronico</label>
-          <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
+          <input type="email" class="form-control col-sm-4" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
           <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie mas.</small>
-          <!-- mensaje de validacion -->
-          <div class="invalid-feedback">
-            Ingrese un corredo valido
         </div>
         <div class="form-group">
             <label>Tipo de usuario</label>
-            <select name="tipo" id="tipo" class="form-control">
+            <select name="tipo" id="tipo" class="form-control col-sm-2">
                 <option value="admin">Administrador</option>
                 <option value="archivo">Archivador</option>
             </select>
         </div>
-        </div>
+  
         <div class="form-group">
           <label for="contra">Contraseña</label>
-          <input type="password" class="form-control" name="password" id="contra" placeholder="Ingrese contraseña">
-          <!-- mensaje de validacion -->
-          <div class="invalid-feedback">
-             Debe contener minimo 8 digitos y maximo 10
-        </div>
+          <input type="password" class="form-control col-sm-4" name="password" id="contra" placeholder="Ingrese contraseña">
         </div> 
-        <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
+        <input type="submit" class="btn btn-primary" id="submit" name="enviar" Value="Guardar Cambios">
         <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">                  
-      </form>';
+      </form>
+      <p class="text-danger">* Todos los campos son requeridos</p>';
   }
 
   // retorna el formulario de los pacientes
   function pacientes(){
       return '<form action="'.base_url('Pacientes/Registrar').'" method="post" id="form">
-      <div class="form-group">
-          <label for="nom">Nombres:</label>
-          <input type="text" name="nom" id="nom" class="form-control" placeholder="Ingrese Nombres">
-      </div>
-      <div class="form-group">
-          <label for="nom">Apellidos:</label>
-          <input type="text" name="ape" id="ape" class="form-control" placeholder="Ingrese Apellidos">
-      </div>
       <div class="row">
-          <div class="col">
-              <label for="fech">Fecha de naciemiento:</label>
-              <input type="datetime" name="fecha" class="form-control" id="fech" placeholder="yyyy/mm/dd">
+      <div class="form-group col">
+          <label for="nom">Nombres:</label>
+          <input type="text" name="nom" id="nom" class="form-control col-sm-8" placeholder="Ingrese Nombres">
+          <small id="nom" class="form-text text-muted">ej: Josue Samuel</small>
+      </div>
+      <div class="form-group col">
+          <label for="nom">Apellidos:</label>
+          <input type="text" name="ape" id="ape" class="form-control col-sm-8" placeholder="Ingrese Apellidos">
+          <small id="ape" class="form-text text-muted">ej: Rogriguez Tobias</small>
+      </div>
+      </div>
+          <div class="form-group">
+              <label for="fech">Fecha de nacimiento:</label>
+              <input type="datetime" name="fecha" class="form-control col-sm-2" id="fech" placeholder="Año - Mes - Dia">
+              <small id="fech" class="form-text text-muted">ej: 1999-10-05</small>
           </div>
-          <div class="col">
+          <div class="form-group">
             <label for="sexo">Sexo:</label>
-            <select name="sexo" id="sexo" class="form-control">
-                <option value="man">Hombre</option>
-                <option value="woman">Mujer</option>
+            <select name="sexo" id="sexo" class="form-control col-sm-2">
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
             </select>
           </div>
-      </div>
       <div class="row">
           <div class="col">
               <label for="fech">Numero de telefono:</label>
@@ -129,22 +114,34 @@
       <br>
       <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
       <input type="button" class="btn btn-primary" id="boton" name="cancelar" Value="Cancelar">   
-     </form>';
+     </form>
+     <p class="text-danger">* Todos los campos son requeridos</p>';
    }
 
-   function citas($doctores,$horario,$paciente){
+   function citas($doctores,$paciente){
     $form='<form action="'.base_url('Citas/Registrar').'" method="post">
-    <div class="form-group">
-        <label for="horario">Horario</label>
-        <select class="form-control" id="horario" name="horario">';
-    foreach($horario as $hor){
-      $form.= '<option>'.$hor->HORA.'</option>';
-    }
-     $form.='</select>
+
+    <div class="row">
+    <div class="col form-group">
+        <label for="horario">Hora</label>
+        <select class="form-control col-sm-4" id="horario" name="horario">
+            <option value="7:30">7:30 am</option>
+            <option value="7:30">8:30 am</option>
+            <option value="7:30">9:30 am</option>
+        </select>
     </div>
-    <div class="form-group">
+
+    <div class="col form-group">
+              <label for="fech">Fecha de cita:</label>
+              <input type="datetime" name="fecha" class="form-control col-sm-4" id="fech" placeholder="Año - Mes - Dia">
+              <small id="fech" class="form-text text-muted">ej: 1999-10-05</small>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col form-group">
       <label for="docto">Doctor</label>
-      <select class="form-control" id="docto" name="doctor">';
+      <select class="form-control col-sm-8" id="docto" name="doctor">';
     foreach($doctores as $docs){
       if($docs->ESTADO==1){
         $form.= '<option>'.$docs->NOMBRE_DOCTOR.'</option>';
@@ -152,22 +149,24 @@
     }
     $form.= ' </select>
     </div>
-    <div class="form-group">
+    <div class="col form-group">
       <label for="pac">Paciente: </label>
-      <select class="form-control" name="paciente" id="pac">';
+      <select class="form-control col-sm-8" name="paciente" id="pac">';
     foreach($paciente as $pac){
       $form.= '<option>'.$pac->NOMBRE_PACIENTE.'</option>';
     }
      $form.=' </select>
     </div>
+    </div>
     <div class="form-group">
       <label for="des">Ingrese una descripción: </label>
-      <textarea class="form-control" id="des" name="des"></textarea>
+      <textarea class="form-control col-sm-8" id="des" name="des"></textarea>
     </div>
     <br>
     <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
     <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
-    </form>';
+    </form>
+    <p class="text-danger">* Todos los campos son requeridos</p>';
    //formulario de citas
     return $form;
    }

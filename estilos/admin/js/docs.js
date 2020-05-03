@@ -1,7 +1,9 @@
-//quitando las alertas pasado 3 minutos despues de cargar toda la pagina
-document.addEventListener('DOMContentLoaded',quitar);
+//quitando alertas generadas
 function quitar(){
-    setTimeout(function(){
+    setTimeout(function(e){
         document.querySelector('.alert').remove();
+        e.preventDefault();
     },3000)
 }
+quitar();
+

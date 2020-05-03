@@ -7,11 +7,10 @@ class Doctores extends CI_Controller {
     parent:: __construct(); 
     // cargando los helpers 
     $this->load->helper('Menu');
-    $this->load->helper('MenuArchivo');
     $this->load->helper('forms/forms');
-    $this->load->helper('forms/validarF');
     $this->load->helper('forms/formsac');
     $this->load->helper('list/listas');
+    $this->load->helper('alertas/alertas');
     $this->load->helper('MenuArchivo');
     // cargando base de datos
     $this->load->database();
@@ -21,10 +20,8 @@ class Doctores extends CI_Controller {
     $this->load->model('Generador');
     //modelo mostrar
     $this->load->model('Mostrar');
-    //modelo de actualizar
-    $this->load->model('Actualizar');
-    //cargando libreria de errores
-    $this->load->library(array('form_validation'));
+    $this->load->model('validaciones');
+
 
     /*aqui evaluamos si no existe una variable de sesion definida en el parametro login no tendra asignado nada
     entonces devolvera false si esto sucede quiere decir que mientras no se haya iniciado sesion no existira una variable de sesion
@@ -37,9 +34,9 @@ class Doctores extends CI_Controller {
 
 // funcion que carga la vistas
 public function doctores(){
-
+      $espe=$this->Mostrar->especialidades();
       //tomando el formulario que devuelve la funcion
-      $form = docs();
+      $form = docs($espe);
       //tomando la estructura de la pagina
       /*Se evalua si por variable de sesion desde la base si el usuario es administrador entonces
         imprimira el helper del menu completo*/
@@ -51,85 +48,42 @@ public function doctores(){
           elseif($this->session->userdata('tipo')=='archivo'){
             $data['estructura']= menuarchivo($form,'','Ingresando Doctores');
           }
+
       $this->load->view('administrador/doctores.php',$data);
-  
-   
-  
 }
 ///////////////////////////////////////////////////////////
 
 // funcion para el registro de doctores en la base de datos
 public function Registrar(){
-    //variable que posee el formulario de la pagina
-    //tomando el formulario que devuelve la funcion
-    $form = docs();
-    //obteniendo los datos igresados en cada input
-    $nombre = $this->input->post('nom');   
-    $apellido = $this->input->post('ape');
+    //tomando los valores de las cajas de texto
+    $nom = $this->input->post('nom');   
+    $ape = $this->input->post('ape');
     $especialidad = $this->input->post('espe');
     $estado = $this->input->post('est');
     if($estado=='Activo'){$numE=1;}else{$numE=0;}
-    //obteniendo id del doctor
-    $doctores = $this->Mostrar->Docs();
-    $id= $this->Generador->id_doctor($nombre,$apellido,$doctores);
-    // comprobando si se selecciono activo o inactivo
-    $campos = doctoresVal();
-    $this->form_validation->set_rules($campos);
-    if($this->form_validation->run($campos) ==FALSE){
-        $msg='<div class="alert alert-danger">Error en los datos del llenado</div>';
-        if($this->session->userdata('tipo')=='admin'){
-          $data['estructura'] = menu($form,$msg,'Ingresando doctores');
-        }
-        elseif($this->session->userdata('tipo')=='archivo'){
-          $data['estructura'] = menuarchivo($form,$msg,'Ingresando doctores');
-        }
-        
-        $this->load->view('administrador/doctores.php',$data);
+    $espe=$this->Mostrar->especialidades();
+    $form = docs($espe);
+    $doctores=$this->Mostrar->Docs();
 
+    $msg = $this->validaciones->doctoresVal($nom,$ape,$especialidad,$estado,'','registro');
+    if($this->session->userdata('tipo')=='admin'){
+      $data['estructura'] = menu($form,$msg,'Ingresando doctores');
     }
-    else{
-    //guardando los valores en un arreglo para su llenado
-        $datos = array(
-       'NOMBRE_DOCTOR' => strtolower($nombre),
-       'APELLIDO_DOCTOR' => strtolower($apellido),
-       'ESTADO' => $numE,
-       'ESPECIALIDAD' => $especialidad,
-       'ID_DOCTOR' => $id
-       );
-      // comprobando que se haya enviado datos a la base
-      if(!$this->Insertando->InsertandoDocs($datos)){
-        //recargando la pagina con mensaje de guardado
-        $msg='<div class="alert alert-danger"> Error en el llenado</div>';
-
-            if($this->session->userdata('tipo')=='admin'){
-              $data['estructura'] = menu($form,$msg,'Ingresando Doctores');
-            }
-            elseif($this->session->userdata('tipo')=='archivo'){
-              $data['estructura'] = menuarchivo($form,$msg,'Ingresando Doctores');
-            }
-        $this->load->view('administrador/doctores.php',$data);
-
-      }else{
-         //recargando la pagina con mensaje de guardado
-         $msg='<div class="alert alert-success"> Guardado correctamente</div>';
-
-            if($this->session->userdata('tipo')=='admin'){
-              $data['estructura'] = menu($form,$msg,'Ingresando Doctores');
-            }
-            elseif($this->session->userdata('tipo')=='archivo'){
-              $data['estructura'] = menuarchivo($form,$msg,'Ingresando Doctores');
-            }
-
-         $this->load->view('administrador/doctores.php',$data);
-        }
-      }
+    elseif($this->session->userdata('tipo')=='archivo'){
+      $data['estructura'] = menuarchivo($form,$msg,'Ingresando doctores');
+    }
+    $this->load->view('administrador/doctores.php',$data);
 }
 
 
 //funcion que muestra los doctores registrados en la base de datos
-  public function mostrarD(){
-  $doctores = $this->Mostrar->Docs();
-  $lista = verDocs($doctores);
+  public function mostrarD($pagina=1){
+    $inicio = ($pagina-1)*6;
+    $fin = $inicio+6;
+
+    $doctores = $this->Mostrar->Docs();
+    $pdoctores= $this->Mostrar->pdocs($inicio,$fin);
+  $lista = verDocs($doctores,$pdoctores);
       if($this->session->userdata('tipo')=='admin'){
         $data['estructura'] = menu($lista,'','Lista de Doctores');
       }
@@ -137,16 +91,16 @@ public function Registrar(){
         $data['estructura'] = menuarchivo($lista,'','Lista de Doctores');
       }
   //cargando la vista con los doctores registrados en la base
-  $this->load->view('administrador/verDocs.php',$data);}
-  
-
-
+  $this->load->view('administrador/doctores.php',$data);
+}
+/////////////////////////////////////////////////////////////////////////  
 
   //funcion que toma los valores del docto a actualizar
   public function editarDocs($id){
+    $espe=$this->Mostrar->especialidades();
     $datos= $this->Actualizar->tomarDocs($id);
     //tomando el formulario que devuelve la funcion
-    $form = docsA($datos);
+    $form = docsA($datos,$espe);
 
         if($this->session->userdata('tipo')=='admin'){
           $data['estructura'] = menu($form,'','Actualizar Doctor');
@@ -158,90 +112,44 @@ public function Registrar(){
     $this->load->view('administrador/doctores',$data);
   }
 
-
-
   //funcion que actualizar los datos
-  public function ActualizarDocs(){
+  public function ActualizarDocs($pagina=1){
     //tomando los valores de las cajas de texto
-    $id_doctor = $this->input->post('id');
-    $nombre = $this->input->post('nom');   
-    $apellido = $this->input->post('ape');
+    $nom = $this->input->post('nom');   
+    $ape = $this->input->post('ape');
     $especialidad = $this->input->post('espe');
     $estado = $this->input->post('est');
-    if($estado=='Activo'){$numE=1;}else{$numE=0;}
+    $id=$this->input->post('id');
 
-    //validando los datos que se estan mandando
-    $campos = doctoresVal();
-    $this->form_validation->set_rules($campos);
+    //validando que ocurra un error de datos mal ingresados
+    $msg= $this->validaciones->doctoresVal($nom,$ape,$especialidad,$estado,$id,'actualizar');
+    if($msg==noactualizado()||$msg==numeros()||$msg==Campos()||$msg==existente()||$msg==llenadoE()){
+      $espe=$this->Mostrar->especialidades();
+      $datos= $this->Actualizar->tomarDocs($id);
+      //tomando el formulario que devuelve la funcion
+      $form = docsA($datos,$espe);
+  
+          if($this->session->userdata('tipo')=='admin'){
+            $data['estructura'] = menu($form,$msg,'Actualizar Doctor');
+          }
+          elseif($this->session->userdata('tipo')=='archivo'){
+            $data['estructura'] = menuarchivo($form,$msg,'Actualizar Doctor');
+          }
+    }else if($msg==actualizado()){
+      $inicio = ($pagina-1)*6;
+    $fin = $inicio+6;
 
-    
-    if($this->form_validation->run($campos)==FALSE){
-      $datos= $this->actualizar->tomarDocs($id);
-        //tomando el formulario que devuelve la funcion
-        $form = docsA($datos);
-
-        if($this->session->userdata('tipo')=='admin'){
-          $data['estructura'] = menu($form,'<div class="alert alert-danger">Datos mal ingresados</div>','Actualizar datos del Doctor');
-        }
-        elseif($this->session->userdata('tipo')=='archivo'){
-          $data['estructura'] = menuarchivo($form,'<div class="alert alert-danger">Datos mal ingresados</div>','Actualizar datos del Doctor');
-        }
-
-        $this->load->view('administrador/doctores',$data);
-
-
-    }else{
-      //guardando los valores en un arreglo para su llenado
-    $datos = array(
-      'NOMBRE_DOCTOR' => strtolower($nombre),
-      'APELLIDO_DOCTOR' => strtolower($apellido),
-      'ESTADO' => $numE,
-      'ESPECIALIDAD' => $especialidad,
-      'ID_DOCTOR' => $id_doctor
-      );
-
-
-      //llamando metodo para actualizar los datos
-      if(!$this->Actualizar->actualizarDocs($datos)){
-        $datos= $this->Actualizar->tomarDocs($id);
-        //tomando el formulario que devuelve la funcion
-        $form = docsA($datos);
-
-        if($this->session->userdata('tipo')=='admin'){
-          $data['estructura'] = menu($form,'<div class="alert alert-danger">No se ha actualizado</div>','Actualizar datos del Doctor');
-        }
-        elseif($this->session->userdata('tipo')=='archivo'){
-          $data['estructura'] = menuarchivo($form,'<div class="alert alert-danger">No se ha actualizado</div>','Actualizar datos del Doctor');
-        }
-
-        $this->load->view('administrador/doctores',$data);
-
-
-      }
-      
-      else{
-      $doctores = $this->Mostrar->Docs();
-      $lista = verDocs($doctores);
-      
-        if($this->session->userdata('tipo')=='admin'){
-          $data['estructura'] = menu($lista,'<div class="alert alert-success">Actualizado Correctamente</div>','Lista de Doctores');
-        }
-        elseif($this->session->userdata('tipo')=='archivo'){
-          $data['estructura'] = menuarchivo($lista,'<div class="alert alert-success">Actualizado Correctamente</div>','Lista de Doctores');
-        }
-
-      //cargando la vista con los doctores registrados en la base
-      $this->load->view('administrador/verDocs.php',$data);
-      //cargando la vista de los datos de la base
-
-
-      }
+    $doctores = $this->Mostrar->Docs();
+    $pdoctores= $this->Mostrar->pdocs($inicio,$fin);
+    $lista = verDocs($doctores,$pdoctores);
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($lista,$msg,'Doctores');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($form,$msg,'Doctores');
+            }
     }
-
-    ///////////////////////////////////////////
-
-    
-
+        $this->load->view('administrador/doctores',$data);
   }
 }
 ?>

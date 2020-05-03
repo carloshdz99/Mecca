@@ -30,11 +30,19 @@ function menu($form,$msg,$nom){
                 </a>
             </li>
             <li>
-                <a href="'.base_url().'Usuarios/Usuarios">
+                <a href="#usuarioSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <i class="fas fa-users"></i>
-                    <span></span>Personal</span>
-                </a>
+                    Personal</a>
+                <ul class="collapse list-unstyled" id="usuarioSubmenu">
+                    <li>
+                        <a href="'.base_url().'Usuarios/Usuarios">Agregar Personal</a>
+                    </li>
+                    <li>
+                        <a href="'.base_url().'Usuarios/verusers">Ver Personal</a>
+                    </li>                       
+                </ul>
             </li>
+
             <li>
                 <a href="#doctorSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <i class="fas fa-user-md"></i>

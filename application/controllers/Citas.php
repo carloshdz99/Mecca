@@ -8,10 +8,12 @@ class Citas extends CI_Controller {
         $this->load->helper('Menu');
         $this->load->helper('MenuArchivo');
         $this->load->helper('forms/forms');
+        $this->load->helper('forms/formsac');
         $this->load->helper('list/listas');
         $this->load->model('Mostrar');
         $this->load->model('actualizar');
         $this->load->model('Insertando');
+        $this->load->model('validaciones');
         // cargando base de datos
         $this->load->database();
         
@@ -32,10 +34,9 @@ class Citas extends CI_Controller {
         //tomando la estructura de la pagina 
         //tomando los doctores existentes en la base de datos
         $doctores = $this->Mostrar->Docs();
-        $hora = $this->Mostrar->horario();
         $pacientes=$this->Mostrar->pacientes();
         //tomando el formulario correspondiete a la vista
-        $form = citas($doctores,$hora,$pacientes);
+        $form = citas($doctores,$pacientes);
 
             /*Se evalua si por variable de sesion desde la base si el usuario es administrador entonces
             imprimira el helper del menu completo*/
@@ -55,58 +56,27 @@ class Citas extends CI_Controller {
 
     //funcion registrar cistas
     public function Registrar(){
+        $doctores = $this->Mostrar->Docs();
+        $pacientes=$this->Mostrar->pacientes();
         //tomando los valores de las variables
-        $id=rand(0,200);
-        $horario = $this->input->post('horario');
+        $hora = $this->input->post('horario');
         $doctor = $this->input->post('doctor');
         $paciente = $this->input->post('paciente');
-        $descripcion=$this->input->post('des');
-        //obteniendo id del expediente
-        $idExp = $this->Mostrar->idEx($paciente);
-        //obteniendo id del horario
-        $idHor= $this->Mostrar->idHor($horario);
-        $datos = array(
-            "ID_CITA" => $id,
-            "ID_HORARIO"=> $idHor["ID_HORARIO"],
-            "IDEXPEDIENTE"=> $idExp["IDEXPEDIENTE"],
-            "DOCTOR"=> $doctor,
-            "COMENTARIO" => $descripcion
-        );
+        $comentario=$this->input->post('des');
+        $fecha=$this->input->post('fecha');
 
+        $form = citas($doctores,$pacientes);
 
-        if(!$this->Insertando->InsertandoCitas($datos)){
-            $doctores = $this->Mostrar->Docs();
-            $hora = $this->Mostrar->horario();
-            $pacientes=$this->Mostrar->pacientes();
-            //tomando el formulario correspondiete a la vista
-            $form = citas($doctores,$hora,$pacientes);
+        $msg= $this->validaciones->citasingreval($hora, $doctor, $paciente, $comentario, $fecha, '', 'registro');
 
-                if($this->session->userdata('tipo')=='admin'){
-                    $data['estructura'] = menu($form,'<div class="alert alert-danger">Error en el registro</div>','Citas');
-                }
-                elseif($this->session->userdata('tipo')=='archivo'){
-                    $data['estructura'] = menuarchivo($form,'<div class="alert alert-danger">Error en el registro</div>','Citas');
-                }
-
-            $this->load->view('administrador/cita.php',$data);
-
+        if($this->session->userdata('tipo')=='admin'){
+            $data['estructura'] = menu($form,$msg,'Citas');
         }
-        else{
-            $doctores = $this->Mostrar->Docs();
-            $hora = $this->Mostrar->horario();
-            $pacientes=$this->Mostrar->pacientes();
-            //tomando el formulario correspondiete a la vista
-            $form = citas($doctores,$hora,$pacientes);
-
-                if($this->session->userdata('tipo')=='admin'){
-                    $data['estructura'] = menu($form,'<div class="alert alert-success">Guardado Correctamente</div>','Citas');
-                }
-                elseif($this->session->userdata('tipo')=='archivo'){
-                    $data['estructura'] = menuarchivo($form,'<div class="alert alert-success">Guardado Correctamente</div>','Citas');
-                }
-
-            $this->load->view('administrador/cita.php',$data);
+        elseif($this->session->userdata('tipo')=='archivo'){
+            $data['estructura'] = menuarchivo($form,$msg,'Citas');
         }
+
+        $this->load->view('administrador/cita.php',$data);
     }
 
 
@@ -125,6 +95,52 @@ class Citas extends CI_Controller {
             }
 
         $this->load->view('administrador/verCitas',$data);
+    }
+
+    //tomando las citas para actualizacion
+    public function tomarcitas($id){
+        $doctores = $this->Mostrar->Docs();
+        $cita= $this->Mostrar->tomarcits($id);
+        //obteniendo la fecha de la cita
+        $fecha=$this->Mostrar->obtenerfecha($cita["ID_HORARIO"]);
+        //obteniendo nombre de paciente
+        $nombrep=$this->Mostrar->nombrepac($cita["IDEXPEDIENTE"]);
+
+        $form = citasa($doctores,$nombrep["NOMBRE_PACIENTE"],$fecha["FECHA"],$cita["COMENTARIO"], $cita["ID_CITA"]);
+
+        //cargando la vista de citas con la cita seleccionada dependiendo el tipo de usuario
+        if($this->session->userdata('tipo')=='admin'){
+            $data['estructura'] = menu($form,'','Actualizar Cita');
+        }
+        elseif($this->session->userdata('tipo')=='archivo'){
+            $data['estructura'] = menuarchivo($form,'','Actualizar Cita');
+        }
+
+        $this->load->view('administrador/cita.php',$data);
+    }
+
+    //funcion que actualiza los datos de las citas
+    public function Actualizar($paginacion=1){
+        $hora = $this->input->post('horario');
+        $doctor = $this->input->post('doctor');
+        $paciente = $this->input->post('paciente');
+        $comentario=$this->input->post('des');
+        $fecha=$this->input->post('fecha');
+        $id=$this->input->post('id');
+
+        $msg=$this->Validaciones->citasingreval($hora, $doctor, $paciente, $comentario, $fecha, '', 'registro');
+    
+        if($msg==){
+
+        }
+        if($this->session->userdata('tipo')=='admin'){
+            $data['estructura'] = menu($form,'','Actualizar Cita');
+        }
+        elseif($this->session->userdata('tipo')=='archivo'){
+            $data['estructura'] = menuarchivo($form,'','Actualizar Cita');
+        }
+
+        $this->load->view('administrador/cita.php',$data);
     }
 
 }
