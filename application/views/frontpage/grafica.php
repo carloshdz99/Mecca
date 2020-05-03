@@ -61,9 +61,6 @@
     </p>
 </figure>
 
-<?php
-print_r($datos);
-?>
 
 		<script type="text/javascript">
 Highcharts.chart('container', {
@@ -101,17 +98,16 @@ Highcharts.chart('container', {
         type: "pie",
         name: "Porcentaje",
         data: [
-            ['Fisioterapia', 45.0],
-            ['Urologia', 26.8],
+            ['Fisioterapia', <?php echo round($datos[0]); ?> ],
+            ['Urologia', <?php echo round($datos[1]); ?> ],
             {
                 name: 'Cardiologia',
-                y: 12.8,
+                y: <?php echo round($datos[2]); ?> ,
                 sliced: true,
                 selected: true
             },
-            ['Cirugia', 8.5],
-            ['Medicina interna', 6.2],
-            ['Others', 0.7]
+            ['Cirugia', <?php echo round($datos[3]); ?> ],
+            ['Medicina interna', <?php echo round($datos[4]); ?> ]
         ]
     }]
 });
