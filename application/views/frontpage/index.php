@@ -35,3 +35,38 @@
 </body>
 
 </html>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $('#enviar').click(function(e){
+
+                  e.preventDefault();
+                  
+                  var name = $("#name").val();
+                  var email = $("#email").val();
+                  var asunto = $("#asunto").val();
+                  var telefono = $("#telefono").val();
+                  var fecha = $("#fecha").val();
+                  var comentario = $("#comentario").val();
+                  var lenguage = $("#lenguage").val();
+
+                  $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url() ?>enviaremail",
+                    data: {name: name, email: email, asunto: asunto, telefono, telefono, fecha: fecha, comentario: comentario, lenguage: lenguage},
+                    error: function(){
+                      $('#inforesults').text("Hubo un problema al enviar el correo eléctronico");
+                    },
+                    success: function(data)
+                    {
+                      $('#inforesults').text(data);
+                    }
+
+                  });
+
+    });
+
+  });
+
+</script>

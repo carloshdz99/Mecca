@@ -129,16 +129,28 @@ class Citas extends CI_Controller {
         $id=$this->input->post('id');
 
         $msg=$this->Validaciones->citasingreval($hora, $doctor, $paciente, $comentario, $fecha, '', 'registro');
+
     
         /*
+=======
+        
+        /*if($msg==){
+
+        }
+>>>>>>> dda04c5b52e2fb4c9381bf81b2d11ca5b0dce049
         if($this->session->userdata('tipo')=='admin'){
             $data['estructura'] = menu($form,'','Actualizar Cita');
         }
         elseif($this->session->userdata('tipo')=='archivo'){
             $data['estructura'] = menuarchivo($form,'','Actualizar Cita');
         }
+
 */
        // $this->load->view('administrador/cita.php',$data);
+
+
+        //$this->load->view('administrador/cita.php',$data);
+
     }
 
 }

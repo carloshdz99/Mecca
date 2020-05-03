@@ -66,8 +66,9 @@ class Usuarios extends CI_Controller {
 
         $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
         $this->load->view('administrador/personal.php',$data);
+        }
     }
-}
+
     
     //mostrando usuarios del sistema
     function verusers($paginacion=1){
@@ -79,9 +80,14 @@ class Usuarios extends CI_Controller {
         
         $data['estructura'] = menu($lista,'','Personal');
 
+
         $this->load->view('administrador/personal.php',$data);
         
      
+
+        
+        $this->load->view('administrador/personal.php',$data);
+
     }  
 
         

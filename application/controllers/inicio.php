@@ -9,6 +9,7 @@ class Inicio extends CI_Controller {
         parent:: __construct();
         $this->load->model("frontemail");
         $this->load->helper('forms/forms');
+        $this->load->model('Mostrar');
         
         
     }
@@ -57,7 +58,7 @@ class Inicio extends CI_Controller {
         $telefono=$this->input->post('telefono');
         $fecha=$this->input->post('fecha');
         $comentario=$this->input->post('comentario');
-
+        $lenguage = $this->input->post('lenguage');
                            
            $datos=array(
             'titulo'=>$asunto,
@@ -73,20 +74,53 @@ class Inicio extends CI_Controller {
 
            $envio=$this->frontemail->enviaremail($datos);
 
-          /* if(!$envio){
+           if(!$envio){
 
-            $msg='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
-            $this->load->view('frontpage/index',$data);
+
+           
+           // $msg='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
+           // $this->load->view('frontpage/index');
+
+            //$data['msg']='<div class="alert alert-danger"> No se pudo enviar el correo</div>';
+            //$this->load->view('frontpage/index',$data);
+              if($lenguage == 1){
+                echo 'No se pudo enviar el correo';
+              }
+              else{
+                echo 'The mail could not be sent';
+              }
+
+              
+
            
            }
            else{
 
+
             $msg='<div class="alert alert-success"> Se envio correctamente el correo</div>';
+
+            //$data['msg']='<div class="alert alert-success"> Se envio correctamente el correo</div>';
+
            
-            $this->load->view('frontpage/index',$data);
+            //$this->load->view('frontpage/index',$data);
+              if($lenguage == 1){
+                echo 'Se envio correctamente el correo';
+              }
+              else{
+                echo 'The mail was sent correctly';
+              }
+              
 
-
-           }*/
+           }
         
+    }
+
+
+    public function grafh(){
+        
+      $data['datos']=$this->Mostrar->grafica();
+      $this->load->view('frontpage/grafica',$data);
+      
+
     }
 }
