@@ -102,6 +102,38 @@ class Mostrar extends CI_Model{
         return $citas->result();
     }
 
+
+    public function grafica(){
+        $doctores= $this->db->get('doctor');
+        $total=$doctores->num_rows();
+
+        $fisio=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Fisioterapia"));
+        $numfi=$fisio->num_rows();
+        $porfi=$numfi*100/$total;
+
+        $urologia=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Urologia"));
+        $numuro=$urologia->num_rows();
+        $poruro=$numuro*100/$total;
+
+        $cardiologia=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Cardiologia"));
+        $numcar=$cardiologia->num_rows();
+        $porcar=$numcar*100/$total;
+
+        $cirugia=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Cirugia"));
+        $numci=$cirugia->num_rows();
+        $porci=$numci*100/$total;
+
+        $medicina=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Medicina interna"));
+        $numme=$medicina->num_rows();
+        $porme=$numme*100/$total;
+
+        $grafh=array($porfi,$poruro,$porcar,$porci,$porme);
+        return $grafh;
+    }
+
+
+
+
     //tomando horarios de la tabla horario
     public function horario($fecha, $hora){
        $hora = $this->db->get_where('horario',array("HORA"=>$hora,"FECHA"=>$fecha));
@@ -125,6 +157,7 @@ class Mostrar extends CI_Model{
     function nombrepac($id){
         $nombre= $this->db->get_where('expediente',array("IDEXPEDIENTE"=>$id));
         return $nombre->row_array();
+
     }
     //citas paginadas
     function citasp($inicio, $fin){

@@ -164,8 +164,6 @@ class Citas extends CI_Controller {
                 $data['estructura'] = menuarchivo($lista,$msg,'Lista de Citas');
             }
         }
-
-        $this->load->view('administrador/verCitas',$data);
     }
 
 }

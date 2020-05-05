@@ -109,7 +109,7 @@ function menu($form,$msg,$nom){
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item mr-3">
-                                    <a class="btn btn-primary " href="'.base_url().'index/sitioPublico" target="_blank" role="button">Ir al sitio público</a>
+                                    <a class="btn btn-primary " href="'.base_url().'Inicio" target="_blank" role="button">Ir al sitio público</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="btn btn-primary" href="'.base_url().'Login/logout" role="button">Cerrar sesión</a>

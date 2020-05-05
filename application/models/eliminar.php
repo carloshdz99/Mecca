@@ -15,6 +15,10 @@ class Eliminar extends CI_Model{
             return true;
         }
     }
+
+
+    
+
     //funcion que elimina usuarios
     function eliminarus($id){
         if(!$this->db->delete('usuario',array("ID_USUARIO"=>$id))){
@@ -25,6 +29,7 @@ class Eliminar extends CI_Model{
             return $msg;
         }
     }
+
 }
 
 ?>

@@ -128,6 +128,10 @@ function usuariosa($user){
      </form>';
   }
 
+
+
+ 
+
   function citasa($doctores, $paciente, $fecha ,$comentario,$ID){
       $form='<form action="'.base_url('Citas/Actualizar').'" method="post">
       <input type="text" value="'.$ID.'" name="id" style="display:none;">
@@ -181,4 +185,5 @@ function usuariosa($user){
      //formulario de citas
       return $form;
   }
+
 ?>

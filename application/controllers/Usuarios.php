@@ -38,13 +38,37 @@ class Usuarios extends CI_Controller {
         $email=$this->input->post('email');
         $tipo_usuario=$this->input->post('tipo');
         $contraseña=$this->input->post('password');
+
+
+        $db=$this->Mostrar->users();
+        $id=$this->Generador->id_usuarios($tipo_usuario,$nombre,$db);
+
+        $datos = array(
+            'ID_USUARIO'=>$id,
+            'NOMBRE_USUARIO'=>$nombre,
+            'APELLIDO_USUARIO'=>$apellido,
+            'TIPO_USUARIO'=>$tipo_usuario,
+            'CONTRASENA'=>$contraseña,
+            'CORREO'=>$email
+            );
+        
+
+            $form=personas();
+            // comprobando que se haya recibido datos
+      if(!$this->Insertando->InsertandoUsuarios($datos)){
+        //recargando la pagina con mensaje de guardado
+        $msg='<div class="alert alert-danger"> Error en el llenado</div>';
+
         //cargando formulario de la pagina
         $form = personas();
         $msg= $this->Validaciones->usuariosval($nombre,$apellido,$email,$tipo_usuario,$contraseña);
         //cargando la pagina despues del registro
+
         $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
         $this->load->view('administrador/personal.php',$data);
+        }
     }
+
     
     //mostrando usuarios del sistema
     function verusers($paginacion=1){
@@ -55,9 +79,19 @@ class Usuarios extends CI_Controller {
         $lista = usuarios($usuarios,$usuariosp);
         
         $data['estructura'] = menu($lista,'','Personal');
+
+
+        $this->load->view('administrador/personal.php',$data);
+        
+     
+
         
         $this->load->view('administrador/personal.php',$data);
-    }
+
+    }  
+
+        
+    
     //funcion que elimina los usuarios
     function eliminar($id,$paginacion=1){
         $inicio = ($paginacion-1)*6;
@@ -110,4 +144,5 @@ class Usuarios extends CI_Controller {
         }
         $this->load->view('administrador/personal.php',$data);
     }
+
 }

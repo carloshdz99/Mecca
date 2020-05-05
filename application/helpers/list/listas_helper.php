@@ -161,6 +161,9 @@ function verCit($citas, $citasp){
    </nav>';
    return $ci;
 }
+
+
+
 // funcion para mostrar los usuarios
 function usuarios($users, $usersp){
   $us = '<table class="table table-striped" id="lista">
@@ -217,4 +220,5 @@ function usuarios($users, $usersp){
   $us.='</ul></nav>';
   return $us;
 }
+
 ?>

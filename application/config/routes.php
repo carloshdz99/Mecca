@@ -50,6 +50,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'Login';
+
+/*PARA QUE AJAX FUNCIONE EN CODEIGNITER*/
+$route['enviaremail'] = 'Inicio/cita';
+/***************************************/
+
 $route['404_override'] = '';
 $route["doctores"]='Doctores/mostrar';
 $route['translate_uri_dashes'] = FALSE;
