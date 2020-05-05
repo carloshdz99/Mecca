@@ -31,7 +31,6 @@ class Doctores extends CI_Controller {
       redirect(base_url());
     }
     }
-
 // funcion que carga la vistas
 public function doctores(){
       $espe=$this->Mostrar->especialidades();
@@ -151,5 +150,24 @@ public function Registrar(){
     }
         $this->load->view('administrador/doctores',$data);
   }
+   
+   
+  //mostrando doctores en la frontpage 
+  public function mostrar(){
+       $doctores= $this->Mostrar->docs();
+       $arreglo = array();
+       //añadiendo valores al arreglo
+       foreach($doctores as $docs){
+            array_push($arreglo,array(
+              "nombre" => $docs->NOMBRE_DOCTOR,
+              "apellido" => $docs->APELLIDO_DOCTOR,
+              "especialidad" => $docs->ESPECIALIDAD
+            ));
+       }
+
+       //imprimiendo el arreglo para que se muestre con fetch 
+       echo json_encode($arreglo);
+  }
+
 }
 ?>

@@ -67,7 +67,7 @@ class Citas extends CI_Controller {
 
         $form = citas($doctores,$pacientes);
 
-        $msg= $this->validaciones->citasingreval($hora, $doctor, $paciente, $comentario, $fecha, '', 'registro');
+        $msg= $this->validaciones->citasval($hora, $fecha, $doctor, $paciente, $comentario);
 
         if($this->session->userdata('tipo')=='admin'){
             $data['estructura'] = menu($form,$msg,'Citas');
@@ -82,9 +82,12 @@ class Citas extends CI_Controller {
 
 
     //cargando la lista de cistas registradas
-    public function verCitas(){
+    public function verCitas($pagina=1){
+        $inicio = ($pagina-1)*6;
+        $fin = $inicio+6;
         $pacientes = $this->Mostrar->citas();
-        $lista = verCit($pacientes);
+        $pacientesp= $this->Mostrar->citasp($inicio,$fin);
+        $lista = verCit($pacientes,$pacientesp);
         //tomando la estructura de la pagina 
 
             if($this->session->userdata('tipo')=='admin'){
@@ -120,27 +123,49 @@ class Citas extends CI_Controller {
     }
 
     //funcion que actualiza los datos de las citas
-    public function Actualizar($paginacion=1){
+    public function Actualizar($pagina=1){
         $hora = $this->input->post('horario');
         $doctor = $this->input->post('doctor');
         $paciente = $this->input->post('paciente');
         $comentario=$this->input->post('des');
-        $fecha=$this->input->post('fecha');
+        $fechaingre=$this->input->post('fecha');
         $id=$this->input->post('id');
+        //tomando los datos para imprimir el formulario en la vista
+        $doctores = $this->Mostrar->Docs();
+        $cita= $this->Mostrar->tomarcits($id);
+        //obteniendo la fecha de la cita
+        $fecha=$this->Mostrar->obtenerfecha($cita["ID_HORARIO"]);
+        //obteniendo nombre de paciente
+        $nombrep=$this->Mostrar->nombrepac($cita["IDEXPEDIENTE"]);
+        $form = citasa($doctores,$nombrep["NOMBRE_PACIENTE"],$fecha["FECHA"],$cita["COMENTARIO"], $cita["ID_CITA"]);
 
-        $msg=$this->Validaciones->citasingreval($hora, $doctor, $paciente, $comentario, $fecha, '', 'registro');
+        $msg=$this->validaciones->actualizarcitas($hora, $fechaingre, $doctor, $paciente, $comentario, $cita["ID_HORARIO"],$cita["ID_CITA"],$cita["IDEXPEDIENTE"]);
     
-        if($msg==){
+        // validando que no halla error, si lo hay volvera a cargar el formulario con los datos
+        if($msg==noactualizado() || $msg==Campos() || $msg==existente() || $msg==hora() || $msg==fecha()){
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($form,$msg,'Actualizar Cita');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($form,$msg,'Actualizar Cita');
+            }
+        }else{
+            $inicio = ($pagina-1)*6;
+            $fin = $inicio+6;
 
-        }
-        if($this->session->userdata('tipo')=='admin'){
-            $data['estructura'] = menu($form,'','Actualizar Cita');
-        }
-        elseif($this->session->userdata('tipo')=='archivo'){
-            $data['estructura'] = menuarchivo($form,'','Actualizar Cita');
+            $pacientes = $this->Mostrar->citas();
+            $pacientesp= $this->Mostrar->citasp($inicio,$fin);
+            $lista = verCit($pacientes,$pacientesp);
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($lista,$msg,'Lista de Citas');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($lista,$msg,'Lista de Citas');
+            }
         }
 
-        $this->load->view('administrador/cita.php',$data);
+        $this->load->view('administrador/verCitas',$data);
     }
 
 }

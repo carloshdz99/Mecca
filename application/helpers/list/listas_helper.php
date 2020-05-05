@@ -41,7 +41,8 @@ function verDocs($doctores,$pdoctores){
     return $mos;
 }
 function doctoresActivos($doctores,$docsa){
-    $mos= '<div class="row mb-3">';
+    $mos= '
+    <div class="row mb-3">';
     foreach($doctores as $d){
       $mos.= '<div class="col-lg-4 py-1"><div class="card bg-light">
         <div class="card-header">ID: '.$d->ID_DOCTOR.'</div>
@@ -125,7 +126,7 @@ function verPaci($pacs, $pacsp){
     return $pacientes;
 }
 //funcion que devuelve las citas
-function verCit($citas){
+function verCit($citas, $citasp){
    $ci = '<table class="table table-striped" id="lista">
    <thead>
      <tr>
@@ -138,7 +139,7 @@ function verCit($citas){
      </tr>
    </thead>
    <tbody>';
-   foreach($citas as $cis){
+   foreach($citasp as $cis){
      $ci.= '<tr>
      <td>'.$cis->ID_CITA.'</td>
      <td>'.$cis->ID_HORARIO.'</td>
@@ -149,7 +150,15 @@ function verCit($citas){
      </tr>';
    }
    $ci.='</tbody>
-   </table>';
+   </table><nav aria-label="Page navigation example">
+   <ul class="pagination">';
+   $cantidad= count($citas)/6;
+   $cantidad= ceil($cantidad);
+   for($i=1; $i<=$cantidad; $i+1){
+     $ci.= '<li class="page-item"><a class="page-link" href="'.base_url().'Citas/verCitas/'.$i.'">'.$i++.'</a></li>';
+   }
+   $ci.='</ul>
+   </nav>';
    return $ci;
 }
 // funcion para mostrar los usuarios

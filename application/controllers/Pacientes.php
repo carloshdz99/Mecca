@@ -81,7 +81,7 @@ class Pacientes extends CI_Controller {
         $sexo=$this->input->post('sexo');
         $telefono=$this->input->post('telefono');
         $form=pacientes();
-        $msg= $this->Validaciones->pacientesval($nombre,$apellido,$fecha,$sexo,$telefono,'','registro');
+        $msg= $this->Validaciones->pacientesval($nombre,$apellido,$fecha,$sexo,$telefono);
             // comprobando que se haya recibido datos
             if($this->session->userdata('tipo')=='admin'){
                 $data['estructura'] = menu($form,$msg,'Ingresando Pacientes');
@@ -126,7 +126,7 @@ class Pacientes extends CI_Controller {
         $paci=$this->Actualizar->tomarPacs($id);
         $form= paciA($paci);
 
-        $msg= $this->Validaciones->pacientesval($nombre, $apellido, $fecha, $sexo, $telefono, $id, 'actualizar');
+        $msg= $this->Validaciones->actualizarpacientes($nombre, $apellido, $fecha, $sexo, $telefono, $id);
 
         if($msg==fecha() || $msg==Campos() || $msg==numeros() || $msg==noactualizado() || $msg==existente() || $msg==telefono()){
             if($this->session->userdata('tipo')=='admin'){

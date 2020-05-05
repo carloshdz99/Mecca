@@ -2,17 +2,19 @@
   //funcion que imprime el formulario de los doctores
   function docs($especialidad){
       //retornando el formulario de los doctores
-      $docs= '<form action="'.base_url('Doctores/Registrar').'" method="post" id="form">
-      <div class="form-group">
-       <label for="nom">Nombres: </label>
-       <input type="text" class="form-control" id="nom" name="nom" placeholder="Ingrese nombres">
-      </div>
-      <div class="form-group">
-       <label for="ape">Apellidos: </label>
-       <input type="text" class="form-control" id="ape" name="ape" placeholder="Ingrese apellidos">
-      </div>
+      $docs= '<form method="post" action="'.base_url().'/Doctores/Registrar" id="form">
       <div class="row">
-      <div class="form-group col">
+      <div class="col form-group">
+       <label for="nom">Nombres: </label>
+       <input type="text" class="form-control col-sm-8" id="nom" name="nom" placeholder="Ingrese nombres">
+      </div>
+      <div class="col form-group">
+       <label for="ape">Apellidos: </label>
+       <input type="text" class="form-control col-sm-8" id="ape" name="ape" placeholder="Ingrese apellidos">
+      </div>
+      </div>
+
+      <div class="form-group">
       <label for="est">Estado</label>
       <select name="est" id="est" class="form-control col-sm-4">
          <option>Activo</option>
@@ -20,14 +22,13 @@
      </select>
     </div>
   
-    <div class="form-group col">
+    <div class="form-group">
       <label for="espe">Especialidad</label>
-      <select class="form-control col-sm-6" id="espe" name="espe">';
+      <select class="form-control col-sm-4" id="espe" name="espe">';
       foreach($especialidad as $esp){
         $docs .='<option>'.$esp->NOMBRE_ESPECIALIDAD.'</option>';
       }
      $docs.=' </select>
-    </div>
     </div>
     <br>
     
@@ -126,8 +127,8 @@
         <label for="horario">Hora</label>
         <select class="form-control col-sm-4" id="horario" name="horario">
             <option value="7:30">7:30 am</option>
-            <option value="7:30">8:30 am</option>
-            <option value="7:30">9:30 am</option>
+            <option value="8:30">8:30 am</option>
+            <option value="9:30">9:30 am</option>
         </select>
     </div>
 

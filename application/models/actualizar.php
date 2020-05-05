@@ -48,7 +48,16 @@ class Actualizar extends CI_Model{
     //actualizando citas
     function actualizarcita($datos){
         $this->db->where('ID_CITA',$datos["ID_CITA"]);
-        if(!$this->db->update($datos)){
+        if(!$this->db->update('cita',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //actualizando horario
+    function actualizarhorarios($datos){
+        $this->db->where('ID_HORARIO',$datos['ID_HORARIO']);
+        if(!$this->db->update('horario',$datos)){
             return false;
         }else{
             return true;

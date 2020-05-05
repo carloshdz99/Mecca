@@ -19,9 +19,11 @@ class Mostrar extends CI_Model{
         //retornando los datos obtenidos de la base
         return $doctores->result();
     }
+    //devolviendo id del doctor encontrado
     public function doc($nom){
         $dato = $this->db->get_where('doctor',array("NOMBRE_DOCTOR"=>$nom));
-        return $dato->row_array();
+        $id= $dato->row_array();
+        return $id["ID_DOCTOR"];
     }
     //tomando los doctores por su nombre y apellido
     public function docexis($nom,$ape){
@@ -38,8 +40,8 @@ class Mostrar extends CI_Model{
         return $dato->result();
     }
     //tomando usuarios por sus datos
-    public function userexis($nom, $ape, $email){
-        $dato = $this->db->get_where('usuario',array("NOMBRE_USUARIO"=>$nom, "APELLIDO_USUARIO"=>$ape, "CORREO"=>$email));
+    public function userexis($email){
+        $dato = $this->db->get_where('usuario',array("CORREO"=>$email));
         return $dato->row_array();
     }
     //tomando usuarios cuando se pase el id
@@ -63,8 +65,13 @@ class Mostrar extends CI_Model{
         return $pacientes->result();
     }
     //tomando paciente para comprobar si este existe
-    public function pacientese($non, $ape, $telefono, $sexo){
-        $pacientes= $this->db->get_where('expediente',array("NOMBRE_PACIENTE"=>$non,"APELLIDO_PACIENTE"=>$ape,"TELEFONO"=>$telefono,"SEXO"=>$sexo));
+    public function pacientese($nombre,$apellido){
+        $pacientes= $this->db->get_where('expediente',array("NOMBRE_PACIENTE"=>$nombre,"APELLIDO_PACIENTE"=>$apellido));
+        return $pacientes->result();
+    }
+    //comprobando que el numero de telefono no exista
+    public function numeropa($tele){
+        $pacientes=$this->db->get_where('expediente',array("TELEFONO"=>$tele));
         return $pacientes->result();
     }
 
@@ -97,8 +104,8 @@ class Mostrar extends CI_Model{
 
     //tomando horarios de la tabla horario
     public function horario($fecha, $hora){
-        $horario= $this->db->get_where('horario',array("HORA"=>$hora,"FECHA"=>$fecha));
-        return $horario->result();
+       $hora = $this->db->get_where('horario',array("HORA"=>$hora,"FECHA"=>$fecha));
+       return $hora->result();
     }
     public function contarhorario(){
         $horario =$this->db->get('horario');
@@ -118,5 +125,16 @@ class Mostrar extends CI_Model{
     function nombrepac($id){
         $nombre= $this->db->get_where('expediente',array("IDEXPEDIENTE"=>$id));
         return $nombre->row_array();
+    }
+    //citas paginadas
+    function citasp($inicio, $fin){
+        $citas = $this->db->get('cita',$fin,$inicio);
+        return $citas->result();
+    }
+    //paciente por su nombre
+    function id_paciente($nombre){
+        $pacientes = $this->db->get_where('expediente',array("NOMBRE_PACIENTE"=>$nombre));
+        $id= $pacientes->row_array();
+        return $id["IDEXPEDIENTE"];
     }
 }

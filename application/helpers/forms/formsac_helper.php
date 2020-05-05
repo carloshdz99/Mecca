@@ -85,7 +85,7 @@ function usuariosa($user){
       <input type="password" class="form-control col-sm-4" name="password" id="contra" placeholder="Ingrese contraseña">
     </div> 
     <input type="submit" class="btn btn-primary" id="submit" name="enviar" Value="Guardar Cambios">
-    <a href="'.base_url('Usuarios/verusers').'" class="btn btn-primary" id="boton" name="cancelar">Cancelar</a>                  
+    <a href="'.base_url('Usuarios/verusers').'" class="btn btn-dark" id="boton" name="cancelar">Cancelar</a>                  
   </form>
   <p class="text-danger">* Todos los campos son requeridos</p>';
 
@@ -124,7 +124,7 @@ function usuariosa($user){
           </div>
       <br>
       <input type="submit" class="btn btn-primary" id="boton" name="enviar" Value="Guardar Cambios">
-      <a href="'.base_url().'Pacientes/verPacie" class="btn btn-primary" id="boton" name="cancelar">Cancelar</a>   
+      <a href="'.base_url().'Pacientes/verPacie" class="btn btn-dark" id="boton" name="cancelar">Cancelar</a>   
      </form>';
   }
 
@@ -136,15 +136,17 @@ function usuariosa($user){
           <label for="horario">Hora</label>
           <select class="form-control col-sm-4" id="horario" name="horario">
               <option value="7:30">7:30 am</option>
-              <option value="7:30">8:30 am</option>
-              <option value="7:30">9:30 am</option>
+              <option value="8:30">8:30 am</option>
+              <option value="9:30">9:30 am</option>
           </select>
       </div>
   
       <div class="col form-group">
                 <label for="fech">Fecha de cita:</label>
                 <input type="datetime" name="fecha" class="form-control col-sm-4" value="'.$fecha.'" id="fech" placeholder="Año - Mes - Dia">
-                <small id="fech" class="form-text text-muted">ej: 1999-10-05</small>
+                <small id="fech" class="form-text text-muted">
+                     Año - Mes - Dia
+                ej: 1999-10-05</small>
       </div>
       </div>
   
@@ -172,8 +174,8 @@ function usuariosa($user){
         <textarea class="form-control col-sm-8" id="des" name="des" readonly>'.$comentario.'</textarea>
       </div>
       <br>
-      <button type="submit" class="btn btn-primary mb-4">Guardar datos</button>
-      <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+      <input type="submit" class="btn btn-primary mb-4" value="Guardar Cambios" name="enviar">
+      <a href="'.base_url().'/Citas/verCitas" class="btn btn-dark mb-4">Cancelar</a>
       </form>
       <p class="text-danger">* Todos los campos son requeridos</p>';
      //formulario de citas

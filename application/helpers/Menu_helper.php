@@ -11,12 +11,14 @@
 
 //<span class="hidden-sx">'; echo $this->session->userdata("nombre");    echo '</span> para inprimir usuario
 
+//
 function menu($form,$msg,$nom){
-    echo '<div class="wrapper">
+    echo '
+    <div class="wrapper">
     <!-- menu lateral de la pagina -->
     <nav id="sidebar">
         <div class="sidebar-header ">
-            <a href="'.base_url().'>index/index" rel="noopener noreferrer">
+            <a href="'.base_url().'Dashboard/Dashboard" rel="noopener noreferrer">
                 <img src="'.base_url('estilos/admin/img/logo2.jpg').'" alt="" class="rounded-circle rounded mx-auto d-block" width="155">
             </a>
         </div>

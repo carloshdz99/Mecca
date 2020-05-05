@@ -40,7 +40,7 @@ class Usuarios extends CI_Controller {
         $contraseña=$this->input->post('password');
         //cargando formulario de la pagina
         $form = personas();
-        $msg= $this->Validaciones->usuariosval($nombre,$apellido,$email,$tipo_usuario,$contraseña,'','registro');
+        $msg= $this->Validaciones->usuariosval($nombre,$apellido,$email,$tipo_usuario,$contraseña);
         //cargando la pagina despues del registro
         $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
         $this->load->view('administrador/personal.php',$data);
@@ -97,7 +97,7 @@ class Usuarios extends CI_Controller {
         $contraseña=$this->input->post('password');
         $id=$this->input->post('id');
 
-        $msg= $this->Validaciones->usuariosval($nombre,$apellido,$email,$tipo_usuario,$contraseña,$id,'actualizar');
+        $msg= $this->Validaciones->usuariosval($nombre,$apellido,$email,$tipo_usuario,$contraseña,$id);
         if($msg==noactualizado()||$msg==numeros()||$msg==Campos()||$msg==existente()||$msg==malcorreo()){
             $users = $this->Mostrar->userac($id);
             $form=usuariosa($users);

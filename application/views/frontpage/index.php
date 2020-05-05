@@ -9,9 +9,9 @@
   <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
 
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
-  <link rel="stylesheet" type="text/css" href="..\..\..\mecca\estilos\front\css\font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="..\..\..\mecca\estilos\front\css\bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="..\..\..\mecca\estilos\front\css\style.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('estilos\front\css\font-awesome.min.css')?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('estilos\front\css\bootstrap.min.css')?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('estilos\front\css\style.css')?>">
 
 </head>
 
@@ -167,70 +167,10 @@
   <!--/ about-->
   <!--doctor team-->
   <section id="doctor-team" class="section-padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="ser-title">Conoce nuestros doctores</h2>
-          <hr class="botm-line">
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="..\..\..\mecca\estilos\front\img\anonimo.png" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Dr. Aldo Erick Flores</h3>
-              <p>Urología/Medicina General</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="..\..\..\Mecca\estilos\front\img\anonimo.png" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Licda. Carmen Elena Fernández</h3>
-              <p>Fisioterapia</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="..\..\..\Mecca\estilos\front\img\anonimo.png" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Dr. Mario Montoya</h3>
-              <p>Cirugía/Medicina Interna</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="..\..\..\mecca\estilos\front\img\anonimo.png" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Dra. Silvia Hernández</h3>
-              <p>Cardiología</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+     <!-- en esta parte se imprimiran los doctores-->
+     <div class="container" id="mostrardocs">
+          
+     </div>
   </section>
   <!--/ doctor team-->
   <!--testimonial-->
@@ -327,7 +267,7 @@
 
 
 
-            <form action="<?php echo base_url();?>Frontpage/cita" method="post" role="form" class="contactForm">
+            <form id="form" class="contactForm">
               <div class="form-group">
                 <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Nombre" data-rule="minlen:4" data-msg="Ingrese al menos 4 caracteres" required="" />
                 <div class="validation"></div>
@@ -408,6 +348,7 @@
       </div>
     </div>
     <div class="footer-line">
+    <a href="<?php echo base_url()?>front">prueba</a>
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
@@ -428,12 +369,38 @@
   </footer>
   <!--/ footer-->
 
-  <script src="..\..\..\mecca\estilos\front\js\jquery.min.js"></script>
+  <script src="<?php echo base_url('estilos\front\js\jquery.min.js')?>"></script>
   <script src="<?php echo base_url('estilos\front\js\jquery.easing.min.js') ?>"></script>
-  <script src="..\..\..\mecca\estilos\front\js\bootstrap.min.js"></script>
-  <script src="..\..\..\mecca\estilos\front\js\custom.js"></script>
+  <script src="<?php echo base_url('estilos\front\js\bootstrap.min.js')?>"></script>
+  <script src="<?php echo base_url('estilos\front\js\custom.js')?>"></script>
   <script src="<?php echo base_url('estilos\front\contactform\contactform.js') ?>"></script>
 
+  <script type="text/javascript">
+   //cargando los doctores al cargar por completo la pagina
+document.addEventListener("DOMContentLoaded",function(e){
+    e.preventDefault();
+    //div donde se imprimiran los doctores
+    var div = document.getElementById("mostrardocs");
+    //variable con los doctores
+    //tomando los doctores desde la base de datos
+    fetch("<?php echo base_url() ?>doctores")
+    .then(res=> res.json())
+    .then(doctores=>{
+        console.log(doctores);
+        var docs=`<div class="row mb-3">`;
+        for(i=0; i<doctores.length; i++){
+            docs+=`<div class="col-md-3 col-sm-3 col-xs-6">
+            <div class="caption">
+              <h3>Dr. ${doctores[i].nombre} ${doctores[i].apellido}</h3>
+              <p>Especialidad: ${doctores[i].especialidad}</p>
+            </div>
+          </div>`;
+        }
+        docs+=`</div>`;
+        div.innerHTML=docs;
+      });
+   });
+  </script>
 
 </body>
 

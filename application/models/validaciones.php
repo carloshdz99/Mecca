@@ -61,7 +61,7 @@ class Validaciones extends CI_Model{
     }
     ///////////////////////////////////////////////////////////
     // validando usuarios
-    function usuariosval($nom,$ape,$email,$tipo,$password,$idp,$roa){
+    function usuariosval($nom,$ape,$email,$tipo,$password){
         $n= str_replace(' ','',$nom);  $a= str_replace(' ','',$ape);
         //validando vacios de los campos
         if($nom==null || $ape==null || $email==null || $password==null){
@@ -70,13 +70,9 @@ class Validaciones extends CI_Model{
         }else if(ctype_alpha($n)==true && ctype_alpha($a)==true){
             //validando formato de correo
             if(preg_match("/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/",$email)==1){
-                $db=$this->Mostrar->users();
+                $db=$this->Mostrar->users();         
+                $id=$this->Generador->id_usuarios($tipo,$nom,$db,$ape);
                 
-                if($idp==''){
-                    $id=$this->Generador->id_usuarios($tipo,$nom,$db,$ape);
-                }else{
-                    $id=$idp;
-                }
                 $datos = array(
                     'ID_USUARIO'=>$id,
                     'NOMBRE_USUARIO'=>$nom,
@@ -86,20 +82,12 @@ class Validaciones extends CI_Model{
                     'CORREO'=>$email
                 );
                 //validando que el usuarios no exista
-                if(!$this->Mostrar->userexis($nom,$ape,$email)){
-                    if($roa=='registro'){
+                if(!$this->Mostrar->userexis($email)){
                         if(!$this->Insertando->InsertandoUsuarios($datos)){
                              $error = llenadoE();
                         }else{
                              $error = llenadoC();  
                         }
-                    }elseif($roa=='actualizar'){
-                        if(!$this->Actualizar->actualizarusers($datos)){
-                            $error = noactualizado();
-                        }else{
-                            $error=actualizado();
-                        }
-                    }
                 }else{
                     $error = existente();
                 }
@@ -112,8 +100,37 @@ class Validaciones extends CI_Model{
             return $error;
         }
     }
+    //actualizando usuarios
+    function actualizarusuarios($nom,$ape,$email,$tipo,$password,$iduser){
+        $n= str_replace(' ','',$nom);  $a= str_replace(' ','',$ape);  
+        if($nom==null || $ape==null || $email==null || $password==null){
+            $error= Campos();
+            return $error;
+        }else if(ctype_alpha($n)==true && ctype_alpha($a)==true){
+            if(preg_match("/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/",$email)==1){
+                $datos = array(
+                    'ID_USUARIO'=>$iduser,
+                    'NOMBRE_USUARIO'=>$nom,
+                    'APELLIDO_USUARIO'=>$ape,
+                    'TIPO_USUARIO'=>$tipo,
+                    'CONTRASENA'=>$password,
+                    'CORREO'=>$email
+                );
+                //comprobando que se actualicen los datos
+                if(!$this->Actualizar->actualizarusers($datos)){
+                    $error= noactualizado();
+                }else{
+                    $error= actualizado();
+                }
+            }
+            return $error;
+        }else if(!ctype_alpha($n) || !ctype_alpha($a)){
+            $error = numeros();
+            return $error;
+        }
+    }
     //validando pacientes
-    function pacientesval($nombre, $apellido, $fecha, $sexo, $numero, $idp, $roa){
+    function pacientesval($nombre, $apellido, $fecha, $sexo, $numero){
         $n = str_replace(' ','',$nombre); $a= str_replace(' ','',$apellido); $tel= str_replace('-','',$numero);
         $fecha_actual= strtotime(date("y-m-d"));
         $fecha_ingresada= strtotime($fecha);
@@ -123,15 +140,10 @@ class Validaciones extends CI_Model{
         }else if(ctype_alpha($n)==true && ctype_alpha($a)==true){
             if(preg_match("/^[0-9]{8}/",$tel)==1){
                 if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_ingresada<$fecha_actual){
-                //arreglo de valores de los campos
-                //para generar el id del paciente
-                $pacientes = $this->Mostrar->pacientes();
-                if($idp==""){
+                   //arreglo de valores de los campos
+                   //para generar el id del paciente
+                    $pacientes = $this->Mostrar->pacientes();
                     $id=$this->Generador->id_paciente($nombre,$apellido,$pacientes);
-                }else{
-                    $id=$idp;
-                }
-    
                 $datos = array(
                     'IDEXPEDIENTE'=>$id,
                     'NOMBRE_PACIENTE'=>$nombre,
@@ -141,20 +153,16 @@ class Validaciones extends CI_Model{
                     'FECHA_NACIEMIENTO'=>$fecha
                     );
                     //comprobando si el paciente existe
-                    if(!$this->Mostrar->pacientese($nombre,$apellido,$tel,$sexo)){
-                      if($roa== "registro"){
+                    if(!$this->Mostrar->pacientese($nombre,$apellido)){  
+                        if(!$this->Mostrar->numeropa($tel)){                  
                             if(!$this->Insertando->InsertandoPacientes($datos)){
                                  $error = llenadoE();
                             }else{
                                  $error = llenadoC();
                             } 
-                      }else if($roa=="actualizar"){
-                          if(!$this->Actualizar->actualizarPacs($datos)){
-                                 $error = noactualizado();
-                          }else{
-                                 $error=actualizado();
-                          }
-                      } 
+                        }else{
+                            $error= existente();
+                        }
                     }else{
                         $error = existente();
                     }
@@ -171,90 +179,158 @@ class Validaciones extends CI_Model{
             return $error;
         }
     }
-
-    function citasingreval($hora, $doctor, $paciente, $comentario,$fecha, $idp, $roa){
+    //actualizando pacientes
+    function actualizarpacientes($nombre, $apellido, $fecha, $sexo, $numero, $idpaciente){
+        $n = str_replace(' ','',$nombre); $a= str_replace(' ','',$apellido); $tel= str_replace('-','',$numero);
         $fecha_actual= strtotime(date("y-m-d"));
         $fecha_ingresada= strtotime($fecha);
-        if($hora==null || $doctor==null || $paciente==null || $comentario==null || $fecha==null){
+    
+        if($nombre==null || $apellido==null || $fecha==null || $numero==null){
             $error= Campos();
-        }else if($this->Mostrar->horario($fecha, $hora)){
-            $error=hora();
-        }else if(!preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 || $fecha_ingresada<$fecha_actual){
-            $error= fecha();
-        }else{
-            $horarios = $this->Mostrar->contarhorario();
-            if($idp==''){
-                $idho = count($horarios) + 1;
-            }else{
-                $idho=$idp;
-            }
-            $numero1= substr($hora,0,2);
-            if($numero1 >= 12){
-                $jornada = 'Vespertino';
-            }else{
-                $jornada = 'Matutino';
-            }
-
-            //comprobando que sea registro o actualizar
-            if($roa=='registro'){
-                            // arreglo para horario
-            $horario= array(
-                "ID_HORARIO" => $idho,
-                "HORA" => $hora,
-                "JORNADA" => $jornada,
-                "FECHA" => $fecha
-            );
-            //comprobando que se este realizando el llenado de cada tabla
-            if($this->Insertando->horario($horario)){
-                $idci=rand(0,9).substr($jornada,0,2).rand(100,900);
-                $idExp = $this->Mostrar->idEx($paciente);
-                //arreglo para cita
-                 $cita= array(
-                      "ID_CITA" => $idci,
-                      "ID_HORARIO" => $idho,
-                      "IDEXPEDIENTE" => $idExp["IDEXPEDIENTE"],
-                      "DOCTOR" => $doctor,
-                      "COMENTARIO"=> $comentario
-                 );
-                if($this->Insertando->InsertandoCitas($cita)){
-                    $iddoc = $this->Mostrar->doc($doctor);
-                     //arreglo para doctor_horario
-                           $horariodoctor= array(
-                               "ID_HORARIO" => $idho,
-                               "ID_DOCTOR" => $iddoc["ID_DOCTOR"]
-                            );
-                    if($this->Insertando->doctorhorario($horariodoctor)){
-                        $error = llenadoC();
-                    }else{
-                        $error= llenadoE();
-                    }
+            return $error;
+        }
+        else if(ctype_alpha($n)==true && ctype_alpha($a)==true){
+            if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_ingresada<$fecha_actual){
+                $paciente=array(
+                    'IDEXPEDIENTE'=>$idpaciente,
+                    'NOMBRE_PACIENTE'=>$nombre,
+                    'APELLIDO_PACIENTE'=>$apellido,
+                    'TELEFONO'=>$tel,
+                    'SEXO'=>$sexo,
+                    'FECHA_NACIEMIENTO'=>$fecha
+                );
+                if(!$this->Actualizar->actualizarPacs($paciente)){
+                    $error = noactualizado();
                 }else{
-                    $error=llenadoE();
+                    $error = actualizado();
                 }
             }else{
-                $error = llenadoE();
+                $error = fecha();
             }
-            //fin del llenado
-            }else if($roa=='actualizar'){
-                //inicio de actualizar
-                $idExp = $this->Mostrar->idEx($paciente);
-                $cita= array(
-                    "ID_CITA" => $idci,
-                    "ID_HORARIO" => $idho,
-                    "IDEXPEDIENTE" => $idExp["IDEXPEDIENTE"],
-                    "DOCTOR" => $doctor,
-                    "COMENTARIO"=> $comentario
-               );
-               if(!$this->Actualizar->actualizarcita($cita)){
-                   $error= noactualizado();
-               }else{
-                   $error = actualizado();
-               }
-               //fin de actualizar
+            return $error;
+        }
+        else if(!ctype_alpha($n) || !ctype_alpha($a)){
+            $error = numeros();
+            return $error;
+        }
+    }
+    //fin de funciones pacientes
+
+
+    //funciones para registrar y actualizar datos de citas
+    function citasval($hora, $fecha, $doctor, $paciente, $comentario){
+        //id de cita ingresada
+        $idcita= substr($doctor,0,2).rand(0,9).substr($fecha,0,4);
+        //id de horario
+        $idho= substr($fecha,0,4).substr($hora,0,2);
+        //id del doctor
+        $iddoctor=$this->Mostrar->doc($doctor);
+        //jornada
+        if(substr($hora,0,2)>=12){
+            $jornada = "Vespertina";
+        }else{
+            $jornada ="Matutina";
+        }
+        //obteniendo el id del paciente
+        $idexpediente= $this->Mostrar->id_paciente($paciente);
+        $fecha_insertada= strtotime($fecha);
+        $fecha_ac= strtotime(date('y-m-d'));
+        if(!$fecha==null && !$comentario==null){
+            //validando la fecha ingresada
+            if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_insertada>$fecha_ac){
+                //comprobando que un horario no exista
+                if(!$this->Mostrar->horario($fecha, $hora)){
+                    $horario= array(
+                        "ID_HORARIO"=> $idho,
+                        "HORA"=> $hora,
+                        "JORNADA"=> $jornada,
+                        "FECHA"=> $fecha
+                    );
+                    if(!$this->Insertando->horario($horario)){
+                        $error= llenadoE(); 
+                    }else{
+                        //arreglo de citas
+                        $citas= array(
+                            "ID_CITA"=>$idcita,
+                            "ID_HORARIO"=> $idho,
+                            "IDEXPEDIENTE"=> $idexpediente,
+                            "DOCTOR"=>$doctor,
+                            "COMENTARIO"=>$comentario
+                        );
+                        //realizando llenado de citas
+                        if(!$this->Insertando->InsertandoCitas($citas)){
+                            $error= llenadoE();
+                        }else{
+                            //arreglo de doctor horario
+                            $doctorhorario= array(
+                                "ID_HORARIO"=> $idho,
+                                "ID_DOCTOR"=> $iddoctor
+                            );
+                            if(!$this->Insertando->doctorhorario($doctorhorario)){
+                                $error=llenadoE();
+                            }else{
+                                $error = llenadoC();
+                            }
+                        }
+                    }
+                }else{
+                    $error = hora();
+                }
+                return $error;
+            }else{
+                $error=fecha();
+                return $error;
             }
+        }else{
+            $error= Campos();
+            return $error;
         }
 
-        return $error;
+        //retornando error del llenado
+    }
+    //funcion para actualizar
+    public function actualizarcitas($hora, $fecha, $doctor, $paciente, $comentario, $idhorario, $idcita, $idexp){
+        $fecha_insertada= strtotime($fecha);
+        $fecha_ac= strtotime(date('y-m-d'));
+        if(substr($hora,0,2)>=12){
+            $jornada = "Vespertina";
+        }else{
+            $jornada ="Matutina";
+        }
+        if(!$fecha==null && !$comentario==null){
+            if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_insertada>$fecha_ac){
+                if(!$this->Mostrar->horario($fecha, $hora)){
+                    $horario= array(
+                        "ID_HORARIO"=> $idhorario,
+                        "HORA"=> $hora,
+                        "JORNADA"=> $jornada,
+                        "FECHA"=> $fecha
+                    );
+                    if(!$this->Actualizar->actualizarhorarios($horario)){
+                        $error= noactualizado();
+                    }else{
+                        $citas= array(
+                            "ID_CITA"=>$idcita,
+                            "ID_HORARIO"=> $idhorario,
+                            "IDEXPEDIENTE"=> $idexp,
+                            "DOCTOR"=>$doctor,
+                            "COMENTARIO"=>$comentario
+                        );
+                        if(!$this->actualizar->actualizarcita($citas)){
+                            $error = noactualizado();
+                        }else{
+                            $error = actualizado();
+                        }
+                    }
+                }
+            }else{
+                $error=fecha();
+            }
+            return $error;
+        }else{
+            $error = Campos();
+            return $error;
+        }
     }
     }
     

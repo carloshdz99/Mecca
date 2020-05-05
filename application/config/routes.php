@@ -51,4 +51,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'Login';
 $route['404_override'] = '';
+$route["doctores"]='Doctores/mostrar';
 $route['translate_uri_dashes'] = FALSE;

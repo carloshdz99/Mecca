@@ -17,6 +17,10 @@ class Frontpage extends CI_Controller {
         $this->load->view('frontpage/index');
 		
     }
+
+    public function prueba(){
+        echo json_encode("hola forastero");
+    }
     
     
     
