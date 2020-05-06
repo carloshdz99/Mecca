@@ -3,7 +3,14 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Highcharts Example</title>
+		<title>MECCA WEB</title>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+  <link rel="stylesheet" type="text/css" href="..\..\..\mecca\estilos\front\css\font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="..\..\..\mecca\estilos\front\css\bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="..\..\..\mecca\estilos\front\css\style.css">
+  <link rel="stylesheet" type="text/css" href="..\..\..\mecca\estilos\front\estilo\bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 
 		<style type="text/css">
 #container {
@@ -46,18 +53,60 @@
 
 		</style>
 	</head>
-	<body>
+	<body style="text-align:center">
 <script src="..\..\..\mecca\estilos\code\highcharts.js"></script>
 <script src="..\..\..\mecca\estilos\code\highcharts-3d.js"></script>
 <script src="..\..\..\mecca\estilos\code\exporting.js"></script>
 <script src="..\..\..\mecca\estilos\code\export-data.js"></script>
 <script src="..\..\..\mecca\estilos\code\accessibility.js"></script>
 
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-sm sticky-top">
+       
+        <!------------------------ANCLA LOGO------------------------------->
+
+
+        <a class="navbar-brand" href="<?php echo base_url('Inicio');?>">
+            <img src="..\..\..\mecca\estilos\front\img\logoc.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
+             MECCA WEB
+        </a>
+ 
+        <!-------------------------DIV DE ENLANCES-------------------------->
+        
+     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+
+
+        <div class="navbar-nav mr-auto text-center ml-auto">
+          <h1 style="color: white">Gráficos</h1>
+        </div>
+
+
+                     <!--          REDES SOCIALES               -->
+
+
+        <div class="d-flex  flex-row justify-content-center">
+            <a class="btn btn-outline-primary mr-2" href="https://www.facebook.com/multiclinicadeespecialidades/">F</a>
+            <a class="btn btn-outline-danger " href="#" target="_blanck">G</a>
+        </div>
+
+
+     </div>
+
+
+         <!----------------TOOGLE BOTON DE MENU DESPLEGABLE----------------->
+
+     <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+     </button>
+
+
+    </nav>
+
 <figure class="highcharts-figure">
     <div id="container"></div>
-    <p class="highcharts-description">
+    <p class="highcharts-description" style="font-size: x-large">
         En esta grafica se presenta el porcentaje de doctores que existe
-        por cada especialidad que existe en la multiclinica.
+        por cada especialidad existente en la multiclinica.
     </p>
 </figure>
 
@@ -111,6 +160,48 @@ Highcharts.chart('container', {
         ]
     }]
 });
-		</script>
+    </script>
+    
+
+
+    <br>
+    <br>
+   <hr>
+    <h1 class="highcharts-description">Doctores activos</h1>
+    
+    <br>
+    <br>
+
+  <?php
+        $mos='<table class="table table-striped " id="lista"   >
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Especialidad</th>
+          </tr>
+        </thead>
+        <tbody>';
+        //recorriendo los datos de los doctores
+          foreach($doctores as $d){
+            
+            $mos .= '<tr>
+            <td>'.$d->ID_DOCTOR.'</td>
+            <td>'.$d->NOMBRE_DOCTOR.'</td>
+            <td>'.$d->APELLIDO_DOCTOR.'</td>
+            <td>'.$d->ESPECIALIDAD.'</td>
+          </tr>';
+          }
+          $mos.='</tbody>
+          </table>';
+         
+          echo $mos;
+     
+  ?>
+
+
+    
+    
 	</body>
 </html>

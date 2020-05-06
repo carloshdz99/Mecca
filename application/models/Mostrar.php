@@ -177,4 +177,10 @@ class Mostrar extends CI_Model{
         $id= $pacientes->row_array();
         return $id["IDEXPEDIENTE"];
     }
+
+
+    public function grafhlista(){
+        $dato = $this->db->get_where('doctor',array("ESTADO"=>1));
+        return $dato->result();
+    }
 }

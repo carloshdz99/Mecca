@@ -38,8 +38,10 @@ class Usuarios extends CI_Controller {
         $email=$this->input->post('email');
         $tipo_usuario=$this->input->post('tipo');
         $contraseña=$this->input->post('password');
-            $form=personas();
+
+        //recargando la pagina con mensaje de guardado
         
+
         //cargando formulario de la pagina
         $form = personas();
         $msg= $this->Validaciones->usuariosval($nombre,$apellido,$email,$tipo_usuario,$contraseña);
