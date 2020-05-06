@@ -239,7 +239,7 @@ class Validaciones extends CI_Model{
         $fecha_ac= strtotime(date('y-m-d'));
         if(!$fecha==null && !$comentario==null){
             //validando la fecha ingresada
-            if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_insertada>$fecha_ac){
+            if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_insertada>=$fecha_ac){
                 //comprobando que un horario no exista
                 if(!$this->Mostrar->horario($fecha, $hora)){
                     $horario= array(
