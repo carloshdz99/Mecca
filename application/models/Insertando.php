@@ -14,6 +14,14 @@ class Insertando extends CI_Model{
            return true;
        }
     }
+    //
+    public function Insert_doctorhorario($datos){
+        if(!$this->db->insert('doctor_especialidad',$datos)){
+            return false;
+        }else{
+            return true;
+        }
+    }
    //funcion de llenado para usuarios
     public function InsertandoUsuarios($datos){
         if(!$this->db->insert('usuario',$datos)){

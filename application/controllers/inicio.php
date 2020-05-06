@@ -21,15 +21,20 @@ class Inicio extends CI_Controller {
         //$data['estructura']=inicioIngles();
         //$this->load->view('frontpage/index',$data);
 
-        if($_COOKIE["idioma"]==2){
+        if(!isset($_COOKIE["idioma"])){
 
-           $data['estructura']=inicioIngles();
+          $data['estructura']=inicioEspañol();
            $this->load->view('frontpage/index',$data);
+           
         }
-        else
+        else if($_COOKIE["idioma"]==2)
         {
-            $data['estructura']=inicioEspañol();
-           $this->load->view('frontpage/index',$data);
+          $data['estructura']=inicioIngles();
+          $this->load->view('frontpage/index',$data);
+        }else if($_COOKIE["idioma"]==1)
+        {
+          $data['estructura']=inicioEspañol();
+          $this->load->view('frontpage/index',$data);
         }
 		
     }

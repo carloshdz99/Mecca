@@ -10,10 +10,12 @@ class Citas extends CI_Controller {
         $this->load->helper('forms/forms');
         $this->load->helper('forms/formsac');
         $this->load->helper('list/listas');
+        $this->load->helper('alertas/alertas');
         $this->load->model('Mostrar');
         $this->load->model('actualizar');
         $this->load->model('Insertando');
         $this->load->model('validaciones');
+        $this->load->model('Eliminar');
         // cargando base de datos
         $this->load->database();
         
@@ -164,6 +166,30 @@ class Citas extends CI_Controller {
                 $data['estructura'] = menuarchivo($lista,$msg,'Lista de Citas');
             }
         }
+        $this->load->view('administrador/cita.php',$data);
+    }
+
+    //funcion para borrar citas 
+    function eliminarci($id,$pagina=1){
+        if(!$this->Eliminar->eliminarcitas($id)){
+            $msg= noeliminar();
+        }else{
+            $msg= eliminar();
+        }
+            $inicio = ($pagina-1)*6;
+            $fin = $inicio+6;
+
+            $pacientes = $this->Mostrar->citas();
+            $pacientesp= $this->Mostrar->citasp($inicio,$fin);
+            $lista = verCit($pacientes,$pacientesp);
+
+            if($this->session->userdata('tipo')=='admin'){
+                $data['estructura'] = menu($lista,$msg,'Lista de Citas');
+            }
+            elseif($this->session->userdata('tipo')=='archivo'){
+                $data['estructura'] = menuarchivo($lista,$msg,'Lista de Citas');
+            }
+            $this->load->view('administrador/cita.php',$data);
     }
 
 }

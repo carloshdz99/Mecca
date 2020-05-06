@@ -28,8 +28,9 @@ class Mostrar extends CI_Model{
     //tomando los doctores por su nombre y apellido
     public function docexis($nom,$ape){
         $dato = $this->db->get_where('doctor',array("NOMBRE_DOCTOR"=>$nom, "APELLIDO_DOCTOR"=>$ape));
-        return $dato->row_array();
+        return $dato->result();
     }
+    //////////////////////////////////////////////////
     public function docsa(){
         $dato = $this->db->get_where('doctor',array("ESTADO"=>1,));
         return $dato->result();
@@ -42,7 +43,7 @@ class Mostrar extends CI_Model{
     //tomando usuarios por sus datos
     public function userexis($email){
         $dato = $this->db->get_where('usuario',array("CORREO"=>$email));
-        return $dato->row_array();
+        return $dato->result();
     }
     //tomando usuarios cuando se pase el id
     public function userac($id){
@@ -53,6 +54,12 @@ class Mostrar extends CI_Model{
     public function especialidades(){
         $especialidad = $this->db->get('especialidad');
         return $especialidad->result();
+    }
+    //obteniendo id de especialidad
+    public function id_especialidad($nombre){
+        $espe = $this->db->get_where('especialidad',array("NOMBRE_ESPECIALIDAD"=>$nombre));
+        $id= $espe->row_array();
+        return $id["ID_ESPECIALIDAD"];
     }
 
     //tomando los pacientes 
@@ -105,26 +112,26 @@ class Mostrar extends CI_Model{
 
     public function grafica(){
         $doctores= $this->db->get('doctor');
-        $total=$doctores->num_rows();
+        $total=count($doctores->result());
 
         $fisio=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Fisioterapia"));
-        $numfi=$fisio->num_rows();
+        $numfi=count($fisio->result());
         $porfi=$numfi*100/$total;
 
         $urologia=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Urologia"));
-        $numuro=$urologia->num_rows();
+        $numuro=count($urologia->result());
         $poruro=$numuro*100/$total;
 
         $cardiologia=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Cardiologia"));
-        $numcar=$cardiologia->num_rows();
-        $porcar=$numcar*100/$total;
+        $numcar=count($cardiologia->result());
+       $porcar=$numcar*100/$total;
 
         $cirugia=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Cirugia"));
-        $numci=$cirugia->num_rows();
+        $numci=count($cirugia->result());
         $porci=$numci*100/$total;
 
-        $medicina=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Medicina interna"));
-        $numme=$medicina->num_rows();
+        $medicina=$this->db->get_where('doctor',array("ESPECIALIDAD" =>"Medicina General"));
+        $numme=count($medicina->result());
         $porme=$numme*100/$total;
 
         $grafh=array($porfi,$poruro,$porcar,$porci,$porme);

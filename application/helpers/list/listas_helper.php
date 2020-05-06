@@ -26,7 +26,7 @@ function verDocs($doctores,$pdoctores){
       <td>'.$d->APELLIDO_DOCTOR.'</td>
       <td>'.$d->ESPECIALIDAD.'</td>
       <td>'.$est.'</td>
-      <td><a href="'.base_url().'Doctores/editarDocs/'.$d->ID_DOCTOR.'" class="btn btn-dark"><i class="fas fa-edit"></i></a></td>
+      <td><a href="'.base_url().'Doctores/editarDocs/'.$d->ID_DOCTOR.'" class="btn btn-warning"><i class="fas fa-edit"></i></a></td>
     </tr>';
     }
     $mos.='</tbody>
@@ -90,28 +90,9 @@ function verPaci($pacs, $pacsp){
      <td>'.$p->TELEFONO.'</td>
      <td>'.$p->SEXO.'</td>
      <td>'.$p->FECHA_NACIEMIENTO.'</td>
-     <td><a href="'.base_url().'Pacientes/tomarP/'.$p->IDEXPEDIENTE.'" class="btn btn-warning"><i class="fas fa-edit"></i></a> / <a class="btn btn-danger" data-toggle="modal" data-target="#eliminar'.$i.'"><i class="fas fa-trash-alt"></i></a>/
-     <a href="#" class="btn btn-info"><i class="fas fa-download"></i></a></td>
+     <td><a href="'.base_url().'Pacientes/tomarP/'.$p->IDEXPEDIENTE.'" class="btn btn-warning"><i class="fas fa-edit"></i></a>
    </tr>
-   <div class="modal fade" id="eliminar'.$i.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-     <div class="modal-dialog" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <h5 class="modal-title" id="exampleModalLabel">Eliminando Registro</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-         </div>
-         <div class="modal-body">
-           Esta seguro?
-         </div>
-         <div class="modal-footer">
-           <a href="'.base_url().'Pacientes/eliminarPacs/'.$p->IDEXPEDIENTE.'" class="btn btn-primary">Aceptar</a>
-           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-         </div>
-       </div>
-     </div>
-   </div>';
+   ';
    }
    $pacientes.='</tbody>
    </table><nav aria-label="Page navigation example">
@@ -127,7 +108,10 @@ function verPaci($pacs, $pacsp){
 }
 //funcion que devuelve las citas
 function verCit($citas, $citasp){
-   $ci = '<table class="table table-striped" id="lista">
+   $ci = '
+   <br>
+   <br>
+   <table class="table table-striped" id="lista">
    <thead>
      <tr>
        <th scope="col">ID</th>
@@ -139,6 +123,7 @@ function verCit($citas, $citasp){
      </tr>
    </thead>
    <tbody>';
+   $i=0;
    foreach($citasp as $cis){
      $ci.= '<tr>
      <td>'.$cis->ID_CITA.'</td>
@@ -146,8 +131,29 @@ function verCit($citas, $citasp){
      <td>'.$cis->IDEXPEDIENTE.'</td>
      <td>'.$cis->DOCTOR.'</td>
      <td>'.$cis->COMENTARIO.'</td>
-     <td><a href="'.base_url().'/Citas/tomarcitas/'.$cis->ID_CITA.'" class="btn btn-warning"><i class="fas fa-edit"></i></a> / <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
-     </tr>';
+     <td><a href="'.base_url().'/Citas/tomarcitas/'.$cis->ID_CITA.'" class="btn btn-warning"><i class="fas fa-edit"></i></a> / 
+     <button data-toggle="modal" data-target="#eliminar'.$i.'" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
+     </tr> 
+     <div class="modal fade" id="eliminar'.$i.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Eliminando Registro</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+           Esta seguro? al eliminarlo no podra recuperar el registro <i class="fas fa-exclamation-triangle"></i>
+         </div>
+         <div class="modal-footer">
+           <a href="'.base_url().'Citas/eliminarci/'.$cis->ID_HORARIO.'" class="btn btn-primary">Aceptar</a>
+           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+         </div>
+       </div>
+     </div>
+   </div>';
+   $i++;
    }
    $ci.='</tbody>
    </table><nav aria-label="Page navigation example">
@@ -199,7 +205,7 @@ function usuarios($users, $usersp){
           </button>
         </div>
         <div class="modal-body">
-          Esta seguro?
+          Esta seguro? al eliminarlo no podra recuperar el registro <i class="fas fa-exclamation-triangle"></i>
         </div>
         <div class="modal-footer">
           <a href="'.base_url().'Usuarios/eliminar/'.$u->ID_USUARIO.'" class="btn btn-primary">Aceptar</a>

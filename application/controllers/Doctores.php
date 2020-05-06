@@ -64,7 +64,7 @@ public function Registrar(){
     $form = docs($espe);
     $doctores=$this->Mostrar->Docs();
 
-    $msg = $this->validaciones->doctoresVal($nom,$ape,$especialidad,$estado,'','registro');
+    $msg = $this->validaciones->doctoresVal($nom,$ape,$especialidad,$estado);
     if($this->session->userdata('tipo')=='admin'){
       $data['estructura'] = menu($form,$msg,'Ingresando doctores');
     }
@@ -121,7 +121,7 @@ public function Registrar(){
     $id=$this->input->post('id');
 
     //validando que ocurra un error de datos mal ingresados
-    $msg= $this->validaciones->doctoresVal($nom,$ape,$especialidad,$estado,$id,'actualizar');
+    $msg= $this->validaciones->actualizardoctores($nom,$ape,$especialidad,$estado,$id);
     if($msg==noactualizado()||$msg==numeros()||$msg==Campos()||$msg==existente()||$msg==llenadoE()){
       $espe=$this->Mostrar->especialidades();
       $datos= $this->Actualizar->tomarDocs($id);

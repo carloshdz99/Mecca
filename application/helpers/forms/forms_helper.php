@@ -382,74 +382,12 @@
   <!--about-->
 
   <!--/ about-->
-  <!--doctor team-->
   <section id="doctor-team" class="section-padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="ser-title">Conoce nuestros doctores</h2>
-          <hr class="botm-line">
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="'.base_url('estilos/front/img/anonimo.png').'" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Dr. Aldo Erick Flores</h3>
-              <p>Urología/Medicina General</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="'.base_url('estilos/front/img/anonimo.png').'" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Licda. Carmen Elena Fernández</h3>
-              <p>Fisioterapia</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="'.base_url('estilos/front/img/anonimo.png').'" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Dr. Mario Montoya</h3>
-              <p>Cirugía/Medicina Interna</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <img src="'.base_url('estilos/front/img/anonimo.png').'" alt="..." class="team-img">
-            <div class="caption">
-              <h3>Dra. Silvia Hernández</h3>
-              <p>Cardiología</p>
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+     <!-- en esta parte se imprimiran los doctores-->
+     <div class="container" id="mostrardocs">
+          
+     </div>
   </section>
-  <!--/ doctor team-->
   <!--testimonial-->
   <section id="testimonial" class="section-padding">
     <div class="container">

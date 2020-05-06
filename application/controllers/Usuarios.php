@@ -131,7 +131,7 @@ class Usuarios extends CI_Controller {
         $contraseña=$this->input->post('password');
         $id=$this->input->post('id');
 
-        $msg= $this->Validaciones->usuariosval($nombre,$apellido,$email,$tipo_usuario,$contraseña,$id);
+        $msg= $this->Validaciones->actualizarusuarios($nombre,$apellido,$email,$tipo_usuario,$contraseña,$id);
         if($msg==noactualizado()||$msg==numeros()||$msg==Campos()||$msg==existente()||$msg==malcorreo()){
             $users = $this->Mostrar->userac($id);
             $form=usuariosa($users);

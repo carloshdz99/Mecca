@@ -11,9 +11,11 @@ class Validaciones extends CI_Model{
         $this->load->library(array('form_validation'));
     }
     //funcion para validar los campos de doctores
-    function doctoresVal($nom,$ape,$espe,$est,$idp,$roa){
+    function doctoresVal($nom,$ape,$espe,$est){
         $n = str_replace(' ','',$nom); $a= str_replace(' ','',$ape);
         //validando que los campos no sean vacios
+        //tomando el id de la especialidad
+        $idespecialidad= $this->Mostrar->id_especialidad($espe);
         if($nom==null || $ape ==null){
             $error = Campos();
             return $error;
@@ -22,10 +24,13 @@ class Validaciones extends CI_Model{
             if($est=='Activo'){$numE=1;}else{$numE=0;}
                 //obteniendo id del doctor
                 $doctores = $this->Mostrar->Docs();
-                if($idp==''){
                 $id= $this->Generador->id_doctor($nom,$ape,$doctores);
-                }else{$id= $idp;}
-            //arreglo para llenado
+            //arreglo para llenado de tabla doctor_especialidad
+            $doctor_espe=array(
+                "ID_ESPECIALIDAD"=>$idespecialidad,
+                "ID_DOCTOR"=>$id
+            );
+            //arreglo para llenado de doctores
             $datos = array(
                 'NOMBRE_DOCTOR' => strtolower($nom),
                 'APELLIDO_DOCTOR' => strtolower($ape),
@@ -35,19 +40,11 @@ class Validaciones extends CI_Model{
             );
             //validando que el dato no exista
         if(!$this->Mostrar->docexis($nom,$ape)){
-            if($roa=='registro'){
             //validando que se hallan ingresado los datos
-            if(!$this->Insertando->InsertandoDocs($datos)){
+            if(!$this->Insertando->InsertandoDocs($datos) || !$this->Insertando->Insert_doctorhorario($doctor_espe)){
                 $error = llenadoE();
             }else{
                 $error = llenadoC();               
-            }
-            }elseif($roa=='actualizar'){
-                if(!$this->Actualizar->actualizarDocs($datos)){
-                    $error=noactualizado();
-                }else{
-                    $error=actualizado();
-                }
             }
         }else{
             $error = existente();
@@ -58,6 +55,23 @@ class Validaciones extends CI_Model{
            $error = numeros();
            return $error;
         }
+    }
+    //actualizando doctores
+    function actualizardoctores($nom,$ape,$espe,$est,$iddoctor){
+        if($est=='Activo'){$numE=1;}else{$numE=0;}
+        $datos = array(
+            'NOMBRE_DOCTOR' => strtolower($nom),
+            'APELLIDO_DOCTOR' => strtolower($ape),
+            'ESTADO' => $numE,
+            'ESPECIALIDAD' => $espe,
+            'ID_DOCTOR' => $iddoctor
+        );
+        if(!$this->Actualizar->actualizarDocs($datos)){
+            $error = noactualizado();
+        }else{
+            $error = actualizado();
+        }
+        return $error;
     }
     ///////////////////////////////////////////////////////////
     // validando usuarios
@@ -102,12 +116,7 @@ class Validaciones extends CI_Model{
     }
     //actualizando usuarios
     function actualizarusuarios($nom,$ape,$email,$tipo,$password,$iduser){
-        $n= str_replace(' ','',$nom);  $a= str_replace(' ','',$ape);  
-        if($nom==null || $ape==null || $email==null || $password==null){
-            $error= Campos();
-            return $error;
-        }else if(ctype_alpha($n)==true && ctype_alpha($a)==true){
-            if(preg_match("/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/",$email)==1){
+                $n= str_replace(' ','',$nom);  $a= str_replace(' ','',$ape);  
                 $datos = array(
                     'ID_USUARIO'=>$iduser,
                     'NOMBRE_USUARIO'=>$nom,
@@ -122,12 +131,7 @@ class Validaciones extends CI_Model{
                 }else{
                     $error= actualizado();
                 }
-            }
             return $error;
-        }else if(!ctype_alpha($n) || !ctype_alpha($a)){
-            $error = numeros();
-            return $error;
-        }
     }
     //validando pacientes
     function pacientesval($nombre, $apellido, $fecha, $sexo, $numero){
@@ -185,12 +189,11 @@ class Validaciones extends CI_Model{
         $fecha_actual= strtotime(date("y-m-d"));
         $fecha_ingresada= strtotime($fecha);
     
-        if($nombre==null || $apellido==null || $fecha==null || $numero==null){
+        if($fecha==null || $numero==null){
             $error= Campos();
             return $error;
         }
-        else if(ctype_alpha($n)==true && ctype_alpha($a)==true){
-            if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_ingresada<$fecha_actual){
+         else if(preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$fecha)==1 && $fecha_ingresada<$fecha_actual){
                 $paciente=array(
                     'IDEXPEDIENTE'=>$idpaciente,
                     'NOMBRE_PACIENTE'=>$nombre,
@@ -208,11 +211,7 @@ class Validaciones extends CI_Model{
                 $error = fecha();
             }
             return $error;
-        }
-        else if(!ctype_alpha($n) || !ctype_alpha($a)){
-            $error = numeros();
-            return $error;
-        }
+        
     }
     //fin de funciones pacientes
 
@@ -221,14 +220,17 @@ class Validaciones extends CI_Model{
     function citasval($hora, $fecha, $doctor, $paciente, $comentario){
         //id de cita ingresada
         $idcita= substr($doctor,0,2).rand(0,9).substr($fecha,0,4);
-        //id de horario
-        $idho= substr($fecha,0,4).substr($hora,0,2);
+        
         //id del doctor
         $iddoctor=$this->Mostrar->doc($doctor);
         //jornada
         if(substr($hora,0,2)>=12){
             $jornada = "Vespertina";
+            //id de horario
+           $idho= substr($fecha,0,4).substr($hora,0,2);
         }else{
+            //id de horario
+            $idho= substr($fecha,0,4).substr($hora,0,1);
             $jornada ="Matutina";
         }
         //obteniendo el id del paciente

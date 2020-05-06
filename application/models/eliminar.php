@@ -16,7 +16,23 @@ class Eliminar extends CI_Model{
         }
     }
 
-
+    //eliminando citas de la base de datos
+    function eliminarcitas($id){
+        //eliminando primero doctor-horario
+        if(!$this->db->delete('doctor_horario',array("ID_HORARIO"=>$id))){
+            return false;
+        }else{
+            if(!$this->db->delete('cita',array("ID_HORARIO"=>$id))){
+                return false;
+            }else{
+                if(!$this->db->delete('horario',array("ID_HORARIO"=>$id))){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }
+    }
     
 
     //funcion que elimina usuarios

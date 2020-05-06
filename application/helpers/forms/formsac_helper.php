@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
      <label for="nom">Nombres: </label>
-     <input type="text" class="form-control" id="nom" value="'.$en["NOMBRE_DOCTOR"].'" name="nom" placeholder="Ingrese nombres">
+     <input type="text" class="form-control" id="nom" value="'.$en["NOMBRE_DOCTOR"].'" name="nom" placeholder="Ingrese nombres" readonly>
       <!-- mensaje de validacion -->
       <div class="invalid-feedback">
         Ingrese los dos nombres 
@@ -17,7 +17,7 @@
   
     <div class="form-group">
      <label for="ape">Apellidos: </label>
-     <input type="text" class="form-control" id="ape" value="'.$en["APELLIDO_DOCTOR"].'" name="ape" placeholder="Ingrese apellidos">
+     <input type="text" class="form-control" id="ape" value="'.$en["APELLIDO_DOCTOR"].'" name="ape" placeholder="Ingrese apellidos" readonly>
       <!-- mensaje de validacion -->
       <div class="invalid-feedback">
         Ingrese los dos apellidos
@@ -59,17 +59,17 @@ function usuariosa($user){
   <div class="row">
     <div class="form-group col">
         <label for="nom">Nombres: </label>
-        <input type="text" class="form-control col-sm-8" value="'.$user['NOMBRE_USUARIO'].'" name="nom" id="nom" placeholder="Ingrese nombres">
+        <input type="text" readonly class="form-control col-sm-8" value="'.$user['NOMBRE_USUARIO'].'" name="nom" id="nom" placeholder="Ingrese nombres">
       </div>
     <div class="form-group col">
         <label for="ape">Apellidos: </label>
-        <input type="text" class="form-control col-sm-8" value="'.$user['APELLIDO_USUARIO'].'" name="ape" id="ape" placeholder="Ingrese apellidos">
+        <input type="text" readonly class="form-control col-sm-8" value="'.$user['APELLIDO_USUARIO'].'" name="ape" id="ape" placeholder="Ingrese apellidos">
     </div>  
   </div>
 
     <div class="form-group">
       <label for="email">Correo electronico</label>
-      <input type="email" class="form-control col-sm-4" value="'.$user['CORREO'].'" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
+      <input type="email" readonly class="form-control col-sm-4" value="'.$user['CORREO'].'" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo">
       <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie mas.</small>
     </div>
     <div class="form-group">
@@ -100,11 +100,11 @@ function usuariosa($user){
       <div class="row">
       <div class="form-group col">
           <label for="nom">Nombres:</label>
-          <input type="text" name="nom" id="nom" value="'.$pa['NOMBRE_PACIENTE'].'" class="form-control col-sm-8" placeholder="Ingrese Nombres">
+          <input type="text" readonly name="nom" id="nom" value="'.$pa['NOMBRE_PACIENTE'].'" class="form-control col-sm-8" placeholder="Ingrese Nombres">
       </div>
       <div class="form-group col">
           <label for="nom">Apellidos:</label>
-          <input type="text" name="ape" id="ape" value="'.$pa['APELLIDO_PACIENTE'].'" class="form-control col-sm-8" placeholder="Ingrese Apellidos">
+          <input type="text" readonly name="ape" id="ape" value="'.$pa['APELLIDO_PACIENTE'].'" class="form-control col-sm-8" placeholder="Ingrese Apellidos">
       </div>
       </div>
           <div class="form-group">

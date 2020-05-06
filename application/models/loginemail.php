@@ -2,9 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-require_once('C:\wamp64\www\Mecca\PHPMailer/src/PHPMailer.php');
-require_once('C:\wamp64\www\Mecca\PHPMailer/src/SMTP.php'); 
-require_once('C:\wamp64\www\Mecca\PHPMailer/src/Exception.php');
+require_once('C:\xampp\htdocs\Mecca\PHPMailer/src/PHPMailer.php');
+require_once('C:\xampp\htdocs\Mecca\PHPMailer/src/SMTP.php'); 
+require_once('C:\xampp\htdocs\Mecca\PHPMailer/src/Exception.php');
 
     
 
