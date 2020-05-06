@@ -77,10 +77,6 @@ function __construct(){
        }
    }
 
-   function id_citas(){
-       
-   }
-
    
 }
 ?>
