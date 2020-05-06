@@ -40,24 +40,14 @@ class Usuarios extends CI_Controller {
         $contraseña=$this->input->post('password');
 
 
-        $db=$this->Mostrar->users();
-        $id=$this->Generador->id_usuarios($tipo_usuario,$nombre,$db);
-
-        $datos = array(
-            'ID_USUARIO'=>$id,
-            'NOMBRE_USUARIO'=>$nombre,
-            'APELLIDO_USUARIO'=>$apellido,
-            'TIPO_USUARIO'=>$tipo_usuario,
-            'CONTRASENA'=>$contraseña,
-            'CORREO'=>$email
-            );
+        
         
 
-            $form=personas();
+           
             // comprobando que se haya recibido datos
-      if(!$this->Insertando->InsertandoUsuarios($datos)){
+     
         //recargando la pagina con mensaje de guardado
-        $msg='<div class="alert alert-danger"> Error en el llenado</div>';
+        
 
         //cargando formulario de la pagina
         $form = personas();
@@ -66,7 +56,7 @@ class Usuarios extends CI_Controller {
 
         $data['estructura'] = menu($form,$msg,'Ingresando Usuarios');
         $this->load->view('administrador/personal.php',$data);
-        }
+        
     }
 
     

@@ -152,4 +152,10 @@ class Mostrar extends CI_Model{
         return $nombre->row_array();
 
     }
+
+
+    public function grafhlista(){
+        $dato = $this->db->get_where('doctor',array("ESTADO"=>1));
+        return $dato->result();
+    }
 }

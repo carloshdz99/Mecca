@@ -241,6 +241,7 @@
                         <a href="'.base_url().'Inicio/ingles">Ingles</a>
                     </li>                       
                 </ul>
+                    
                 </div>
 
 
@@ -248,6 +249,7 @@
             
             <div class="collapse navbar-collapse navbar-right" id="myNavbar">
               <ul class="nav navbar-nav">
+                <li class=""><a href="#">'.$_SESSION['visitas'].'</a></li>
                 <li class="active"><a href="#banner">Inicio</a></li>
                 <li class=""><a href="#service">Servicios</a></li>
                 <!--<li class=""><a href="#about">Nosotros</a></li>-->
@@ -688,6 +690,7 @@
 
    function inicioIngles(){
 
+    
     return '
     <section id="banner" class="banner">
     <div class="bg-color">
@@ -716,6 +719,7 @@
                         <a href="'.base_url().'Inicio/ingles">English</a>
                     </li>                       
                 </ul>
+                
                 </div>
 
 
@@ -723,6 +727,7 @@
             
             <div class="collapse navbar-collapse navbar-right" id="myNavbar">
               <ul class="nav navbar-nav">
+                <li class=""><a href="#">'.$_SESSION['visitas'].'</a></li>
                 <li class="active"><a href="#banner">Index</a></li>
                 <li class=""><a href="#service">Services</a></li>
                 <!--<li class=""><a href="#about">Nosotros</a></li>-->

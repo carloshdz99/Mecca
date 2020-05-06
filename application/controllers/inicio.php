@@ -20,17 +20,42 @@ class Inicio extends CI_Controller {
        // $data['estructura']=inicioEspañol();
         //$data['estructura']=inicioIngles();
         //$this->load->view('frontpage/index',$data);
+        
+        if(!isset($_COOKIE["idioma"])){
 
-        if($_COOKIE["idioma"]==2){
-
+          $data['estructura']=inicioEspañol();
+           $this->load->view('frontpage/index',$data);
+           
+        }
+        elseif($_COOKIE["idioma"]==2)
+        {
+            
            $data['estructura']=inicioIngles();
            $this->load->view('frontpage/index',$data);
         }
-        else
+        elseif($_COOKIE["idioma"]==1)
         {
-            $data['estructura']=inicioEspañol();
-           $this->load->view('frontpage/index',$data);
+            
+          $data['estructura']=inicioEspañol();
+          $this->load->view('frontpage/index',$data);
         }
+
+
+        if(isset($_COOKIE['contador']))
+        { 
+          // Caduca en un año 
+          
+          setcookie('contador', $_COOKIE['contador'] + 1, time() + 365 * 24 * 60 * 60); 
+         $_SESSION['visitas']= 'Número de visitas: ' . $_COOKIE['contador']; 
+        } 
+        else 
+        { 
+          // Caduca en un año 
+          
+          setcookie('contador', 1, time() + 365 * 24 * 60 * 60); 
+          $_SESSION['visitas'] = 'Bienvenido a nuestra página web'; 
+        } 
+        
 		
     }
     
@@ -119,6 +144,7 @@ class Inicio extends CI_Controller {
     public function grafh(){
         
       $data['datos']=$this->Mostrar->grafica();
+      $data['doctores']=$this->Mostrar->grafhlista();
       $this->load->view('frontpage/grafica',$data);
       
 
